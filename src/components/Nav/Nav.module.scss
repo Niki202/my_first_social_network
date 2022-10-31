@@ -1,0 +1,19 @@
+.nav{
+  grid-area: n;
+  background-color: #9da5d2;
+  padding: 10px;
+  :last-child{
+    margin-top: 30px;
+  }
+  a{
+    color: #73630f;
+    text-decoration: none;
+    &:hover{
+      color: gold;
+    }
+
+  }
+  .active{
+     color: gold;
+   }
+}

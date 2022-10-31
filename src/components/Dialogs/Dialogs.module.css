@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap");
+.dialogs {
+  display: grid;
+  grid-template-columns: 3fr 10fr;
+}
+.dialogs .dialogsItems {
+  padding: 10px;
+}
+.dialogs .dialogsItems a {
+  text-decoration: none;
+}
+.dialogs .dialogsItems a:hover {
+  color: coral;
+}
+.dialogs .dialogsItems .dialog {
+  font-family: "Rubik Wet Paint", cursive;
+}
+.dialogs .dialogsItems .dialog.active {
+  color: gold;
+}
+.dialogs .dialogsItems .active {
+  color: chocolate;
+}
+.dialogs .messages {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.dialogs .messages .message {
+  display: inline-block;
+  max-width: 200px;
+  border: solid 2px gray;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  font-family: "Roboto", sans-serif;
+}
+
+/*# sourceMappingURL=Dialogs.module.css.map */

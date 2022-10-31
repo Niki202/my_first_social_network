@@ -1,0 +1,12 @@
+.header {
+  grid-area: h;
+  background-color: #c1c6d7;
+  display: flex;
+}
+.header img {
+  height: 60%;
+  width: auto;
+  align-self: center;
+}
+
+/*# sourceMappingURL=Header.module.css.map */
