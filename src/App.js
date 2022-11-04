@@ -10,6 +10,7 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 
 import {Routes, Route} from "react-router-dom";
+import {GET_DIALOGS_actionCreator, GET_MESSAGES_actionCreator} from "./Redux/store";
 
 
 function App(props) {
@@ -19,8 +20,9 @@ function App(props) {
               <Nav/>
               <div className='app-wrapper-content'>
                   <Routes>
-                      <Route path="/profile" element={<Profile myPostPage={props.state.myPostPage}/>}/>
-                      <Route path='/dialogs/*' element={<Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                      <Route path="/profile" element={<Profile store={props.store}/>}/>
+                      <Route path='/dialogs/*' element={<Dialogs dialogs={props.store.dispatch(GET_DIALOGS_actionCreator())}
+                                                                 messages={props.store.dispatch(GET_MESSAGES_actionCreator())}/>}/>
                       <Route path='/news' element={<News/>}/>
                       <Route path='/music' element={<Music/>}/>
                       <Route path='/setting' element={<Settings/>}/>

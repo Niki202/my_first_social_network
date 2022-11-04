@@ -26,9 +26,11 @@ class Store {
     }
 
     addPost() {
-        this.posts.push({"id": this.posts.length + 1, "post": this.newTextPost, "likesCount": 0})
-        this.newTextPost = ''
-        renderDOM()
+        if (this.newTextPost !== '') {
+            this.posts.push({"id": this.posts.length + 1, "post": this.newTextPost, "likesCount": 0})
+            this.newTextPost = ''
+            renderDOM()
+        }
     }
 
     changeTextArea(text) {
@@ -47,14 +49,17 @@ class Store {
     getPosts() {
         return this.posts
     }
+
+    getNewTextPost(){
+        return this.newTextPost
+    }
 }
 
 
-// export const subscribe = (observer) => {
-//     renderDOM = observer
-// }
+export const subscribe = (observer) => {
+    renderDOM = observer
+}
 
-store = new Store()
+export let store = new Store()
 
-console.log(store.getMessages())
 // window.store = store

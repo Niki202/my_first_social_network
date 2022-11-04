@@ -1,5 +1,5 @@
 let renderDOM = () => {}
-export const state = {
+export const state_old = {
     "dialogsPage": {
         "dialogs": [
             {"id": 1, "name": "Dimych"},
@@ -28,14 +28,14 @@ export const state = {
 }
 
 function addPost() {
-    const text = state.myPostPage.newPostText
-    state.myPostPage.posts.push({"id": state.myPostPage.posts.length + 1, "post": text, "likesCount": 0})
-    state.myPostPage.newPostText = ''
+    const text = state_old.myPostPage.newPostText
+    state_old.myPostPage.posts.push({"id": state_old.myPostPage.posts.length + 1, "post": text, "likesCount": 0})
+    state_old.myPostPage.newPostText = ''
     renderDOM()
 }
 
 function changeTextArea(text){
-    state.myPostPage.newPostText = text
+    state_old.myPostPage.newPostText = text
     renderDOM()
 }
 
@@ -43,4 +43,4 @@ export const subscribe = (observer) => {
     renderDOM = observer
 }
 
-window.state = state
+window.state = state_old

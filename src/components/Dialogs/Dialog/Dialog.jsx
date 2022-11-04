@@ -2,7 +2,7 @@ import classes from "./Dialog.module.css";
 import {NavLink} from "react-router-dom";
 
 
-const activeClassName = (className) => className.isActive ? classes.active : undefined
+const activeClassName = (element) => element.isActive ? classes.active : undefined
 
 const Dialog = (props) => {
     // debugger;

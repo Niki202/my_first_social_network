@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 
-import {state, subscribe} from './Redux/state'
+import {store} from './Redux/store'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,13 +14,13 @@ const renderDOM = () => {
     root.render(
         <BrowserRouter>
             <React.StrictMode>
-                <App state={state}/>
+                <App store={store}/>
             </React.StrictMode>
         </BrowserRouter>
     );
 }
 renderDOM()
-subscribe(renderDOM)
+store.subscribe(renderDOM)
 export default renderDOM
 
 // If you want to start measuring performance in your app, pass a function
