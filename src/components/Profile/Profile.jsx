@@ -1,19 +1,14 @@
 import classes from './Profile.module.css'
-import Post from './Post/Post'
-import { NavLink } from "react-router-dom";
+import MyPosts from './MyPosts/MyPosts'
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
-const Profile = () => {
-  return(
-      <div className={classes.content}>
-        <div className={classes.pictWrapper}>
-            <img className={classes.img} src='https://99px.ru/sstorage/53/2021/09/mid_333252_961881.jpg' alt="logo"/>
+const Profile = (props) => {
+    return (
+        <div className={classes.content}>
+            <ProfileInfo myPostPage={props.myPostPage}/>
+            <MyPosts posts={props.myPostPage.posts}/>
         </div>
-        <div>ava + descriptions</div>
-        <div>My posts</div>
-        <div>New posts</div>
-        <Post message='Hello React!'/>
-        <Post message='This is my first social network!!!'/>
-      </div>
-  )
+)
 }
+
 export default Profile

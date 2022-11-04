@@ -1,0 +1,14 @@
+.dialog {
+  font-family: "Rubik Wet Paint", cursive;
+}
+.dialog .active {
+  color: chocolate;
+}
+.dialog a {
+  text-decoration: none;
+}
+.dialog a:hover {
+  color: coral;
+}
+
+/*# sourceMappingURL=Dialog.module.css.map */

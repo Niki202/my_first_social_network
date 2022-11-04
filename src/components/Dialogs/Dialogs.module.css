@@ -6,31 +6,16 @@
 .dialogs .dialogsItems {
   padding: 10px;
 }
-.dialogs .dialogsItems a {
-  text-decoration: none;
-}
-.dialogs .dialogsItems a:hover {
-  color: coral;
-}
-.dialogs .dialogsItems .dialog {
-  font-family: "Rubik Wet Paint", cursive;
-}
-.dialogs .dialogsItems .dialog.active {
-  color: gold;
-}
-.dialogs .dialogsItems .active {
-  color: chocolate;
-}
-.dialogs .messages {
+
+.messages {
   padding: 10px;
   display: flex;
   flex-direction: column;
 }
-.dialogs .messages .message {
+.messages .message {
   display: inline-block;
-  max-width: 200px;
-  border: solid 2px gray;
-  border-radius: 5px;
+  border-radius: 10px 0;
+  background-color: #c0c3d7;
   margin: 5px;
   padding: 5px;
   font-family: "Roboto", sans-serif;

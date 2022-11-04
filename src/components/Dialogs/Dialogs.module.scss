@@ -1,39 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap');
-.dialogs{
+
+.dialogs {
   display: grid;
   grid-template-columns: 3fr 10fr;
-  //color: red;
-  .dialogsItems{
-    padding: 10px;
-    a{
-      text-decoration: none;
-      &:hover{
-        color: coral;
-      }
-    }
-    .dialog{
-      font-family: 'Rubik Wet Paint', cursive;
-      &.active{
-        color: gold;
-      }
-    }
-    .active{
-      color: chocolate;
-    }
-  }
-  .messages{
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
 
-    .message{
-      display: inline-block;
-      max-width: 200px;
-      border: solid 2px gray;
-      border-radius: 5px;
-      margin: 5px;
-      padding: 5px;
-      font-family: "Roboto", sans-serif;
-    }
+  .dialogsItems {
+    padding: 10px;
   }
 }
+
+.messages {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .message {
+    display: inline-block;
+    //border: solid 2px gray;
+    border-radius: 10px 0;
+    background-color: #c0c3d7;
+    margin: 5px;
+    padding: 5px;
+    font-family: "Roboto", sans-serif;
+  }
+}
+
