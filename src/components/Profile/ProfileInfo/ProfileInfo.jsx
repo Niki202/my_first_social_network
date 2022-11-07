@@ -33,7 +33,7 @@ const ProfileInfo = (props) => {
                     <textarea value={props.store.dispatch(GET_NEW_TEXT_POST_actionCreator())} onChange={changeNewPost}/>
                 </div>
                 <div>
-                    <button
+                    <button className={classes.button}
                         onClick={addPost}>Add post
                     </button>
                 </div>

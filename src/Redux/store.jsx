@@ -1,16 +1,23 @@
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-TEXT-POST'
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 const GET_NEW_TEXT_POST = 'GET-NEW-TEXT-POST'
 const GET_DIALOGS = 'GET-DIALOGS'
 const GET_MESSAGES = 'GET-MESSAGES'
 const GET_POSTS = 'GET-POSTS'
+const GET_NEW_TEXT_MESSAGE = 'GET_NEW_TEXT_MESSAGE'
+const ADD_MESSAGE = 'ADD_MESSAGE'
 
 export const ADD_POST_actionCreator = () => ({type: ADD_POST})
-export const UPDATE_NEW_TEXT_POST_actionCreator = (text) => ({type: UPDATE_NEW_TEXT_POST, text: text})
+export const ADD_MESSAGE_actionCreator = (userId) => ({type: ADD_MESSAGE, userId: userId})
+export const UPDATE_NEW_TEXT_POST_actionCreator = (text) => ({'type': UPDATE_NEW_TEXT_POST, 'text': text})
+export const UPDATE_NEW_MESSAGE_TEXT_actionCreator = (text) => ({'type': UPDATE_NEW_MESSAGE_TEXT, 'text': text})
 export const GET_NEW_TEXT_POST_actionCreator = () => ({type: GET_NEW_TEXT_POST})
 export const GET_DIALOGS_actionCreator = () => ({type: GET_DIALOGS})
 export const GET_MESSAGES_actionCreator = () => ({type: GET_MESSAGES})
 export const GET_POSTS_actionCreator = () => ({type: GET_POSTS})
+export const GET_NEW_TEXT_MESSAGE_actionCreator = () => ({type: GET_NEW_TEXT_MESSAGE})
+
 
 export let store = {
     _state: {
@@ -23,10 +30,22 @@ export let store = {
                 {"id": 5, "name": "Vova"},
             ],
             "messages": [
-                {"id": 1, "message": "Hello!"},
-                {"id": 2, "message": "How are you?"},
-                {"id": 3, "message": "A'm fine!"},
-            ]
+                {userId: 1, userMessages: [
+                        {"id": 1, "message": "Hello!"},
+                        {"id": 2, "message": "How are you?"},
+                        {"id": 3, "message": "A'm fine!"},
+                        {"id": 4, "message": "Yo"},
+                        {"id": 5, "message": "WTF?"},]},
+                {userId: 2, userMessages: [
+                        {"id": 1, "message": "Blabla!"},
+                        {"id": 2, "message": "I'm andrew!"},]},
+                {userId: 3, userMessages: []},
+                {userId: 4, userMessages: []},
+                {userId: 5, userMessages: [
+                        {"id": 1, "message": "Blabla!"},
+                        {"id": 2, "message": "I'm Vovan!"},]},
+        ],
+            'newMessageText': ''
         },
         "myPostPage": {
             "posts": [
@@ -50,7 +69,6 @@ export let store = {
             this._state.myPostPage.newPostText = ''
             store.renderDOM()
         } else if (action.type === UPDATE_NEW_TEXT_POST) {
-            debugger
             this._state.myPostPage.newPostText = action.text
             store.renderDOM()
         } else if (action.type === GET_NEW_TEXT_POST){
@@ -61,7 +79,22 @@ export let store = {
             return this._state.dialogsPage.messages
         } else if (action.type === GET_POSTS) {
             return this._state.myPostPage.posts
+        } else if (action.type === GET_NEW_TEXT_MESSAGE) {
+            return this._state.dialogsPage.newMessageText
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+            this._state.dialogsPage.newMessageText = action.text
+            store.renderDOM()
+        } else if (action.type === ADD_MESSAGE) {
+            // console.log(action)
+            const index = this._state.dialogsPage.messages
+                .find((message) => message.userId === action.userId).userId - 1
+            this._state.dialogsPage.messages[index].userMessages.push({
+                id: this._state.dialogsPage.messages[index].userMessages.length + 1,
+                message: this._state.dialogsPage.newMessageText})
+            this._state.dialogsPage.newMessageText = ''
+            store.renderDOM()
         }
+
     }
 
 

@@ -1,4 +1,14 @@
-
+.messageList{
+  display: grid;
+  grid-template-rows: 1fr 30px;
+  grid-template-areas:
+  'm'
+  's';
+  height: 100%;
+}
+.messages{
+  grid-area: m;
+}
 .message {
   display: inline-block;
   //border: solid 2px gray;
@@ -7,6 +17,46 @@
   margin: 5px;
   padding: 5px;
   font-family: "Roboto", sans-serif;
+}
+.sendMessage{
+  grid-area: s;
+  display: flex;
+  flex-wrap: nowrap;
+  padding-bottom: 10px;
+  //padding-left: 10px;
+
+  input{
+    width: 85%;
+    border-radius: 50px 0 0 50px;
+    padding: 3px 10px;
+
+    &:hover{
+      outline: 2px solid #a2ace7;
+      outline-offset: -2px;
+    }
+    &:focus{
+      //box-shadow: 0 0 5px gray;
+      outline: 2px solid #a2ace7;
+      outline-offset: -2px;
+    }
+  }
+  .button{
+
+    transition: 0.2s;
+    border-radius: 0 15px 15px 0;
+    background-color: #a2ace7;
+    color: white;
+    padding: 3px 14px 3px 10px;
+    height: 100%;
+
+    &:active{
+      box-shadow: inset 0 0 3px black;
+    }
+    &:hover{
+      cursor: pointer;
+      background-color: #8c95cb;
+    }
+  }
 }
 
 

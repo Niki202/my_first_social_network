@@ -1,6 +1,7 @@
 import classes from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
+import {Route, Routes} from "react-router-dom";
 
 
 
@@ -8,10 +9,17 @@ import Message from "./Message/Message";
 const Dialogs = (props) => {
     // debugger;
     const dialogs = props.dialogs.map(dialog =>
-        <Dialog key={dialog.id.toString()} id={dialog.id} name={dialog.name}/>)
+        <Dialog key={dialog.id} id={dialog.id} name={dialog.name}/>)
 
-    const messages = props.messages.map(message =>
-        <Message key={message.id.toString()} message={message.message}/>)
+    const messages = props.messages.map(userMessages => {
+           return <Route path={userMessages.userId.toString()}
+                         key={userMessages.userId}
+                         element={<Message messages={userMessages.userMessages}
+                                           userId={userMessages.userId}
+                                           newTextMessage={props.newTextMessage}
+                                           dispatch={props.dispatch}/>}/>
+        }
+    )
 
   return(
       <div className={classes.dialogs}>
@@ -19,7 +27,9 @@ const Dialogs = (props) => {
               {dialogs}
           </div>
           <div className={classes.messages}>
-              {messages}
+              <Routes>
+                  {messages}
+              </Routes>
           </div>
       </div>
   )

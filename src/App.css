@@ -1,5 +1,8 @@
+@import 'nullstyle.css';
 .app-wrapper {
-  min-height: 100vh;
+  position: relative;
+  min-height: calc(100vh - 10px);
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
@@ -10,6 +13,8 @@
 }
 
 .app-wrapper-content {
+  position: relative;
+  height: 100%;
   grid-area: c;
   background-color: #ececec;
 }

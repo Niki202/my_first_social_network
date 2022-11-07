@@ -1,5 +1,6 @@
 .dialog {
   font-family: "Rubik Wet Paint", cursive;
+  margin-bottom: 5px;
 }
 .dialog .active {
   color: chocolate;
