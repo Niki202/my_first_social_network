@@ -8,6 +8,8 @@ const GET_POSTS = 'GET-POSTS'
 const GET_NEW_TEXT_MESSAGE = 'GET_NEW_TEXT_MESSAGE'
 const ADD_MESSAGE = 'ADD_MESSAGE'
 
+// dsdsdsd
+
 export const ADD_POST_actionCreator = () => ({type: ADD_POST})
 export const ADD_MESSAGE_actionCreator = (userId) => ({type: ADD_MESSAGE, userId: userId})
 export const UPDATE_NEW_TEXT_POST_actionCreator = (text) => ({'type': UPDATE_NEW_TEXT_POST, 'text': text})
