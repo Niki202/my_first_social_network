@@ -8,15 +8,15 @@ import {Route, Routes} from "react-router-dom";
 
 const Dialogs = (props) => {
     // debugger;
-    const dialogs = props.dialogs.map(dialog =>
+    const dialogs = props.dialogsPage.dialogs.map(dialog =>
         <Dialog key={dialog.id} id={dialog.id} name={dialog.name}/>)
 
-    const messages = props.messages.map(userMessages => {
+    const messages = props.dialogsPage.messages.map(userMessages => {
            return <Route path={userMessages.userId.toString()}
                          key={userMessages.userId}
                          element={<Message messages={userMessages.userMessages}
                                            userId={userMessages.userId}
-                                           newTextMessage={props.newTextMessage}
+                                           newTextMessage={props.dialogsPage.newMessageText}
                                            dispatch={props.dispatch}/>}/>
         }
     )

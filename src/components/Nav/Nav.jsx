@@ -8,7 +8,7 @@ import {NavLink} from "react-router-dom";
 //         return undefined
 //     }
 // }
-export const activeClassName = (className) => className.isActive ? classes.active : undefined
+export const activeClassName = (element) => element.isActive ? classes.active : undefined
 
 export const Nav = () => {
     return (

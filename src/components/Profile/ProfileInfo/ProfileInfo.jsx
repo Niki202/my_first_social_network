@@ -1,23 +1,22 @@
+import classes from './ProfileInfo.module.css'
 import {
-    UPDATE_NEW_TEXT_POST_actionCreator,
     ADD_POST_actionCreator,
     GET_NEW_TEXT_POST_actionCreator,
-} from "../../../Redux/store";
-
-import classes from './ProfileInfo.module.css'
+    UPDATE_NEW_TEXT_POST_actionCreator
+} from "../../../Redux/Posts-reducer";
 
 
 const ProfileInfo = (props) => {
     const addPost = () => {
         const action = ADD_POST_actionCreator()
-        props.store.dispatch(action)
+        props.dispatch(action)
     }
 
     const changeNewPost = () => {
         // debugger
         const text = document.getElementsByTagName("textarea")[0].value
         const action = UPDATE_NEW_TEXT_POST_actionCreator(text)
-        props.store.dispatch(action)
+        props.dispatch(action)
     }
 
     return (
@@ -30,7 +29,7 @@ const ProfileInfo = (props) => {
                 <div>ava + descriptions</div>
                 <div>My posts</div>
                 <div>
-                    <textarea value={props.store.dispatch(GET_NEW_TEXT_POST_actionCreator())} onChange={changeNewPost}/>
+                    <textarea value={props.newPostText} onChange={changeNewPost}/>
                 </div>
                 <div>
                     <button className={classes.button}

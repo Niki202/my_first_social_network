@@ -1,29 +1,11 @@
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-TEXT-POST'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
-const GET_NEW_TEXT_POST = 'GET-NEW-TEXT-POST'
-const GET_DIALOGS = 'GET-DIALOGS'
-const GET_MESSAGES = 'GET-MESSAGES'
-const GET_POSTS = 'GET-POSTS'
-const GET_NEW_TEXT_MESSAGE = 'GET_NEW_TEXT_MESSAGE'
-const ADD_MESSAGE = 'ADD_MESSAGE'
+import {dialogsReducer} from "./Dialogs-reducer";
+import {postsReducer} from "./Posts-reducer";
 
-// dsdsdsd
-
-export const ADD_POST_actionCreator = () => ({type: ADD_POST})
-export const ADD_MESSAGE_actionCreator = (userId) => ({type: ADD_MESSAGE, userId: userId})
-export const UPDATE_NEW_TEXT_POST_actionCreator = (text) => ({'type': UPDATE_NEW_TEXT_POST, 'text': text})
-export const UPDATE_NEW_MESSAGE_TEXT_actionCreator = (text) => ({'type': UPDATE_NEW_MESSAGE_TEXT, 'text': text})
-export const GET_NEW_TEXT_POST_actionCreator = () => ({type: GET_NEW_TEXT_POST})
-export const GET_DIALOGS_actionCreator = () => ({type: GET_DIALOGS})
-export const GET_MESSAGES_actionCreator = () => ({type: GET_MESSAGES})
-export const GET_POSTS_actionCreator = () => ({type: GET_POSTS})
-export const GET_NEW_TEXT_MESSAGE_actionCreator = () => ({type: GET_NEW_TEXT_MESSAGE})
 
 
 export let store = {
     _state: {
-        "dialogsPage": {
+        dialogsPage: {
             "dialogs": [
                 {"id": 1, "name": "Dimych"},
                 {"id": 2, "name": "Andrew"},
@@ -49,7 +31,7 @@ export let store = {
         ],
             'newMessageText': ''
         },
-        "myPostPage": {
+        myPostPage: {
             "posts": [
                 {"id": 1, "post": "Hello React!", "likesCount": 11},
                 {"id": 2, "post": "This is my first social network!!!", "likesCount": 12},
@@ -57,46 +39,16 @@ export let store = {
             "newPostText": '',
         }
     },
+    getState(){
+      return this._state
+    },
     subscribe(observer){
-        store.renderDOM = observer
+        this.renderDOM = observer
     },
     dispatch(action){
-        if (action.type === ADD_POST) {
-            const text = this._state.myPostPage.newPostText
-            this._state.myPostPage.posts.push({
-                "id": this._state.myPostPage.posts.length + 1,
-                "post": text,
-                "likesCount": 0
-            })
-            this._state.myPostPage.newPostText = ''
-            store.renderDOM()
-        } else if (action.type === UPDATE_NEW_TEXT_POST) {
-            this._state.myPostPage.newPostText = action.text
-            store.renderDOM()
-        } else if (action.type === GET_NEW_TEXT_POST){
-            return this._state.myPostPage.newPostText
-        } else if (action.type === GET_DIALOGS) {
-            return this._state.dialogsPage.dialogs
-        } else if (action.type === GET_MESSAGES) {
-            return this._state.dialogsPage.messages
-        } else if (action.type === GET_POSTS) {
-            return this._state.myPostPage.posts
-        } else if (action.type === GET_NEW_TEXT_MESSAGE) {
-            return this._state.dialogsPage.newMessageText
-        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-            this._state.dialogsPage.newMessageText = action.text
-            store.renderDOM()
-        } else if (action.type === ADD_MESSAGE) {
-            // console.log(action)
-            const index = this._state.dialogsPage.messages
-                .find((message) => message.userId === action.userId).userId - 1
-            this._state.dialogsPage.messages[index].userMessages.push({
-                id: this._state.dialogsPage.messages[index].userMessages.length + 1,
-                message: this._state.dialogsPage.newMessageText})
-            this._state.dialogsPage.newMessageText = ''
-            store.renderDOM()
-        }
-
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+        this._state.myPostPage = postsReducer(this._state.myPostPage, action)
+        this.renderDOM()
     }
 
 

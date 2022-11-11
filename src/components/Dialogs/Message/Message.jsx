@@ -1,5 +1,5 @@
 import classes from './Message.module.css'
-import {UPDATE_NEW_MESSAGE_TEXT_actionCreator, ADD_MESSAGE_actionCreator} from "../../../Redux/store";
+import {ADD_MESSAGE_actionCreator, UPDATE_NEW_MESSAGE_TEXT_actionCreator} from "../../../Redux/Dialogs-reducer";
 
 
 const Message = (props) => {
