@@ -34,17 +34,26 @@ const initialState = {
 export const dialogsReducer = (state=initialState, action) => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT:
-            state.newMessageText = action.text
-            return state
+            const stateCopy = {...state}
+            stateCopy.newMessageText = action.text
+            return stateCopy
         case ADD_MESSAGE:
+            // Если сообщение не пустое
             if (state.newMessageText !== '') {
-                const index = state.messages
+                // Создаем поверхностную копию state
+                const stateCopy = {...state}
+                // Создаем копию списка messages внутри stateCopy
+                // Получаем индекс объекта в списке сообщений относящийся к нужному userId
+                const index = stateCopy.messages
                     .find((message) => message.userId === action.userId).userId - 1
-                state.messages[index].userMessages.push({
+                // Добавляем сообщение в список с нужным индексом
+                stateCopy.messages[index].userMessages.push({
+                    // Id ставим как длину списка сообщений + 1
                     id: state.messages[index].userMessages.length + 1,
                     message: state.newMessageText
                 })
-                state.newMessageText = ''
+                stateCopy.newMessageText = ''
+                return stateCopy
             }
             return state
         default:

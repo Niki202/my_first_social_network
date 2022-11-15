@@ -7,7 +7,7 @@ import {Route, Routes} from "react-router-dom";
 
 
 const Dialogs = (props) => {
-    debugger
+    // debugger
     const dialogs = props.dialogs.map(dialog =>
         <Dialog key={dialog.id} id={dialog.id} name={dialog.name}/>)
 
