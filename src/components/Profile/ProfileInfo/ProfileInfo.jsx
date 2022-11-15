@@ -1,22 +1,15 @@
 import classes from './ProfileInfo.module.css'
-import {
-    ADD_POST_actionCreator,
-    GET_NEW_TEXT_POST_actionCreator,
-    UPDATE_NEW_TEXT_POST_actionCreator
-} from "../../../Redux/Posts-reducer";
-
 
 const ProfileInfo = (props) => {
     const addPost = () => {
-        const action = ADD_POST_actionCreator()
-        props.dispatch(action)
+        props.addPost()
     }
 
-    const changeNewPost = () => {
+    const changeNewPost = (event) => {
         // debugger
-        const text = document.getElementsByTagName("textarea")[0].value
-        const action = UPDATE_NEW_TEXT_POST_actionCreator(text)
-        props.dispatch(action)
+        const text = event.target.value
+        // const text = document.getElementsByTagName("textarea")[0].value
+        props.changeNewPost(text)
     }
 
     return (

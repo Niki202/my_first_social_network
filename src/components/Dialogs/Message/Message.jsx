@@ -13,10 +13,11 @@ const Message = (props) => {
     })
     const setNewTextMessage = () => {
         const text_value = document.getElementById("input_message").value
-        props.dispatch(UPDATE_NEW_MESSAGE_TEXT_actionCreator(text_value))
+        props.setNewTextMessage(text_value)
     }
     const addMessage = () => {
-        props.dispatch(ADD_MESSAGE_actionCreator(props.userId))
+        props.addMessage(props.userId)
+        document.getElementById('input_message').value = ''
     }
 
   return(

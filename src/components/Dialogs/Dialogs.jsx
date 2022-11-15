@@ -7,17 +7,19 @@ import {Route, Routes} from "react-router-dom";
 
 
 const Dialogs = (props) => {
-    // debugger;
-    const dialogs = props.dialogsPage.dialogs.map(dialog =>
+    debugger
+    const dialogs = props.dialogs.map(dialog =>
         <Dialog key={dialog.id} id={dialog.id} name={dialog.name}/>)
 
-    const messages = props.dialogsPage.messages.map(userMessages => {
+    const messages = props.messages.map(userMessages => {
            return <Route path={userMessages.userId.toString()}
                          key={userMessages.userId}
                          element={<Message messages={userMessages.userMessages}
                                            userId={userMessages.userId}
-                                           newTextMessage={props.dialogsPage.newMessageText}
-                                           dispatch={props.dispatch}/>}/>
+                                           newTextMessage={props.newMessageText}
+                                           dispatch={props.dispatch}
+                                           setNewTextMessage={props.setNewTextMessage}
+                                           addMessage={props.addMessage}/>}/>
         }
     )
 

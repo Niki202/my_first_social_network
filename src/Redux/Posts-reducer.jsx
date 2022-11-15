@@ -12,22 +12,34 @@ const initialState = {
     "newPostText": '',
 }
 
+
 export const postsReducer = (state=initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             if (state.newPostText !== '') {
+                // Сохраняем в переменную переданный в action текст
                 const text = state.newPostText
-                state.posts.push({
+                // Делаем поверхностную копию state
+                const stateCopy = {...state}
+                // Внутри копии state делаем копию массива posts
+                stateCopy.posts = [...state.posts]
+                // Добавляем в массив state.posts новый пост
+                stateCopy.posts.push({
                     "id": state.posts.length + 1,
                     "post": text,
                     "likesCount": 0
                 })
-                state.newPostText = ''
+                // Обнуляем переменную с текстом поста
+                stateCopy.newPostText = ''
+                // Возвращаем копию state с изменениями
+                return stateCopy
+            } else {
+                return state
             }
-            return state
         case UPDATE_NEW_TEXT_POST:
-            state.newPostText = action.text
-            return state
+            const stateCopy = {...state}
+            stateCopy.newPostText = action.text
+            return stateCopy
         default:
             return state
     }
