@@ -10,23 +10,17 @@ import {Provider} from "react-redux";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const renderDOM = () => {
+root.render(
+    <BrowserRouter>
+        <Provider store={store}>
+            <React.StrictMode>
+                <App store={store}/>
+            </React.StrictMode>
+        </Provider>
+    </BrowserRouter>
+);
 
-    // console.log(store)
 
-    root.render(
-        <BrowserRouter>
-            <Provider store={store}>
-                <React.StrictMode>
-                    <App store={store}/>
-                </React.StrictMode>
-            </Provider>
-        </BrowserRouter>
-    );
-}
-renderDOM()
-store.subscribe(renderDOM)
-export default renderDOM
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
