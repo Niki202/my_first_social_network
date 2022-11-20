@@ -1,4 +1,4 @@
-import logo from "../../img/Logo.svg";
+import logo from "../../assets/images/Logo.svg";
 import classes from "./Header.module.css";
 
 const Header = () => {

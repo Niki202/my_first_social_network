@@ -34,9 +34,9 @@ const initialState = {
 export const dialogsReducer = (state=initialState, action) => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_TEXT:
-            const stateCopy = {...state}
-            stateCopy.newMessageText = action.text
-            return stateCopy
+            // Возвращаем копию state и изменяем в ней newMessageText на тот что пришел в action
+            return {...state,
+            newMessageText: action.text}
         case ADD_MESSAGE:
             // Если сообщение не пустое
             if (state.newMessageText !== '') {

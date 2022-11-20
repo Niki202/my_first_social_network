@@ -1,5 +1,5 @@
 import classes from './Post.module.css'
-import ava from './../../../../img/Ava.webp'
+import ava from '../../../../assets/images/Ava.webp'
 
 const Post = (props) => {
 
