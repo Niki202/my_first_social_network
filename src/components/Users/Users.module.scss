@@ -1,5 +1,18 @@
+.paginationWrapper{
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  a{
+    margin: 0 5px;
+  }
+}
+.selected{
+  font-weight: bold;
+  font-size: 1.2em;
+  color: chocolate;
+}
 .button{
-  color: red;
+  color: #ffffff;
   background-color: #9da5d2;
   padding: 5px;
   margin: 5px;
@@ -20,6 +33,7 @@
     img{
       max-width: 100%;
       height: auto;
+      border-radius: 50%;
     }
   }
   .description{

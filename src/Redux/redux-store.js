@@ -6,7 +6,7 @@ import {usersReducer} from "./Users-reducer";
 const reducers = combineReducers({
     myPostPage: postsReducer,
     dialogsPage: dialogsReducer,
-    users: usersReducer
+    usersPage: usersReducer
 })
 
 export const store = legacy_createStore(reducers)

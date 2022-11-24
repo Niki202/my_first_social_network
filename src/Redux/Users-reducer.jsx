@@ -1,26 +1,21 @@
-export const SET_USERS = 'SET_USERS'
-export const FOLLOW = 'FOLLOW'
-export const UNFOLLOW = 'UNFOLLOW'
+const SET_USERS = 'SET_USERS'
+const FOLLOW = 'FOLLOW'
+const UNFOLLOW = 'UNFOLLOW'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS = 'SET_TOTAL_USERS'
 
 
-export const SET_USERS_AC = (users) => ({type: SET_USERS, users: users})
-export const FOLLOW_AC = (userId) => ({type: FOLLOW, userId: userId})
-export const UNFOLLOW_AC = (userId) => ({type: UNFOLLOW, userId: userId})
+export const SET_USERS_AC = (users) => ({type: SET_USERS, users})
+export const FOLLOW_AC = (userId) => ({type: FOLLOW, userId})
+export const UNFOLLOW_AC = (userId) => ({type: UNFOLLOW, userId})
+export const SET_CURRENT_PAGE_AC = (page) => ({type: SET_CURRENT_PAGE, page})
+export const SET_TOTAL_USERS_AC = (totalUsersInt) => ({type: SET_TOTAL_USERS, totalUsersInt})
 
 const initialState = {
-    "users": [
-        {
-            "name": "",
-            "id": 26766,
-            "uniqueUrlName": null,
-            "photos": {
-                "small": null,
-                "large": null
-            },
-            "status": null,
-            "followed": false
-        }
-    ]
+    "users": [],
+    "pageSize": 5,
+    "totalUsers": 0,
+    "currentPage": 1,
 }
 
 
@@ -37,6 +32,12 @@ export const usersReducer = (state=initialState, action) => {
             return {...state,
             users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u
             )}
+        case SET_CURRENT_PAGE:
+            return {...state,
+            currentPage: action.page}
+        case SET_TOTAL_USERS:
+            return {...state,
+            totalUsers: action.totalUsersInt}
         default:
             return state
     }

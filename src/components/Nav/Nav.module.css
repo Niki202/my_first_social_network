@@ -14,7 +14,8 @@
   color: gold;
 }
 .nav .active {
-  color: gold;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=Nav.module.css.map */

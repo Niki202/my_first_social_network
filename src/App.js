@@ -28,7 +28,7 @@ function App(props) {
                            element={<DialogsContainer store={props.store}/>}/>
                     <Route path='/news' element={<News/>}/>
                     <Route path='/music' element={<Music/>}/>
-                    <Route path='/users' element={<UsersContainer/>}/>
+                    <Route path='/users/*' element={<UsersContainer/>}/>
                     <Route path='/setting' element={<Settings/>}/>
                 </Routes>
             </div>
