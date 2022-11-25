@@ -17,6 +17,7 @@ import UsersContainer from "./components/Users/UsersContainer";
 function App(props) {
     // console.log(props.store)
     // debugger
+    window.state = props.store.getState()
     return (
         <div className="app-wrapper">
             <Header/>

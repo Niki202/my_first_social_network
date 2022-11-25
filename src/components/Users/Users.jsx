@@ -21,7 +21,7 @@ export const Users = (props) => {
                     return (
                         <NavLink
                             className={page === props.currentPage && classes.selected}
-                            key={page.toString()} to={`users/${page}`}
+                            key={page.toString()} to={`/users/${page}`}
                             onClick={() => props.onPageClicked(page)}>
                             {page}
                         </NavLink>
