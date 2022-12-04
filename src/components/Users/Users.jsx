@@ -12,7 +12,7 @@ export const Users = (props) => {
     const startPage = props.currentPage - 6 < 0 ? 0 : props.currentPage - 6
     const endPage = props.currentPage + 5 > props.totalUsers ? props.totalUsers : props.currentPage + 5
     const slicePages = pages.slice(startPage, endPage)
-    pages = [slicePages.indexOf(1) === -1 && 1 , ...slicePages, slicePages.indexOf(pagesCount) === -1 && pagesCount]
+    pages = [slicePages.indexOf(1) === -1 && 1, ...slicePages, slicePages.indexOf(pagesCount) === -1 && pagesCount]
     return (
         <>
             <div className={classes.paginationWrapper}>
@@ -25,14 +25,16 @@ export const Users = (props) => {
                             onClick={() => props.onPageClicked(page)}>
                             {page}
                         </NavLink>
-                    )})}
+                    )
+                })}
             </div>
             <div>
                 {props.users.map(u => {
                     return (<div className={classes.user} key={u.id}>
                         <div className={classes.image}>
                             {/*Если ссылки на фото нет в объекте то вставляем универсальную картинку авы*/}
-                            <img src={u.photos.small != null ? u.photos.small : avaImage} alt="avatarImage"/>
+                            <NavLink to={`/profile/${u.id}`}><img src={u.photos.small != null ? u.photos.small : avaImage}
+                                          alt="avatarImage"/></NavLink>
                         </div>
                         <div className={classes.description}>
                             <div>{u.name}</div>

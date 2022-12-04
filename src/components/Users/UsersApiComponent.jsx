@@ -8,7 +8,6 @@ import {Users} from "./Users";
 export class UserApiComponent extends React.Component {
     // Этод метод срабатывает после отрисовки компоненты
     componentDidMount() {
-        console.log(this.props.isFetching)
         this.props.setIsFetching(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data.items);

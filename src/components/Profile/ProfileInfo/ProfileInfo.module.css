@@ -1,3 +1,33 @@
+.profile_descriptions {
+  display: flex;
+}
+.profile_descriptions .avatar_wrapper {
+  width: 200px;
+  height: 200px;
+}
+.profile_descriptions .avatar_wrapper img {
+  width: 100%;
+  height: auto;
+}
+.profile_descriptions .text {
+  padding: 5px 15px;
+}
+.profile_descriptions .text .name {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.profile_descriptions .text .about {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.profile_descriptions .text .job .jobTrue {
+  color: #28A745;
+}
+.profile_descriptions .text .job .jobFalse {
+  color: brown;
+}
+
 .info {
   padding: 10px;
 }

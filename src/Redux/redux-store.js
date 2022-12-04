@@ -1,10 +1,10 @@
 import {combineReducers, legacy_createStore} from "redux";
-import {postsReducer} from "./Posts-reducer";
+import {profileReducer} from "./ProfileReducer";
 import {dialogsReducer} from "./Dialogs-reducer";
 import {usersReducer} from "./Users-reducer";
 
 const reducers = combineReducers({
-    myPostPage: postsReducer,
+    myPostPage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer
 })

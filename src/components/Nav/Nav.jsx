@@ -14,7 +14,7 @@ export const Nav = () => {
     return (
         <nav className={classes.nav}>
             <div>
-                <NavLink to='/profile' className={activeClassName}>Profile</NavLink>
+                <NavLink to='/profile/2' className={activeClassName}>Profile</NavLink>
             </div>
             <div>
                 <NavLink to='/dialogs' className={activeClassName}>Message</NavLink>

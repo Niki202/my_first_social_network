@@ -1,5 +1,5 @@
 import {dialogsReducer} from "./Dialogs-reducer";
-import {postsReducer} from "./Posts-reducer";
+import {profileReducer} from "./ProfileReducer";
 
 
 
@@ -47,7 +47,7 @@ export let store = {
     },
     dispatch(action){
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._state.myPostPage = postsReducer(this._state.myPostPage, action)
+        this._state.myPostPage = profileReducer(this._state.myPostPage, action)
         this.renderDOM()
     }
 

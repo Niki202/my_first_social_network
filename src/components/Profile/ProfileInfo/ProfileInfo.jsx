@@ -1,4 +1,5 @@
 import classes from './ProfileInfo.module.css'
+import avaImage from '../../../assets/images/Ava.webp'
 
 const ProfileInfo = (props) => {
     const addPost = () => {
@@ -6,9 +7,7 @@ const ProfileInfo = (props) => {
     }
 
     const changeNewPost = (event) => {
-        // debugger
         const text = event.target.value
-        // const text = document.getElementsByTagName("textarea")[0].value
         props.changeNewPost(text)
     }
 
@@ -19,14 +18,33 @@ const ProfileInfo = (props) => {
                      alt="logo"/>
             </div>
             <div className={classes.info}>
-                <div>ava + descriptions</div>
+                <div className={classes.profile_descriptions}>
+                    <div className={classes.avatar_wrapper}>
+                        <img src={props.profile.photos.large === null
+                            ? avaImage
+                            : props.profile.photos.large} alt="avatar"/>
+                    </div>
+                    <div className={classes.text}>
+                        <div className={classes.name}>
+                            {props.profile.fullName}
+                        </div>
+                        <div className={classes.about}>
+                            {props.profile.aboutMe}
+                        </div>
+                        <div className={classes.job}>
+                            <span className={props.profile.lookingForAJob ? classes.jobTrue : classes.jobFalse}>
+                                {props.profile.lookingForAJob ? 'Ищу работу: ' + props.profile.lookingForAJobDescription : 'Не ищу работу'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
                 <div>My posts</div>
                 <div>
                     <textarea value={props.newPostText} onChange={changeNewPost}/>
                 </div>
                 <div>
                     <button className={classes.button}
-                        onClick={addPost}>Add post
+                            onClick={addPost}>Add post
                     </button>
                 </div>
             </div>
