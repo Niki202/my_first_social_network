@@ -1,12 +1,12 @@
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-TEXT-POST'
 const SET_PROFILE = 'SET-PROFILE'
-const SET_IS_FETCHING = 'SET_IS_FETCHING'
+const SET_IS_FETCHING_PROFILE = 'SET_IS_FETCHING_PROFILE'
 
 export const addPost = () => ({type: ADD_POST})
 export const changeNewPost = (text) => ({'type': UPDATE_NEW_TEXT_POST, 'text': text})
 export const setProfile = (profileInfo) => ({type: SET_PROFILE, profileInfo})
-export const setIsFetching = (value) => ({type: SET_PROFILE, value})
+export const setIsFetchingProfile = (value) => ({type: SET_IS_FETCHING_PROFILE, value})
 
 const initialState = {
     "posts": [
@@ -34,7 +34,7 @@ const initialState = {
             "large": ""
     }
 },
-    isFetching: true,
+    isFetchingProfile: true,
     "newPostText": '',
 }
 
@@ -69,9 +69,9 @@ export const profileReducer = (state=initialState, action) => {
         case SET_PROFILE:
             return {...state,
             profileInfo: action.profileInfo}
-        case SET_IS_FETCHING:
+        case SET_IS_FETCHING_PROFILE:
             return {...state,
-            isFetching: action.value}
+            isFetchingProfile: action.value}
         default:
             return state
     }

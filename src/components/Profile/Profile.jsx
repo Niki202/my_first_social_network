@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import React from "react";
 import axios from "axios";
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
-import {setIsFetching} from "../../Redux/Users-reducer";
+import {setIsFetchingProfile} from "../../Redux/ProfileReducer";
 import {Preloader} from "../Common/Preloader/Preloader";
 
 
@@ -16,7 +16,7 @@ class Profile extends React.Component {
         const userId = this.props.router.params.userId
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
             this.props.setProfile(response.data)
-            this.props.setIsFetching(false)
+            this.props.setIsFetchingProfile(false)
             console.log(this.props)
         })
 
@@ -25,7 +25,7 @@ class Profile extends React.Component {
     render() {
         return (
             <>
-                {this.props.isFetching
+                {this.props.isFetchingProfile
                     ? <Preloader/>
                     : <div className={classes.content}>
                         <ProfileInfo changeNewPost={this.props.changeNewPost}
@@ -62,11 +62,11 @@ const mapStateToProps = (state) => {
         newPostText: state.myPostPage.newPostText,
         posts: state.myPostPage.posts,
         profileInfo: state.myPostPage.profileInfo,
-        isFetching: state.myPostPage.isFetching,
+        isFetchingProfile: state.myPostPage.isFetchingProfile,
     })
 }
 
-const mapDispatchToProps = {addPost, changeNewPost, setProfile, setIsFetching}
+const mapDispatchToProps = {addPost, changeNewPost, setProfile, setIsFetchingProfile}
 
 
 const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(Profile))
