@@ -1,12 +1,12 @@
 import classes from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {addPost, changeNewPost, setProfile} from "../../Redux/ProfileReducer";
+import {addPost, changeNewPost, setProfile} from "../../Redux/Profile-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import axios from "axios";
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
-import {setIsFetchingProfile} from "../../Redux/ProfileReducer";
+import {setIsFetchingProfile} from "../../Redux/Profile-reducer";
 import {Preloader} from "../Common/Preloader/Preloader";
 
 

@@ -1,5 +1,5 @@
 import {combineReducers, legacy_createStore} from "redux";
-import {profileReducer} from "./ProfileReducer";
+import {profileReducer} from "./Profile-reducer";
 import {dialogsReducer} from "./Dialogs-reducer";
 import {usersReducer} from "./Users-reducer";
 import {authReducer} from "./auth-reducer";

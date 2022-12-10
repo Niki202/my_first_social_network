@@ -3,7 +3,7 @@ import React from "react";
 import {setUserAuthData} from "../../Redux/auth-reducer";
 import {connect} from "react-redux";
 import axios from "axios";
-import {setIsFetchingProfile} from "../../Redux/ProfileReducer";
+import {setIsFetchingProfile} from "../../Redux/Profile-reducer";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
@@ -11,15 +11,18 @@ class HeaderContainer extends React.Component {
             if(response.data.resultCode === 0){
                 let {id, email, login} = response.data.data
                 this.props.setUserAuthData(id, email, login);
-                this.props.setIsFetchingProfile(true)
+                // this.props.setIsFetchingProfile(true)
             }
 
         })
     }
+    onClickLogin() {
+        this.props.setIsFetchingProfile(true)
+    }
 
     render() {
         return (
-            <Header {...this.props}/>
+            <Header {...this.props} onClickLogin={this.onClickLogin}/>
         )
     }
 }

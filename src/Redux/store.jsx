@@ -1,5 +1,5 @@
 import {dialogsReducer} from "./Dialogs-reducer";
-import {profileReducer} from "./ProfileReducer";
+import {profileReducer} from "./Profile-reducer";
 
 
 

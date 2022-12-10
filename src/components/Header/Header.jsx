@@ -10,10 +10,10 @@ const Header = (props) => {
             </div>
             <div>
                 {props.isAuth
-                ? <NavLink to={`/profile/${props.userId}`}>
+                    ? <NavLink to={`/profile/${props.userId}`} onClick={() => props.onClickLogin()}>
                         {props.login}
                     </NavLink>
-                : 'Login'}
+                    : <NavLink to={'/login'} onClick={() => {props.onClickLogin()}}>Login</NavLink>}
             </div>
         </header>
     )
