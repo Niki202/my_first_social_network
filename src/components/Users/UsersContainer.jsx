@@ -1,6 +1,7 @@
 import {UserApiComponent} from "./UsersApiComponent";
 import {
-    follow,
+    addButtonToDisabled,
+    follow, removeButtonFromDisabled,
     setCurrentPage,
     setIsFetching,
     setTotalUsers,
@@ -17,11 +18,12 @@ const mapStateToProps = (state) => {
         totalUsers: state.usersPage.totalUsers,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        buttonsIsDisabled: state.usersPage.buttonsIsDisabled,
     })
 }
 
 const mapDispatchToProps = {
-    setUsers, follow, unfollow, setCurrentPage, setTotalUsers, setIsFetching
+    setUsers, follow, unfollow, setCurrentPage, setTotalUsers, setIsFetching, addButtonToDisabled, removeButtonFromDisabled
 }
 
 

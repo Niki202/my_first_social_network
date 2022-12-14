@@ -2,6 +2,7 @@ import classes from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import avaImage from "../../assets/images/Ava.webp";
 import React from "react";
+import {followUser, unfollowUser} from "../../api/api";
 
 export const Users = (props) => {
     const pagesCount = Math.ceil(props.totalUsers / props.pageSize)
@@ -40,9 +41,25 @@ export const Users = (props) => {
                             <div>{u.name}</div>
                             {/*подставляем разные кнопки в зависимости от значения followed в объекте*/}
                             {u.followed
-                                ? <button onClick={() => props.unfollow(u.id)}
+                                ? <button disabled={props.buttonsIsDisabled.some(id => id === u.id)} onClick={() => {
+                                    props.addButtonToDisabled(u.id)
+                                    unfollowUser(u.id).then(resultCode => {
+                                        if (resultCode === 0) {
+                                            props.unfollow(u.id)
+                                        }
+                                        props.removeButtonFromDisabled(u.id)
+                                    })
+                                }}
                                           className={classes.button}>Unfollow</button>
-                                : <button onClick={() => props.follow(u.id)}
+                                : <button disabled={props.buttonsIsDisabled.some(id => id === u.id)} onClick={() => {
+                                    props.addButtonToDisabled(u.id)
+                                    followUser(u.id).then(resultCode => {
+                                        if (!resultCode) {
+                                            props.follow(u.id)
+                                        }
+                                        props.removeButtonFromDisabled(u.id)
+                                    })
+                                }}
                                           className={classes.button}>Follow</button>}
                         </div>
                     </div>)
