@@ -1,5 +1,7 @@
 import classes from './Nav.module.css'
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
+import {setMyProfileInAuth} from "../../Redux/Profile-reducer";
 
 // const activeClassName = (navData) => {
 //     if (navData.isActive === true){
@@ -10,11 +12,15 @@ import {NavLink} from "react-router-dom";
 // }
 export const activeClassName = (element) => element.isActive ? classes.active : undefined
 
-export const Nav = () => {
+const Nav = (props) => {
     return (
         <nav className={classes.nav}>
             <div>
-                <NavLink to='/profile/2' className={activeClassName}>Profile</NavLink>
+                {props.isAuth
+                    ? <NavLink to={'/profile/' + props.userId}
+                               className={activeClassName}
+                               onClick={() => props.setMyProfile()}>Profile</NavLink>
+                    : <NavLink to='/login' className={activeClassName}>Profile</NavLink>}
             </div>
             <div>
                 <NavLink to='/dialogs' className={activeClassName}>Message</NavLink>
@@ -34,3 +40,9 @@ export const Nav = () => {
         </nav>
     )
 }
+const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth,
+    userId: state.auth.userId,
+})
+
+export const NavContainer = connect(mapStateToProps, {setMyProfile: setMyProfileInAuth})(Nav)

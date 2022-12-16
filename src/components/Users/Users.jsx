@@ -2,7 +2,6 @@ import classes from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import avaImage from "../../assets/images/Ava.webp";
 import React from "react";
-import {followUser, unfollowUser} from "../../api/api";
 
 export const Users = (props) => {
     const pagesCount = Math.ceil(props.totalUsers / props.pageSize)
@@ -34,32 +33,20 @@ export const Users = (props) => {
                     return (<div className={classes.user} key={u.id}>
                         <div className={classes.image}>
                             {/*Если ссылки на фото нет в объекте то вставляем универсальную картинку авы*/}
-                            <NavLink to={`/profile/${u.id}`}><img src={u.photos.small != null ? u.photos.small : avaImage}
-                                          alt="avatarImage"/></NavLink>
+                            <NavLink to={`/profile/${u.id}`}><img
+                                src={u.photos.small != null ? u.photos.small : avaImage}
+                                alt="avatarImage"/></NavLink>
                         </div>
                         <div className={classes.description}>
                             <div>{u.name}</div>
                             {/*подставляем разные кнопки в зависимости от значения followed в объекте*/}
                             {u.followed
-                                ? <button disabled={props.buttonsIsDisabled.some(id => id === u.id)} onClick={() => {
-                                    props.addButtonToDisabled(u.id)
-                                    unfollowUser(u.id).then(resultCode => {
-                                        if (resultCode === 0) {
-                                            props.unfollow(u.id)
-                                        }
-                                        props.removeButtonFromDisabled(u.id)
-                                    })
-                                }}
-                                          className={classes.button}>Unfollow</button>
-                                : <button disabled={props.buttonsIsDisabled.some(id => id === u.id)} onClick={() => {
-                                    props.addButtonToDisabled(u.id)
-                                    followUser(u.id).then(resultCode => {
-                                        if (!resultCode) {
-                                            props.follow(u.id)
-                                        }
-                                        props.removeButtonFromDisabled(u.id)
-                                    })
-                                }}
+                                ?
+                                <button disabled={props.buttonsIsDisabled.some(id => id === u.id)}
+                                        onClick={() => props.addUserToUnfollowed(u.id)}
+                                        className={classes.button}>Unfollow</button>
+                                : <button disabled={props.buttonsIsDisabled.some(id => id === u.id)}
+                                          onClick={() => props.addUserToFollowed(u.id)}
                                           className={classes.button}>Follow</button>}
                         </div>
                     </div>)

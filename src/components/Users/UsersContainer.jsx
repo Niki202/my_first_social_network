@@ -1,13 +1,5 @@
 import {UserApiComponent} from "./UsersApiComponent";
-import {
-    addButtonToDisabled,
-    follow, removeButtonFromDisabled,
-    setCurrentPage,
-    setIsFetching,
-    setTotalUsers,
-    setUsers,
-    unfollow
-} from "../../Redux/Users-reducer";
+import {addUserToFollowed, addUserToUnfollowed, getUsers} from "../../Redux/Users-reducer";
 import {connect} from "react-redux";
 
 
@@ -23,7 +15,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    setUsers, follow, unfollow, setCurrentPage, setTotalUsers, setIsFetching, addButtonToDisabled, removeButtonFromDisabled
+    addUserToFollowed,
+    addUserToUnfollowed,
+    getUsers
 }
 
 

@@ -1,25 +1,18 @@
 import classes from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {addPost, changeNewPost, setProfile} from "../../Redux/Profile-reducer";
+import {addPost, changeNewPost, getProfile} from "../../Redux/Profile-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import {useLocation, useNavigate, useParams} from 'react-router-dom'
-import {setIsFetchingProfile} from "../../Redux/Profile-reducer";
 import {Preloader} from "../Common/Preloader/Preloader";
-import {getUserProfile} from "../../api/api";
-
 
 class Profile extends React.Component {
 
     componentDidMount() {
-        const userId = this.props.router.params.userId
-        getUserProfile(userId).then(profile => {
-            this.props.setProfile(profile)
-            this.props.setIsFetchingProfile(false)
-        })
-
+        this.props.getProfile(this.props.router.params.userId)
     }
+
 
     render() {
         return (
@@ -41,7 +34,7 @@ class Profile extends React.Component {
 }
 // Функция обертка для добавления параметров route
 function withRouter(Component) {
-    function ComponentWithRouterProp(props) {
+    return (props) => {
         let location = useLocation();
         let navigate = useNavigate();
         let params = useParams();
@@ -52,8 +45,6 @@ function withRouter(Component) {
             />
         );
     }
-
-    return ComponentWithRouterProp;
 }
 
 const mapStateToProps = (state) => {
@@ -65,7 +56,7 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = {addPost, changeNewPost, setProfile, setIsFetchingProfile}
+const mapDispatchToProps = {addPost, changeNewPost, getProfile}
 
 
 const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(Profile))

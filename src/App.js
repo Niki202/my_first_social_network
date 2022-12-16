@@ -1,7 +1,7 @@
 import React from "react";
 // import logo from './logo.svg';
 import './App.css';
-import {Nav} from "./components/Nav/Nav";
+import {NavContainer} from "./components/Nav/Nav";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -14,13 +14,11 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 
 
 function App(props) {
-    // console.log(props.store)
-    // debugger
     window.state = props.store.getState()
     return (
         <div className="app-wrapper">
             <HeaderContainer/>
-            <Nav/>
+            <NavContainer/>
             <div className='app-wrapper-content'>
                 <Routes>
                     <Route path="/profile/:userId" element={<ProfileContainer/>}/>

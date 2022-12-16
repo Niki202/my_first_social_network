@@ -1,3 +1,5 @@
+import {getUserProfile} from "../api/api";
+
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-TEXT-POST'
 const SET_PROFILE = 'SET-PROFILE'
@@ -14,9 +16,9 @@ const initialState = {
         {"id": 2, "post": "This is my first social network!!!", "likesCount": 12},
     ],
     profileInfo: {
-    "aboutMe": "",
+        "aboutMe": "",
         "contacts": {
-        "facebook": "",
+            "facebook": "",
             "website": null,
             "vk": "",
             "twitter": "",
@@ -24,22 +26,22 @@ const initialState = {
             "youtube": null,
             "github": "",
             "mainLink": null
-    },
-    "lookingForAJob": true,
+        },
+        "lookingForAJob": null,
         "lookingForAJobDescription": "",
         "fullName": "",
         "userId": 2,
         "photos": {
-        "small": "",
+            "small": "",
             "large": ""
-    }
-},
+        }
+    },
     isFetchingProfile: true,
     "newPostText": '',
 }
 
 
-export const profileReducer = (state=initialState, action) => {
+export const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             if (state.newPostText !== '') {
@@ -67,12 +69,33 @@ export const profileReducer = (state=initialState, action) => {
             stateCopy.newPostText = action.text
             return stateCopy
         case SET_PROFILE:
-            return {...state,
-            profileInfo: action.profileInfo}
+            return {
+                ...state,
+                profileInfo: action.profileInfo
+            }
         case SET_IS_FETCHING_PROFILE:
-            return {...state,
-            isFetchingProfile: action.value}
+            return {
+                ...state,
+                isFetchingProfile: action.value
+            }
         default:
             return state
+    }
+}
+
+export const setMyProfileInAuth = () => {
+    return (dispatch, getState) => {
+        const myProfile = getState().auth.myProfile
+        dispatch(setProfile(myProfile))
+    }
+}
+
+export const getProfile = (userId) => {
+    return (dispatch) => {
+        dispatch(setIsFetchingProfile(true))
+        getUserProfile(userId).then(profile => {
+            dispatch(setProfile(profile))
+            dispatch(setIsFetchingProfile(false))
+        })
     }
 }

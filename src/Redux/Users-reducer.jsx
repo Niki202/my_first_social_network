@@ -1,3 +1,5 @@
+import {followUser, getUsersPage, unfollowUser} from "../api/api";
+
 const SET_USERS = 'SET_USERS'
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -57,5 +59,41 @@ export const usersReducer = (state=initialState, action) => {
             buttonsIsDisabled: state.buttonsIsDisabled.filter(id => id !== action.userId)}
         default:
             return state
+    }
+}
+// подписаться на юзера
+export const addUserToFollowed = (userId) => {
+    return (dispatch) => {
+        dispatch(addButtonToDisabled(userId));
+        followUser(userId).then(resultCode => {
+            if (resultCode === 0) {
+                dispatch(follow(userId))
+            }
+            dispatch(removeButtonFromDisabled(userId))
+        })
+    }
+}
+// отписаться на юзера
+export const addUserToUnfollowed = (userId) => {
+    return (dispatch) => {
+        dispatch(addButtonToDisabled(userId));
+        unfollowUser(userId).then(resultCode => {
+            if (resultCode === 0) {
+                dispatch(unfollow(userId))
+            }
+            dispatch(removeButtonFromDisabled(userId))
+        })
+    }
+}
+// загрузить юзеров на страницу с юзеров
+export const getUsers = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(setIsFetching(true))
+        getUsersPage(currentPage, pageSize).then(data => {
+            dispatch(setUsers(data.items))
+            dispatch(setTotalUsers(data.totalCount))
+            dispatch(setCurrentPage(currentPage))
+            dispatch(setIsFetching(false))
+        })
     }
 }

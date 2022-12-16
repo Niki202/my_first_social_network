@@ -1,6 +1,10 @@
-const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
+import {getAuthMe, getUserProfile} from "../api/api";
 
-export const setUserAuthData = (userId, email, login) => ({type: SET_USER_AUTH_DATA, userId, email, login})
+const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
+const SET_MY_PROFILE = 'SET_MY_PROFILE'
+
+const setUserAuthData = (userId, email, login) => ({type: SET_USER_AUTH_DATA, userId, email, login})
+const setMyProfile = (profile) => ({type: SET_MY_PROFILE, profile})
 
 
 const initialState = {
@@ -8,6 +12,27 @@ const initialState = {
     email: null,
     login: null,
     isAuth: false,
+    myProfile: {
+        aboutMe: null,
+        contacts: {
+            facebook: null,
+            website: null,
+            vk: null,
+            twitter: null,
+            instagram: null,
+            youtube: null,
+            github: null,
+            mainLink: null
+        },
+        lookingForAJob: null,
+        lookingForAJobDescription: null,
+        fullName: null,
+        userId: null,
+        photos: {
+            small: null,
+            large: null
+        }
+    }
 }
 
 export function authReducer (state=initialState, action) {
@@ -20,7 +45,24 @@ export function authReducer (state=initialState, action) {
                 login: action.login,
                 isAuth: true}
             )
+        case SET_MY_PROFILE:
+            return {...state,
+            myProfile: action.profile}
         default:
             return state
+    }
+}
+
+export const getAuthData = () => {
+
+    return (dispatch) => {
+        getAuthMe().then(data => {
+            const {id, email, login} = data
+            getUserProfile(id).then(data => {
+                dispatch(setUserAuthData(id, email, login))
+                dispatch(setMyProfile(data))
+            })
+
+        })
     }
 }
