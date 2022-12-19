@@ -7,6 +7,7 @@ import React from "react";
 import {Preloader} from "../Common/Preloader/Preloader";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {withRouter} from "../../HOC/withRouter";
+import {compose} from "redux";
 
 class Profile extends React.Component {
 
@@ -33,7 +34,6 @@ class Profile extends React.Component {
     }
 
 }
-// Функция обертка для добавления параметров route
 
 
 const mapStateToProps = (state) => {
@@ -45,9 +45,9 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = {addPost, changeNewPost, getProfile}
 
-
-const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(Profile))
-
-export default withAuthRedirect(ProfileContainer)
+export default compose(
+    connect(mapStateToProps, {addPost, changeNewPost, getProfile}),
+    withRouter,
+    withAuthRedirect,
+)(Profile)

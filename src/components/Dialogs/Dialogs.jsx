@@ -3,6 +3,9 @@ import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
 import {Route, Routes} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
+import {addMessage, setNewTextMessage} from "../../Redux/Dialogs-reducer";
+import {connect} from "react-redux";
+import {compose} from "redux";
 
 
 
@@ -22,9 +25,7 @@ const Dialogs = (props) => {
                                            addMessage={props.addMessage}/>}/>
         }
     )
-    // if (!props.isAuth) {
-    //     return <Navigate to={'/login'}/>
-    // }
+
 
   return(
       <div className={classes.dialogs}>
@@ -40,4 +41,18 @@ const Dialogs = (props) => {
   )
 }
 
-export default withAuthRedirect(Dialogs)
+const mapStateToProps = (state) => {
+    return({
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.messages,
+        newMessageText: state.dialogsPage.newMessageText,
+    })
+}
+
+// Compose компонует целевой компонент с разными хоками
+
+export default compose(
+    // Функция connect возвращает hoc
+    connect(mapStateToProps, {setNewTextMessage, addMessage}),
+    withAuthRedirect
+)(Dialogs)

@@ -8,10 +8,10 @@ import Settings from "./components/Settings/Settings";
 import Login from "./components/Login/Login"
 
 import {Routes, Route} from "react-router-dom";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import ProfileContainer from "./components/Profile/Profile";
-import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Dialogs from "./components/Dialogs/Dialogs";
+import UsersApiComponent from "./components/Users/UsersApiComponent";
 
 
 function App(props) {
@@ -23,10 +23,10 @@ function App(props) {
             <div className='app-wrapper-content'>
                 <Routes>
                     <Route path="/profile/:userId" element={<ProfileContainer/>}/>
-                    <Route path='/dialogs/*' element={<DialogsContainer/>}/>
+                    <Route path='/dialogs/*' element={<Dialogs/>}/>
                     <Route path='/news' element={<News/>}/>
                     <Route path='/music' element={<Music/>}/>
-                    <Route path='/users/*' element={<UsersContainer/>}/>
+                    <Route path='/users/*' element={<UsersApiComponent/>}/>
                     <Route path='/setting' element={<Settings/>}/>
                     <Route path='/login' element={<Login/>}/>
                 </Routes>
