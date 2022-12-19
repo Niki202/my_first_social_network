@@ -57,11 +57,13 @@ export const getAuthData = () => {
 
     return (dispatch) => {
         getAuthMe().then(data => {
-            const {id, email, login} = data
-            getUserProfile(id).then(data => {
-                dispatch(setUserAuthData(id, email, login))
-                dispatch(setMyProfile(data))
-            })
+            if (data) {
+                const {id, email, login} = data
+                getUserProfile(id).then(data => {
+                    dispatch(setUserAuthData(id, email, login))
+                    dispatch(setMyProfile(data))
+                })
+            }
 
         })
     }

@@ -2,12 +2,12 @@ import classes from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
 import {Route, Routes} from "react-router-dom";
+import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 
 
 
 
 const Dialogs = (props) => {
-    // debugger
     const dialogs = props.dialogs.map(dialog =>
         <Dialog key={dialog.id} id={dialog.id} name={dialog.name}/>)
 
@@ -22,6 +22,9 @@ const Dialogs = (props) => {
                                            addMessage={props.addMessage}/>}/>
         }
     )
+    // if (!props.isAuth) {
+    //     return <Navigate to={'/login'}/>
+    // }
 
   return(
       <div className={classes.dialogs}>
@@ -37,4 +40,4 @@ const Dialogs = (props) => {
   )
 }
 
-export default Dialogs
+export default withAuthRedirect(Dialogs)

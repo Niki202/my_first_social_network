@@ -4,8 +4,9 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {addPost, changeNewPost, getProfile} from "../../Redux/Profile-reducer";
 import {connect} from "react-redux";
 import React from "react";
-import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import {Preloader} from "../Common/Preloader/Preloader";
+import {withAuthRedirect} from "../../HOC/withAuthRedirect";
+import {withRouter} from "../../HOC/withRouter";
 
 class Profile extends React.Component {
 
@@ -33,19 +34,7 @@ class Profile extends React.Component {
 
 }
 // Функция обертка для добавления параметров route
-function withRouter(Component) {
-    return (props) => {
-        let location = useLocation();
-        let navigate = useNavigate();
-        let params = useParams();
-        return (
-            <Component
-                {...props}
-                router={{ location, navigate, params }}
-            />
-        );
-    }
-}
+
 
 const mapStateToProps = (state) => {
     return({
@@ -61,4 +50,4 @@ const mapDispatchToProps = {addPost, changeNewPost, getProfile}
 
 const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(Profile))
 
-export default ProfileContainer
+export default withAuthRedirect(ProfileContainer)

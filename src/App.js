@@ -5,6 +5,7 @@ import {NavContainer} from "./components/Nav/Nav";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
+import Login from "./components/Login/Login"
 
 import {Routes, Route} from "react-router-dom";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
@@ -27,6 +28,7 @@ function App(props) {
                     <Route path='/music' element={<Music/>}/>
                     <Route path='/users/*' element={<UsersContainer/>}/>
                     <Route path='/setting' element={<Settings/>}/>
+                    <Route path='/login' element={<Login/>}/>
                 </Routes>
             </div>
         </div>
