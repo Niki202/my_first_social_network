@@ -1,3 +1,7 @@
+.info {
+  padding: 10px;
+}
+
 .profile_descriptions {
   display: flex;
 }
@@ -28,8 +32,12 @@
   color: brown;
 }
 
-.info {
-  padding: 10px;
+.status {
+  padding: 20px;
+  font-size: 30px;
+}
+.status input {
+  font-size: 30px;
 }
 
 .img {

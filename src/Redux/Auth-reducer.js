@@ -1,10 +1,12 @@
-import {getAuthMe, getUserProfile} from "../api/api";
+import {getAuthMe, getStatus, getUserProfile} from "../api/api";
 
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
 const SET_MY_PROFILE = 'SET_MY_PROFILE'
+const SET_MY_STATUS = 'SET_MY_STATUS'
 
 const setUserAuthData = (userId, email, login) => ({type: SET_USER_AUTH_DATA, userId, email, login})
 const setMyProfile = (profile) => ({type: SET_MY_PROFILE, profile})
+const setMyStatus = (status) => ({type: SET_MY_STATUS, status})
 
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
     email: null,
     login: null,
     isAuth: false,
+    status: null,
     myProfile: {
         aboutMe: null,
         contacts: {
@@ -48,6 +51,9 @@ export function authReducer (state=initialState, action) {
         case SET_MY_PROFILE:
             return {...state,
             myProfile: action.profile}
+        case SET_MY_STATUS:
+            return {...state,
+            status: action.status}
         default:
             return state
     }
@@ -62,6 +68,9 @@ export const getAuthData = () => {
                 getUserProfile(id).then(data => {
                     dispatch(setUserAuthData(id, email, login))
                     dispatch(setMyProfile(data))
+                })
+                getStatus(id).then(status => {
+                    dispatch(setMyStatus(status))
                 })
             }
 

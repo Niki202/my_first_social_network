@@ -1,3 +1,6 @@
+.info{
+  padding: 10px;
+}
 
 .profile_descriptions{
   display: flex;
@@ -31,8 +34,12 @@
 
   }
 }
-.info{
-  padding: 10px;
+.status{
+  padding: 20px;
+  font-size: 30px;
+  input{
+    font-size: 30px;
+  }
 }
 
 .img {

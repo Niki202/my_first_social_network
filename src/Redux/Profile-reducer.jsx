@@ -1,14 +1,16 @@
-import {getUserProfile} from "../api/api";
+import {getStatus, getUserProfile, updateStatus} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_TEXT_POST = 'UPDATE-NEW-TEXT-POST'
 const SET_PROFILE = 'SET-PROFILE'
 const SET_IS_FETCHING_PROFILE = 'SET_IS_FETCHING_PROFILE'
+const SET_STATUS = 'SET_STATUS'
 
 export const addPost = () => ({type: ADD_POST})
 export const changeNewPost = (text) => ({'type': UPDATE_NEW_TEXT_POST, 'text': text})
 export const setProfile = (profileInfo) => ({type: SET_PROFILE, profileInfo})
 export const setIsFetchingProfile = (value) => ({type: SET_IS_FETCHING_PROFILE, value})
+export const setStatus = (status) => ({type: SET_STATUS, status})
 
 const initialState = {
     "posts": [
@@ -36,6 +38,7 @@ const initialState = {
             "large": ""
         }
     },
+    status: '',
     isFetchingProfile: true,
     "newPostText": '',
 }
@@ -78,15 +81,19 @@ export const profileReducer = (state = initialState, action) => {
                 ...state,
                 isFetchingProfile: action.value
             }
+        case SET_STATUS:
+            return {...state,
+            status: action.status}
         default:
             return state
     }
 }
 
-export const setMyProfileInAuth = () => {
+export const setMyProfileFromAuth = () => {
     return (dispatch, getState) => {
         const myProfile = getState().auth.myProfile
         dispatch(setProfile(myProfile))
+        dispatch(setStatus(getState().auth.status))
     }
 }
 
@@ -96,6 +103,22 @@ export const getProfile = (userId) => {
         getUserProfile(userId).then(profile => {
             dispatch(setProfile(profile))
             dispatch(setIsFetchingProfile(false))
+        })
+    }
+}
+
+export const getUserStatus = (userId) => (dispatch) => {
+    getStatus(userId).then(status => {
+        dispatch(setStatus(status))
+    })
+}
+
+export const updateMyStatus = (status) => (dispatch, getState) => {
+    if (status !== getState().myPostPage.status) {
+        updateStatus(status).then(resultCode => {
+            if (resultCode === 0) {
+                dispatch(setStatus(status))
+            }
         })
     }
 }

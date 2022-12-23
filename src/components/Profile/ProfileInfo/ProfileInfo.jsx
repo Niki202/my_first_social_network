@@ -1,16 +1,8 @@
 import classes from './ProfileInfo.module.css'
 import avaImage from '../../../assets/images/Ava.webp'
+import React from "react";
 
 const ProfileInfo = (props) => {
-    const addPost = () => {
-        props.addPost()
-    }
-
-    const changeNewPost = (event) => {
-        const text = event.target.value
-        props.changeNewPost(text)
-    }
-
     return (
         <>
             <div className={classes.pictWrapper}>
@@ -33,22 +25,37 @@ const ProfileInfo = (props) => {
                         </div>
                         <div className={classes.job}>
                             <span className={props.profile.lookingForAJob ? classes.jobTrue : classes.jobFalse}>
-                                {props.profile.lookingForAJob ? 'Ищу работу: ' + props.profile.lookingForAJobDescription : 'Не ищу работу'}
+                                {props.profile.lookingForAJob
+                                    ? 'Ищу работу: ' + props.profile.lookingForAJobDescription
+                                    : 'Не ищу работу'}
                             </span>
                         </div>
                     </div>
                 </div>
+                <div className={classes.status}>
+                    {!props.statusEditMode
+                        ? <span onDoubleClick={() => props.toggleStatusEditMode(props.userId)}>{props.status
+                            ? props.status
+                            : 'No status'}</span>
+                        : <input aria-selected={true}
+                                 onBlur={() => props.toggleStatusEditMode()}
+                                 onChange={props.changeStateStatus}
+                                 defaultValue={props.status}
+                                 autoFocus={true}/>}
+                </div>
                 <div>My posts</div>
                 <div>
-                    <textarea value={props.newPostText} onChange={changeNewPost}/>
+                    <textarea value={props.newPostText} onChange={props.changeNewPost}/>
                 </div>
                 <div>
                     <button className={classes.button}
-                            onClick={addPost}>Add post
+                            onClick={props.addPost}>Add post
                     </button>
                 </div>
             </div>
         </>
     )
 }
+
+
 export default ProfileInfo

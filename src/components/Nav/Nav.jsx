@@ -1,7 +1,7 @@
 import classes from './Nav.module.css'
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import {setMyProfileInAuth} from "../../Redux/Profile-reducer";
+import {setMyProfileFromAuth} from "../../Redux/Profile-reducer";
 
 // const activeClassName = (navData) => {
 //     if (navData.isActive === true){
@@ -45,4 +45,4 @@ const mapStateToProps = (state) => ({
     userId: state.auth.userId,
 })
 
-export const NavContainer = connect(mapStateToProps, {setMyProfile: setMyProfileInAuth})(Nav)
+export const NavContainer = connect(mapStateToProps, {setMyProfile: setMyProfileFromAuth})(Nav)

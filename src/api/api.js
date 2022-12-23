@@ -38,3 +38,18 @@ export function getAuthMe() {
 
     })
 }
+
+// Получить статус
+export function getStatus(userId) {
+    return instance.get(`profile/status/${userId}`).then(res => {
+        if (res.status === 200) {
+            return res.data
+        }
+
+    })
+}
+
+// Обновить статус
+export function updateStatus(status) {
+    return instance.put('profile/status', {status: status}).then(res => res.data.resultCode)
+}
