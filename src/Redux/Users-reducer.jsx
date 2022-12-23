@@ -25,7 +25,7 @@ const initialState = {
     totalUsers: 0,
     currentPage: 1,
     isFetching: true,
-    buttonsIsDisabled: []
+    buttonsIsDisabledArr: []
 }
 
 
@@ -53,10 +53,10 @@ export const usersReducer = (state=initialState, action) => {
             isFetching: action.value}
         case ADD_BUTTON_TO_DISABLED:
             return {...state,
-            buttonsIsDisabled: [...state.buttonsIsDisabled, action.userId]}
+            buttonsIsDisabled: [...state.buttonsIsDisabledArr, action.userId]}
         case REMOVE_BUTTON_FROM_DISABLED:
             return {...state,
-            buttonsIsDisabled: state.buttonsIsDisabled.filter(id => id !== action.userId)}
+            buttonsIsDisabled: state.buttonsIsDisabledArr.filter(id => id !== action.userId)}
         default:
             return state
     }

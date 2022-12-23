@@ -42,10 +42,10 @@ export const Users = (props) => {
                             {/*подставляем разные кнопки в зависимости от значения followed в объекте*/}
                             {u.followed
                                 ?
-                                <button disabled={props.buttonsIsDisabled.some(id => id === u.id)}
+                                <button disabled={props.buttonsIsDisabledArr.some(id => id === u.id)}
                                         onClick={() => props.addUserToUnfollowed(u.id)}
                                         className={classes.button}>Unfollow</button>
-                                : <button disabled={props.buttonsIsDisabled.some(id => id === u.id)}
+                                : <button disabled={props.buttonsIsDisabledArr.some(id => id === u.id)}
                                           onClick={() => props.addUserToFollowed(u.id)}
                                           className={classes.button}>Follow</button>}
                         </div>

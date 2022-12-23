@@ -1,8 +1,8 @@
 export const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 
-export const ADD_MESSAGE_actionCreator = (userId) => ({type: ADD_MESSAGE, userId: userId})
-export const UPDATE_NEW_MESSAGE_TEXT_actionCreator = (text) => ({'type': UPDATE_NEW_MESSAGE_TEXT, 'text': text})
+export const addMessage = (userId) => ({type: ADD_MESSAGE, userId: userId})
+export const setNewTextMessage = (text) => ({'type': UPDATE_NEW_MESSAGE_TEXT, 'text': text})
 
 const initialState = {
     "dialogs": [
