@@ -1,8 +1,6 @@
-export const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 
-export const addMessage = (userId) => ({type: ADD_MESSAGE, userId: userId})
-export const setNewTextMessage = (text) => ({'type': UPDATE_NEW_MESSAGE_TEXT, 'text': text})
+export const addMessage = (userId, message) => ({type: ADD_MESSAGE, userId, message})
 
 const initialState = {
     "dialogs": [
@@ -28,32 +26,21 @@ const initialState = {
                 {"id": 1, "message": "Blabla!"},
                 {"id": 2, "message": "I'm Vovan!"},]},
     ],
-    'newMessageText': ''
 }
 
 export const dialogsReducer = (state=initialState, action) => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_TEXT:
-            // Возвращаем копию state и изменяем в ней newMessageText на тот что пришел в action
-            return {...state,
-            newMessageText: action.text}
         case ADD_MESSAGE:
             // Если сообщение не пустое
-            if (state.newMessageText !== '') {
-                // Создаем поверхностную копию state
-                const stateCopy = {...state}
-                // Создаем копию списка messages внутри stateCopy
-                // Получаем индекс объекта в списке сообщений относящийся к нужному userId
-                const index = stateCopy.messages
-                    .find((message) => message.userId === action.userId).userId - 1
-                // Добавляем сообщение в список с нужным индексом
-                stateCopy.messages[index].userMessages.push({
-                    // Id ставим как длину списка сообщений + 1
-                    id: state.messages[index].userMessages.length + 1,
-                    message: state.newMessageText
+            if (action.message !== '') {
+                const messages = [...state.messages]
+                messages[action.userId - 1].userMessages.push({
+                    id: messages[action.userId - 1].userMessages.length + 1,
+                    message: action.message
                 })
-                stateCopy.newMessageText = ''
-                return stateCopy
+                return {...state,
+                    "messages": messages}
+
             }
             return state
         default:

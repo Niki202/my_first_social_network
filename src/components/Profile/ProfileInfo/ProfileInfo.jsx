@@ -1,6 +1,7 @@
 import classes from './ProfileInfo.module.css'
 import avaImage from '../../../assets/images/Ava.webp'
 import React from "react";
+import {Form, Field} from "react-final-form";
 
 const ProfileInfo = (props) => {
     return (
@@ -37,23 +38,37 @@ const ProfileInfo = (props) => {
                         ? <span onDoubleClick={() => props.toggleStatusEditMode(props.userId)}>{props.status
                             ? props.status
                             : 'No status'}</span>
-                        : <input aria-selected={true}
-                                 onBlur={() => props.toggleStatusEditMode()}
+                        : <input onBlur={() => props.toggleStatusEditMode()}
                                  onChange={props.changeStateStatus}
                                  defaultValue={props.status}
                                  autoFocus={true}/>}
                 </div>
                 <div>My posts</div>
-                <div>
-                    <textarea value={props.newPostText} onChange={props.changeNewPost}/>
-                </div>
-                <div>
-                    <button className={classes.button}
-                            onClick={props.addPost}>Add post
-                    </button>
-                </div>
+                <PostForm onSubmit={props.onSubmitPost}/>
             </div>
         </>
+    )
+}
+
+const PostForm = (props) => {
+    return (
+        <Form onSubmit={props.onSubmit}
+              initialValues={{}}
+              render={({handleSubmit, form, submitting, pristine, values}) => (
+                  <form onSubmit={handleSubmit}>
+                      <div>
+                          <Field name='newPostText'
+                                 component='textarea'
+                                 type='text'/>
+                      </div>
+                      <div>
+                          <button className={classes.button}
+                                  type='submit'
+                                  disabled={submitting || pristine}>Add post
+                          </button>
+                      </div>
+                  </form>
+              )}/>
     )
 }
 

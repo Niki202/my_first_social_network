@@ -3,7 +3,7 @@ import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
 import {Route, Routes} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
-import {addMessage, setNewTextMessage} from "../../Redux/Dialogs-reducer";
+import {addMessage} from "../../Redux/Dialogs-reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
 
@@ -19,13 +19,9 @@ const Dialogs = (props) => {
                          key={userMessages.userId}
                          element={<Message messages={userMessages.userMessages}
                                            userId={userMessages.userId}
-                                           newTextMessage={props.newMessageText}
-                                           dispatch={props.dispatch}
-                                           setNewTextMessage={props.setNewTextMessage}
                                            addMessage={props.addMessage}/>}/>
         }
     )
-
 
   return(
       <div className={classes.dialogs}>
@@ -45,7 +41,6 @@ const mapStateToProps = (state) => {
     return({
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
-        newMessageText: state.dialogsPage.newMessageText,
     })
 }
 
@@ -53,6 +48,6 @@ const mapStateToProps = (state) => {
 
 export default compose(
     // Функция connect возвращает hoc
-    connect(mapStateToProps, {setNewTextMessage, addMessage}),
+    connect(mapStateToProps, {addMessage}),
     withAuthRedirect
 )(Dialogs)

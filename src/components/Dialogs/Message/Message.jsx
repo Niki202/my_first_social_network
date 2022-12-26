@@ -1,40 +1,58 @@
 import classes from './Message.module.css'
+import {Field, Form} from "react-final-form";
+import React from "react";
 
 
 const Message = (props) => {
-    // debugger
     const messages = props.messages.map(message => {
-        return(
+        return (
             <div key={message.id.toString()}>
                 <div className={classes.message}>{message.message}</div>
             </div>
         )
     })
-    const setNewTextMessage = () => {
-        const text_value = document.getElementById("input_message").value
-        props.setNewTextMessage(text_value)
-    }
-    const addMessage = () => {
-        props.addMessage(props.userId)
-        document.getElementById('input_message').value = ''
+
+    const onSubmit = (formData) => {
+        props.addMessage(props.userId, formData.newMessageText)
     }
 
-  return(
-      <div className={classes.messageList}>
-          <div className={classes.messages}>
-              {messages}
-          </div>
-          <div className={classes.sendMessage}>
-              <input id='input_message' type="text"
-                     value={props.newTextMessage}
-                     placeholder='Enter your message...'
-                     onChange={setNewTextMessage}
-                  />
-              <button className={classes.button} onClick={addMessage}>Send</button>
-          </div>
-      </div>
-  )
+    return (
+        <div className={classes.messageList}>
+            <div className={classes.messages}>
+                {messages}
+            </div>
+            <MessageForm onSubmit={onSubmit}/>
+
+        </div>
+    )
 }
 
+const MessageForm = (props) => {
+    return (
+        <Form onSubmit={props.onSubmit}
+              initialValues={{}}
+              render={({handleSubmit, form, submitting, pristine, values}) => (
+                  <form className={classes.sendMessage}
+                        onSubmit={handleSubmit}>
+                      <Field className={classes.input_message}
+                             id={classes.input_message}
+                             placeholder='Enter your message...'
+                             name='newMessageText'
+                             component='input'
+                             type='text'/>
+                      <button className={classes.button}
+                              type='submit'
+                              onClick={() => {
+                                  form.submit()
+                                  form.reset()
+                              }}
+
+
+                              disabled={submitting || pristine}>Send
+                      </button>
+                  </form>
+              )}/>
+    )
+}
 
 export default Message

@@ -1,19 +1,22 @@
 import classes from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {addPost, changeNewPost, getProfile, getUserStatus, updateMyStatus} from "../../Redux/Profile-reducer";
+import {addPost, getProfile, getUserStatus, updateMyStatus} from "../../Redux/Profile-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import {Preloader} from "../Common/Preloader/Preloader";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {withRouter} from "../../HOC/withRouter";
+import {compose} from "redux";
 
 class Profile extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {statusEditMode: false,
-        status: this.props.status}
+        this.state = {
+            statusEditMode: false,
+            status: this.props.status
+        }
     }
 
     componentDidMount() {
@@ -21,18 +24,11 @@ class Profile extends React.Component {
         this.props.getUserStatus(this.props.router.params.userId)
     }
 
-    addPost = () => {
-        this.props.addPost()
-    }
 
     changeStateStatus = (event) => {
         this.setState({status: event.target.value})
     }
 
-    changeNewPost = (event) => {
-        const text = event.target.value
-        this.props.changeNewPost(text)
-    }
 
     toggleStatusEditMode = (userId) => {
         const statusEditMode = this.state.statusEditMode
@@ -46,6 +42,9 @@ class Profile extends React.Component {
             }
         }
     }
+    onSubmitPost = (formData) => {
+        this.props.addPost(formData.newPostText)
+    }
 
     render() {
         return (
@@ -53,17 +52,15 @@ class Profile extends React.Component {
                 {this.props.isFetchingProfile
                     ? <Preloader/>
                     : <div className={classes.content}>
-                        <ProfileInfo changeNewPost={this.changeNewPost}
-                                     addPost={this.addPost}
-                                     newPostText={this.props.newPostText}
-                                     profile={this.props.profileInfo}
+                        <ProfileInfo profile={this.props.profileInfo}
                                      status={this.props.status}
                                      stateStatus={this.state.status}
                                      getUserStatus={this.props.getUserStatus}
                                      userId={this.props.router.params.userId}
                                      statusEditMode={this.state.statusEditMode}
                                      toggleStatusEditMode={this.toggleStatusEditMode}
-                                     changeStateStatus={this.changeStateStatus}/>
+                                     changeStateStatus={this.changeStateStatus}
+                                     onSubmitPost={this.onSubmitPost}/>
 
 
                         <MyPosts posts={this.props.posts}/>
@@ -77,7 +74,6 @@ class Profile extends React.Component {
 
 const mapStateToProps = (state) => {
     return ({
-        newPostText: state.myPostPage.newPostText,
         posts: state.myPostPage.posts,
         profileInfo: state.myPostPage.profileInfo,
         isFetchingProfile: state.myPostPage.isFetchingProfile,
@@ -86,9 +82,11 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = {addPost, changeNewPost, getProfile, getUserStatus, updateMyStatus}
+const mapDispatchToProps = {addPost, getProfile, getUserStatus, updateMyStatus}
 
 
-const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(withRouter(Profile))
-
-export default withAuthRedirect(ProfileContainer)
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect,
+    withRouter
+)(Profile)

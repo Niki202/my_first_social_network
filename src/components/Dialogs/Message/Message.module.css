@@ -24,16 +24,16 @@
   flex-wrap: nowrap;
   padding-bottom: 10px;
 }
-.sendMessage input {
+.sendMessage .input_message {
   width: 85%;
   border-radius: 50px 0 0 50px;
   padding: 3px 10px;
 }
-.sendMessage input:hover {
+.sendMessage .input_message:hover {
   outline: 2px solid #a2ace7;
   outline-offset: -2px;
 }
-.sendMessage input:focus {
+.sendMessage .input_message:focus {
   outline: 2px solid #a2ace7;
   outline-offset: -2px;
 }
@@ -42,7 +42,7 @@
   border-radius: 0 15px 15px 0;
   background-color: #a2ace7;
   color: white;
-  padding: 3px 14px 3px 10px;
+  padding: 0 14px 3px 10px;
   height: 100%;
 }
 .sendMessage .button:active {
