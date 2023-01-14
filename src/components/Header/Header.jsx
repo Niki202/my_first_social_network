@@ -10,9 +10,15 @@ const Header = (props) => {
             </div>
             <div>
                 {props.isAuth
-                    ? <NavLink to={`/profile/${props.userId}`}
-                               onClick={() => props.setMyProfile()}>{props.login}</NavLink>
-                    : <NavLink to={'/login'}>Login</NavLink>}
+                    ? <div>
+                        <NavLink to={`/profile/${props.userId}`}
+                                 onClick={() => props.setMyProfile()}>{props.login}</NavLink>
+                        <button onClick={props.onClickLogOut}>Log out</button>
+                    </div>
+                    : <NavLink to={'/login'}>
+                        <button>Log in</button>
+                    </NavLink>}
+                     {/*: <NavLink to={'/login'}>Login</NavLink>}*/}
             </div>
         </header>
     )

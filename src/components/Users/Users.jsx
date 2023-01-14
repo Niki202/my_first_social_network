@@ -1,6 +1,7 @@
 import classes from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import avaImage from "../../assets/images/Ava.webp";
+import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
 import React from "react";
 
 export const Users = (props) => {
@@ -30,6 +31,7 @@ export const Users = (props) => {
             </div>
             <div>
                 {props.users.map(u => {
+                    const disabledButton = props.buttonsIsDisabledArr.some(id => id === u.id)
                     return (<div className={classes.user} key={u.id}>
                         <div className={classes.image}>
                             {/*Если ссылки на фото нет в объекте то вставляем универсальную картинку авы*/}
@@ -42,12 +44,12 @@ export const Users = (props) => {
                             {/*подставляем разные кнопки в зависимости от значения followed в объекте*/}
                             {u.followed
                                 ?
-                                <button disabled={props.buttonsIsDisabledArr.some(id => id === u.id)}
+                                <button disabled={disabledButton}
                                         onClick={() => props.addUserToUnfollowed(u.id)}
-                                        className={classes.button}>Unfollow</button>
-                                : <button disabled={props.buttonsIsDisabledArr.some(id => id === u.id)}
+                                        className={classes.button}>Unfollow{disabledButton && <PreloaderButton/>}</button>
+                                : <button disabled={disabledButton}
                                           onClick={() => props.addUserToFollowed(u.id)}
-                                          className={classes.button}>Follow</button>}
+                                          className={classes.button}>Follow{disabledButton && <PreloaderButton/>}</button>}
                         </div>
                     </div>)
                 })}

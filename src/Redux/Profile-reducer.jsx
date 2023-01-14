@@ -1,4 +1,4 @@
-import {getStatus, getUserProfile, updateStatus} from "../api/api";
+import {profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST'
 const SET_PROFILE = 'SET-PROFILE'
@@ -86,7 +86,7 @@ export const setMyProfileFromAuth = () => {
 export const getProfile = (userId) => {
     return (dispatch) => {
         dispatch(setIsFetchingProfile(true))
-        getUserProfile(userId).then(profile => {
+        profileAPI.getUserProfile(userId).then(profile => {
             dispatch(setProfile(profile))
             dispatch(setIsFetchingProfile(false))
         })
@@ -94,14 +94,14 @@ export const getProfile = (userId) => {
 }
 
 export const getUserStatus = (userId) => (dispatch) => {
-    getStatus(userId).then(status => {
+    profileAPI.getStatus(userId).then(status => {
         dispatch(setStatus(status))
     })
 }
 
 export const updateMyStatus = (status) => (dispatch, getState) => {
     if (status !== getState().myPostPage.status) {
-        updateStatus(status).then(resultCode => {
+        profileAPI.updateStatus(status).then(resultCode => {
             if (resultCode === 0) {
                 dispatch(setStatus(status))
             }

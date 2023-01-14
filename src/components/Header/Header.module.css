@@ -10,6 +10,10 @@
   width: 100px;
   height: 60px;
 }
+.header button {
+  padding: 4px;
+  margin: 5px;
+}
 .header img {
   width: 100%;
   height: auto;

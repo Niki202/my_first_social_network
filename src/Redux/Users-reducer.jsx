@@ -1,4 +1,4 @@
-import {followUser, getUsersPage, unfollowUser} from "../api/api";
+import {followAPI, usersAPI} from "../api/api";
 
 const SET_USERS = 'SET_USERS'
 const FOLLOW = 'FOLLOW'
@@ -53,10 +53,10 @@ export const usersReducer = (state=initialState, action) => {
             isFetching: action.value}
         case ADD_BUTTON_TO_DISABLED:
             return {...state,
-            buttonsIsDisabled: [...state.buttonsIsDisabledArr, action.userId]}
+            buttonsIsDisabledArr: [...state.buttonsIsDisabledArr, action.userId]}
         case REMOVE_BUTTON_FROM_DISABLED:
             return {...state,
-            buttonsIsDisabled: state.buttonsIsDisabledArr.filter(id => id !== action.userId)}
+            buttonsIsDisabledArr: state.buttonsIsDisabledArr.filter(id => id !== action.userId)}
         default:
             return state
     }
@@ -65,7 +65,7 @@ export const usersReducer = (state=initialState, action) => {
 export const addUserToFollowed = (userId) => {
     return (dispatch) => {
         dispatch(addButtonToDisabled(userId));
-        followUser(userId).then(resultCode => {
+        followAPI.followUser(userId).then(resultCode => {
             if (resultCode === 0) {
                 dispatch(follow(userId))
             }
@@ -77,7 +77,7 @@ export const addUserToFollowed = (userId) => {
 export const addUserToUnfollowed = (userId) => {
     return (dispatch) => {
         dispatch(addButtonToDisabled(userId));
-        unfollowUser(userId).then(resultCode => {
+        followAPI.unfollowUser(userId).then(resultCode => {
             if (resultCode === 0) {
                 dispatch(unfollow(userId))
             }
@@ -89,7 +89,7 @@ export const addUserToUnfollowed = (userId) => {
 export const getUsers = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(setIsFetching(true))
-        getUsersPage(currentPage, pageSize).then(data => {
+        usersAPI.getUsersPage(currentPage, pageSize).then(data => {
             dispatch(setUsers(data.items))
             dispatch(setTotalUsers(data.totalCount))
             dispatch(setCurrentPage(currentPage))
