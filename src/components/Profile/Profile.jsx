@@ -21,7 +21,6 @@ class Profile extends React.Component {
 
     componentDidMount() {
         this.props.getProfile(this.props.router.params.userId)
-        this.props.getUserStatus(this.props.router.params.userId)
     }
 
 

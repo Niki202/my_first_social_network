@@ -1,17 +1,78 @@
 .head{
   padding: 5px;
 }
-.buttons{
-  padding: 10px;
-  .submit{
-    color: #ffffff;
-    background-color: #28A745;
-    padding: 5px;
-    margin-right: 5px;
+.form{
+  .input{
+    .inputWrapper{
+      display: inline-block;
+      border: 1px solid #a2ace7;
+      border-radius: 5px;
+      overflow: hidden;
+      &.withError{
+        border: 1.5px solid crimson;
+      }
+      input{
+        padding: 5px;
+      }
+    }
+    .submitErrorMessage{
+      color: crimson;
+    }
+    .errorMessage{
+      padding-bottom: 5px;
+      padding-top: 5px;
+      position: relative;
+      span {
+        display: inline-block;
+        background-color: crimson;
+        border-radius: 2px;
+        font-size: 10px;
+        color: white;
+        right: 25%;
+        top: 1.5px;
+        padding: 3px 3px 4px 3px;
+        margin-left: 10px;
+        &:before{
+          content: '';
+          position: absolute;
+          left: 15px;
+          top: 2px;
+          width: 0;
+          height: 0;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-bottom: 6px solid crimson;
+        }
+      }
+    }
+    .checkBoxWrapper{
+      padding: 5px;
+      label{
+        margin-right: 5px;
+      }
+    }
+
+
+
   }
-  .reset{
-    color: white;
-    background-color: brown;
-    padding: 5px;
+  .captchaWrapper{
+    display: inline-block;
+    border: 1.5px solid #a2ace7;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .buttons{
+    padding: 10px;
+    .submit{
+      color: #ffffff;
+      background-color: #28A745;
+      padding: 5px;
+      margin-right: 5px;
+    }
+    .reset{
+      color: white;
+      background-color: brown;
+      padding: 5px;
+    }
   }
 }

@@ -1,21 +1,13 @@
 import Header from "./Header";
 import React from "react";
-import {getAuthData, logOut} from "../../Redux/Auth-reducer";
+import {logOut} from "../../Redux/Auth-reducer";
 import {connect} from "react-redux";
-import {setMyProfileFromAuth} from "../../Redux/Profile-reducer";
+import {getProfile} from "../../Redux/Profile-reducer";
 
 class HeaderContainer extends React.Component {
-    componentDidMount() {
-        this.props.getAuthData()
-    }
-
-    onClickLogOut = () => {
-        this.props.logOut()
-    }
-
     render() {
         return (
-            <Header {...this.props} onClickLogOut={this.onClickLogOut}/>
+            <Header {...this.props}/>
         )
     }
 }
@@ -27,10 +19,5 @@ const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
 })
 
-const mapDispatchToProps = {
-    getAuthData,
-    logOut,
-    setMyProfile: setMyProfileFromAuth,
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer)
+export default connect(mapStateToProps, {logOut, getProfile})(HeaderContainer)

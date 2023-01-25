@@ -4,12 +4,14 @@ import {dialogsReducer} from "./Dialogs-reducer";
 import {usersReducer} from "./Users-reducer";
 import {authReducer} from "./Auth-reducer";
 import thunk from "redux-thunk";
+import {appReducer} from "./App-reducer";
 
 const reducers = combineReducers({
     myPostPage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
     auth: authReducer,
+    app: appReducer,
 })
 
 export const store = legacy_createStore(reducers, applyMiddleware(thunk))

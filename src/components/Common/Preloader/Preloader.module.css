@@ -1,4 +1,5 @@
 .wrapper {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6,4 +7,4 @@
   height: 100%;
 }
 
-/*# sourceMappingURL=PreloaderButton.module.css.map */
+/*# sourceMappingURL=Preloader.module.css.map */

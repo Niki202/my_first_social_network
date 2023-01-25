@@ -1,14 +1,14 @@
-import {authAPI, profileAPI} from "../api/api";
+import {authAPI, securityAPI} from "../api/api";
 
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
-const SET_MY_PROFILE = 'SET_MY_PROFILE'
-const SET_MY_STATUS = 'SET_MY_STATUS'
 const SET_INITIAL_STATE = 'SET_INITIAL_STATE'
+const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR'
+const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
 const setUserAuthData = (userId, email, login) => ({type: SET_USER_AUTH_DATA, userId, email, login})
-const setMyProfile = (profile) => ({type: SET_MY_PROFILE, profile})
-const setMyStatus = (status) => ({type: SET_MY_STATUS, status})
 const setInitialState = (initialState) => ({type: SET_INITIAL_STATE, initialState})
+const setLoginError = (resultCode, errorMessage) => ({type: SET_LOGIN_ERROR, errorMessage, resultCode})
+const setCaptchaURL = (URL) => ({type: SET_CAPTCHA_URL, URL})
 
 
 const initialState = {
@@ -17,27 +17,11 @@ const initialState = {
     login: null,
     isAuth: false,
     status: null,
-    myProfile: {
-        aboutMe: null,
-        contacts: {
-            facebook: null,
-            website: null,
-            vk: null,
-            twitter: null,
-            instagram: null,
-            youtube: null,
-            github: null,
-            mainLink: null
-        },
-        lookingForAJob: null,
-        lookingForAJobDescription: null,
-        fullName: null,
-        userId: null,
-        photos: {
-            small: null,
-            large: null
-        }
-    }
+    loginError: {
+        resultCode: null,
+        message: null
+    },
+    captchaURL: null,
 }
 
 export function authReducer (state=initialState, action) {
@@ -45,19 +29,24 @@ export function authReducer (state=initialState, action) {
         case SET_USER_AUTH_DATA:
             return(
                 {...state,
-                userId: action.userId,
-                email: action.email,
-                login: action.login,
-                isAuth: true}
+                    userId: action.userId,
+                    email: action.email,
+                    login: action.login,
+                    isAuth: true
+                }
             )
-        case SET_MY_PROFILE:
-            return {...state,
-            myProfile: action.profile}
-        case SET_MY_STATUS:
-            return {...state,
-            status: action.status}
         case SET_INITIAL_STATE:
             return {...action.initialState}
+        case SET_LOGIN_ERROR:
+            return {
+                ...state,
+                loginError: {resultCode: action.resultCode ,message: action.errorMessage}
+            }
+        case SET_CAPTCHA_URL:
+            return {
+                ...state,
+                captchaURL: action.URL
+            }
         default:
             return state
     }
@@ -65,17 +54,21 @@ export function authReducer (state=initialState, action) {
 
 export const getAuthData = () => {
     return (dispatch) => {
-        authAPI.getAuthMe().then(data => {
+        // debugger
+        return authAPI.getAuthMe().then(data => {
             if (data) {
                 const {id, email, login} = data
-                profileAPI.getUserProfile(id).then(data => {
-                    dispatch(setUserAuthData(id, email, login))
-                    dispatch(setMyProfile(data))
-                })
-                profileAPI.getStatus(id).then(status => {
-                    dispatch(setMyStatus(status))
+                dispatch(setUserAuthData(id, email, login))
+                // profileAPI.getStatus(id).then(status => {
+                //     dispatch(setMyStatus(status))
+                // })
+            } else {
+                securityAPI.getCaptchaURL.then(url => {
+                    // debugger
+                    dispatch(setCaptchaURL(url))
                 })
             }
+
 
         })
     }
@@ -88,9 +81,17 @@ export const logOut = () => (dispatch) => {
 }
 
 export const logIn = (email, password, rememberMe, captcha) => (dispatch) => {
-    authAPI.logIn(email, password, rememberMe, captcha).then(resultCode => {
-        if (resultCode === 0) {
+    authAPI.logIn(email, password, rememberMe, captcha).then(data => {
+        if (data.resultCode === 0) {
             dispatch(getAuthData())
+        } else if(data.resultCode === 10){
+            securityAPI.getCaptchaURL.then(url => {
+                console.log(url)
+                dispatch(setCaptchaURL(url))
+                dispatch(setLoginError(data.resultCode, data.messages[0]))
+            })
+        } else {
+            dispatch(setLoginError(data.resultCode, data.messages[0]))
         }
 
     })

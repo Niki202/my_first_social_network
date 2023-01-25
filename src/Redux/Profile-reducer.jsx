@@ -75,20 +75,16 @@ export const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const setMyProfileFromAuth = () => {
-    return (dispatch, getState) => {
-        const myProfile = getState().auth.myProfile
-        dispatch(setProfile(myProfile))
-        dispatch(setStatus(getState().auth.status))
-    }
-}
-
 export const getProfile = (userId) => {
     return (dispatch) => {
         dispatch(setIsFetchingProfile(true))
+        // profileAPI.getStatus(userId).then(status => {
+        //     dispatch(setStatus(status))
+        // })
         profileAPI.getUserProfile(userId).then(profile => {
             dispatch(setProfile(profile))
             dispatch(setIsFetchingProfile(false))
+            dispatch(getUserStatus(userId))
         })
     }
 }

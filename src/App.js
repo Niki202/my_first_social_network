@@ -12,27 +12,45 @@ import ProfileContainer from "./components/Profile/Profile";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Dialogs from "./components/Dialogs/Dialogs";
 import UsersApiComponent from "./components/Users/UsersApiComponent";
+import {connect} from "react-redux";
+import {compose} from "redux";
+import {withRouter} from "./HOC/withRouter";
+import {initializeApp} from "./Redux/App-reducer";
+import {Preloader} from "./components/Common/Preloader/Preloader";
 
 
-function App(props) {
-    window.state = props.store.getState()
-    return (
-        <div className="app-wrapper">
-            <HeaderContainer/>
-            <NavContainer/>
-            <div className='app-wrapper-content'>
-                <Routes>
-                    <Route path="/profile/:userId" element={<ProfileContainer/>}/>
-                    <Route path='/dialogs/*' element={<Dialogs/>}/>
-                    <Route path='/news' element={<News/>}/>
-                    <Route path='/music' element={<Music/>}/>
-                    <Route path='/users/*' element={<UsersApiComponent/>}/>
-                    <Route path='/setting' element={<Settings/>}/>
-                    <Route path='/login' element={<Login/>}/>
-                </Routes>
+class App extends React.Component {
+    componentDidMount() {
+        this.props.initializeApp()
+    }
+
+    render() {
+        window.state = this.props.store.getState()
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
+        return (
+            <div className="app-wrapper">
+                <HeaderContainer/>
+                <NavContainer/>
+                <div className='app-wrapper-content'>
+                    <Routes>
+                        <Route path="/profile/:userId" element={<ProfileContainer/>}/>
+                        <Route path='/dialogs/*' element={<Dialogs/>}/>
+                        <Route path='/news' element={<News/>}/>
+                        <Route path='/music' element={<Music/>}/>
+                        <Route path='/users/*' element={<UsersApiComponent/>}/>
+                        <Route path='/setting' element={<Settings/>}/>
+                        <Route path='/login' element={<Login/>}/>
+                    </Routes>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    initialized: state.app.initialized
+})
+
+export default compose(connect(mapStateToProps, {initializeApp}), withRouter)(App);

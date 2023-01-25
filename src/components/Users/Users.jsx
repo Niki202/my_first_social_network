@@ -35,9 +35,9 @@ export const Users = (props) => {
                     return (<div className={classes.user} key={u.id}>
                         <div className={classes.image}>
                             {/*Если ссылки на фото нет в объекте то вставляем универсальную картинку авы*/}
-                            <NavLink to={`/profile/${u.id}`}><img
-                                src={u.photos.small != null ? u.photos.small : avaImage}
-                                alt="avatarImage"/></NavLink>
+                            <NavLink to={`/profile/${u.id}`}>
+                                <img src={u.photos.small != null ? u.photos.small : avaImage} alt="avatarImage"/>
+                            </NavLink>
                         </div>
                         <div className={classes.description}>
                             <div>{u.name}</div>
@@ -46,10 +46,12 @@ export const Users = (props) => {
                                 ?
                                 <button disabled={disabledButton}
                                         onClick={() => props.addUserToUnfollowed(u.id)}
-                                        className={classes.button}>Unfollow{disabledButton && <PreloaderButton/>}</button>
+                                        className={classes.button}>Unfollow{disabledButton &&
+                                    <PreloaderButton/>}</button>
                                 : <button disabled={disabledButton}
                                           onClick={() => props.addUserToFollowed(u.id)}
-                                          className={classes.button}>Follow{disabledButton && <PreloaderButton/>}</button>}
+                                          className={classes.button}>Follow{disabledButton &&
+                                    <PreloaderButton/>}</button>}
                         </div>
                     </div>)
                 })}

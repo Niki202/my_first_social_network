@@ -50,7 +50,7 @@ export const authAPI = {
     logIn: (email, password, rememberMe, captcha) => {
         return instance.post(`auth/login`, {email, password, rememberMe, captcha})
             .then(res => {
-                return res.data.resultCode
+                return res.data
             })
     }
 }
@@ -77,3 +77,10 @@ export const profileAPI = {
     }
 }
 
+// Объект с методами относящимися к эндпоинту "/security"
+export const securityAPI = {
+    getCaptchaURL: instance.get('security/get-captcha-url').then(res => {
+        console.log(res.data.url)
+        return res.data.url
+    })
+}

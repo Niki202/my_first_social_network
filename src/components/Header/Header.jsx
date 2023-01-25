@@ -12,8 +12,8 @@ const Header = (props) => {
                 {props.isAuth
                     ? <div>
                         <NavLink to={`/profile/${props.userId}`}
-                                 onClick={() => props.setMyProfile()}>{props.login}</NavLink>
-                        <button onClick={props.onClickLogOut}>Log out</button>
+                        onClick={() => props.getProfile(props.userId)}>{props.login}</NavLink>
+                        <button onClick={props.logOut}>Log out</button>
                     </div>
                     : <NavLink to={'/login'}>
                         <button>Log in</button>

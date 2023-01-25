@@ -24,6 +24,7 @@ const mapStateToProps = (state) => ({
 
 export const withAuthRedirect = (Component) => {
     const withRedirect = (props) => {
+        // debugger
         if (!props.isAuth) {
             return <Navigate to={'/login'}/>
         }
