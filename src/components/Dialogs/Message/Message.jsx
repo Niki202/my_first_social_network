@@ -67,12 +67,12 @@ const MessageForm = (props) => {
                                               type='submit'
                                               // onSubmit={form.change('newMessageText', 'dfdfd')}
                                           // onChange={form.reset}
-                                          // onClick={() => {
-                                          //     form.submit()
-                                          //     if (!meta.error){
-                                          //         form.reset()
-                                          //     }
-                                          // }}
+                                          onClick={() => {
+                                              form.submit()
+                                              if (!meta.error){
+                                                  form.reset()
+                                              }
+                                          }}
 
 
                                               disabled={submitting || pristine}>Send

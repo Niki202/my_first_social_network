@@ -5,6 +5,14 @@ import {Users} from "./Users";
 import {addUserToFollowed, addUserToUnfollowed, getUsers} from "../../Redux/Users-reducer";
 import {compose} from "redux";
 import {connect} from "react-redux";
+import {
+    getButtonsIsDisabledSel,
+    getCurrentPageSel,
+    getIsFetchingSel,
+    getPageSizeSel,
+    getTotalUsersSel,
+    getUsersSel
+} from "../../Redux/Users-selectors";
 
 
 class UserApiComponent extends React.Component {
@@ -20,6 +28,7 @@ class UserApiComponent extends React.Component {
 
     // Этот метод возвращает реакту jsx разметку
     render() {
+        console.log('render users')
         return (
             <>
                 {this.props.isFetching
@@ -33,13 +42,14 @@ class UserApiComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log('map state to props users')
     return ({
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsers: state.usersPage.totalUsers,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        buttonsIsDisabledArr: state.usersPage.buttonsIsDisabledArr,
+        users: getUsersSel(state),
+        pageSize: getPageSizeSel(state),
+        totalUsers: getTotalUsersSel(state),
+        currentPage: getCurrentPageSel(state),
+        isFetching: getIsFetchingSel(state),
+        buttonsIsDisabledArr: getButtonsIsDisabledSel(state),
     })
 }
 
