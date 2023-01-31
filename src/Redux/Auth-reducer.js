@@ -1,4 +1,5 @@
 import {authAPI, securityAPI} from "../api/api";
+import {getUserStatus} from "./Profile-reducer";
 
 const SET_USER_AUTH_DATA = 'SET_USER_AUTH_DATA'
 const SET_INITIAL_STATE = 'SET_INITIAL_STATE'
@@ -59,11 +60,9 @@ export const getAuthData = () => {
             if (data) {
                 const {id, email, login} = data
                 dispatch(setUserAuthData(id, email, login))
-                // profileAPI.getStatus(id).then(status => {
-                //     dispatch(setMyStatus(status))
-                // })
+                return dispatch(getUserStatus(id))
             } else {
-                securityAPI.getCaptchaURL.then(url => {
+                return securityAPI.getCaptchaURL.then(url => {
                     // debugger
                     dispatch(setCaptchaURL(url))
                 })

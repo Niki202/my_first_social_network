@@ -1,9 +1,34 @@
 import classes from './ProfileInfo.module.css'
 import avaImage from '../../../assets/images/Ava.webp'
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Form, Field} from "react-final-form";
 
 const ProfileInfo = (props) => {
+    const [statusEditMode, toggleStatusEditMode] = useState(false)
+    const [status, setStatus] = useState(props.status)
+
+    const onDoubleClick = () => {
+        if (+props.userId === props.myId) {
+            toggleStatusEditMode(true)
+        }
+    }
+
+    const updateStatus = () => {
+        props.updateMyStatus(status)
+        toggleStatusEditMode(false)
+    }
+    const onKeyDownEnter = (e) => {
+        if (e.key === 'Enter') {
+            updateStatus()
+        }
+    }
+
+    const onChangeStatus = (e) => {
+        setStatus(e.target.value)
+    }
+    useEffect(() => {
+        setStatus(props.status)
+    }, [props.status])
     return (
         <>
             <div className={classes.pictWrapper}>
@@ -33,14 +58,16 @@ const ProfileInfo = (props) => {
                         </div>
                     </div>
                 </div>
+                {/*статус*/}
                 <div className={classes.status}>
-                    {!props.statusEditMode
-                        ? <span onDoubleClick={() => props.toggleStatusEditMode(props.userId)}>{props.status
+                    {!statusEditMode
+                        ? <span onDoubleClick={onDoubleClick}>{props.status
                             ? props.status
                             : 'No status'}</span>
-                        : <input onBlur={() => props.toggleStatusEditMode()}
-                                 onChange={props.changeStateStatus}
-                                 defaultValue={props.status}
+                        : <input onBlur={updateStatus}
+                                 onKeyDown={onKeyDownEnter}
+                                 onChange={onChangeStatus}
+                                 defaultValue={status}
                                  autoFocus={true}/>}
                 </div>
                 <div>My posts</div>

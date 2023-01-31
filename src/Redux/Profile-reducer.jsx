@@ -83,19 +83,21 @@ export const getProfile = (userId) => {
         // })
         profileAPI.getUserProfile(userId).then(profile => {
             dispatch(setProfile(profile))
-            dispatch(setIsFetchingProfile(false))
-            dispatch(getUserStatus(userId))
+            dispatch(getUserStatus(userId)).then(() => {
+                    dispatch(setIsFetchingProfile(false))
+                }
+            )
         })
     }
 }
 
 export const getUserStatus = (userId) => (dispatch) => {
-    profileAPI.getStatus(userId).then(status => {
+    return profileAPI.getStatus(userId).then(status => {
         dispatch(setStatus(status))
     })
 }
 
-export const updateMyStatus = (status) => (dispatch, getState) => {
+export const  updateMyStatus = (status) => (dispatch, getState) => {
     if (status !== getState().myPostPage.status) {
         profileAPI.updateStatus(status).then(resultCode => {
             if (resultCode === 0) {

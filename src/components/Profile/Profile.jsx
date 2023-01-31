@@ -11,36 +11,11 @@ import {compose} from "redux";
 
 class Profile extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            statusEditMode: false,
-            status: this.props.status
-        }
-    }
 
     componentDidMount() {
         this.props.getProfile(this.props.router.params.userId)
     }
 
-
-    changeStateStatus = (event) => {
-        this.setState({status: event.target.value})
-    }
-
-
-    toggleStatusEditMode = (userId) => {
-        const statusEditMode = this.state.statusEditMode
-        if (statusEditMode) {
-            this.setState({statusEditMode: false})
-            this.props.updateMyStatus(this.state.status)
-
-        } else {
-            if (+userId === this.props.myId) {
-                this.setState({statusEditMode: true})
-            }
-        }
-    }
     onSubmitPost = (formData) => {
         this.props.addPost(formData.newPostText)
     }
@@ -53,12 +28,9 @@ class Profile extends React.Component {
                     : <div className={classes.content}>
                         <ProfileInfo profile={this.props.profileInfo}
                                      status={this.props.status}
-                                     stateStatus={this.state.status}
-                                     getUserStatus={this.props.getUserStatus}
                                      userId={this.props.router.params.userId}
-                                     statusEditMode={this.state.statusEditMode}
-                                     toggleStatusEditMode={this.toggleStatusEditMode}
-                                     changeStateStatus={this.changeStateStatus}
+                                     myId={this.props.myId}
+                                     updateMyStatus={this.props.updateMyStatus}
                                      onSubmitPost={this.onSubmitPost}/>
 
 

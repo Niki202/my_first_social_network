@@ -22,12 +22,16 @@ export const appReducer = (state=initialState, action) => {
 }
 
 export const initializeApp = () => (dispatch) => {
-    let promise = dispatch(getAuthData())
+    const getAuthDataPromise = dispatch(getAuthData())
+    // getAuthDataPromise.then(() => {
+    //
+    // })
+    // const getStatusPromise = dispatch(getUserStatus())
     // promise.then((res) => {
     //     console.log(res)
     //     dispatch(initializedSuccess())
     // })
-    Promise.all([promise]).then(() => {
+    Promise.all([getAuthDataPromise]).then(() => {
         // debugger
         dispatch(initializedSuccess())
     })
