@@ -14,6 +14,8 @@ const initialState = {
     "posts": [
         {"id": 1, "post": "Hello React!", "likesCount": 11},
         {"id": 2, "post": "This is my first social network!!!", "likesCount": 12},
+        {"id": 3, "post": "blablabla", "likesCount": 7},
+        {"id": 4, "post": "end", "likesCount": 8},
     ],
     profileInfo: {
         "aboutMe": "",
@@ -68,41 +70,36 @@ export const profileReducer = (state = initialState, action) => {
                 isFetchingProfile: action.value
             }
         case SET_STATUS:
-            return {...state,
-            status: action.status}
+            return {
+                ...state,
+                status: action.status
+            }
         default:
             return state
     }
 }
 
-export const getProfile = (userId) => {
-    return (dispatch) => {
-        dispatch(setIsFetchingProfile(true))
-        // profileAPI.getStatus(userId).then(status => {
-        //     dispatch(setStatus(status))
-        // })
-        profileAPI.getUserProfile(userId).then(profile => {
-            dispatch(setProfile(profile))
-            dispatch(getUserStatus(userId)).then(() => {
-                    dispatch(setIsFetchingProfile(false))
-                }
-            )
-        })
-    }
+export const getProfile = (userId) => async (dispatch) => {
+    dispatch(setIsFetchingProfile(true))
+
+    const profile = await profileAPI.getUserProfile(userId)
+    dispatch(setProfile(profile))
+    await dispatch(getUserStatus(userId))
+    dispatch(setIsFetchingProfile(false))
 }
 
-export const getUserStatus = (userId) => (dispatch) => {
-    return profileAPI.getStatus(userId).then(status => {
-        dispatch(setStatus(status))
-    })
+export const getUserStatus = (userId) => async (dispatch) => {
+    const status = await profileAPI.getStatus(userId)
+    return dispatch(setStatus(status))
+
 }
 
-export const  updateMyStatus = (status) => (dispatch, getState) => {
+export const updateMyStatus = (status) => async (dispatch, getState) => {
     if (status !== getState().myPostPage.status) {
-        profileAPI.updateStatus(status).then(resultCode => {
-            if (resultCode === 0) {
-                dispatch(setStatus(status))
-            }
-        })
+        const resultCode = await profileAPI.updateStatus(status)
+        if (resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+
     }
 }

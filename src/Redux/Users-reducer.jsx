@@ -29,71 +29,108 @@ const initialState = {
 }
 
 
-export const usersReducer = (state=initialState, action) => {
+export const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USERS:
-            return {...state,
-            users: action.users}
+            return {
+                ...state,
+                users: action.users
+            }
         case FOLLOW:
-            return {...state,
-            users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u
-            )}
+            return {
+                ...state,
+                users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u
+                )
+            }
         case UNFOLLOW:
-            return {...state,
-            users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u
-            )}
+            return {
+                ...state,
+                users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u
+                )
+            }
         case SET_CURRENT_PAGE:
-            return {...state,
-            currentPage: action.page}
+            return {
+                ...state,
+                currentPage: action.page
+            }
         case SET_TOTAL_USERS:
-            return {...state,
-            totalUsers: action.totalUsersInt}
+            return {
+                ...state,
+                totalUsers: action.totalUsersInt
+            }
         case SET_IS_FETCHING:
-            return {...state,
-            isFetching: action.value}
+            return {
+                ...state,
+                isFetching: action.value
+            }
         case ADD_BUTTON_TO_DISABLED:
-            return {...state,
-            buttonsIsDisabledArr: [...state.buttonsIsDisabledArr, action.userId]}
+            return {
+                ...state,
+                buttonsIsDisabledArr: [...state.buttonsIsDisabledArr, action.userId]
+            }
         case REMOVE_BUTTON_FROM_DISABLED:
-            return {...state,
-            buttonsIsDisabledArr: state.buttonsIsDisabledArr.filter(id => id !== action.userId)}
+            return {
+                ...state,
+                buttonsIsDisabledArr: state.buttonsIsDisabledArr.filter(id => id !== action.userId)
+            }
         default:
             return state
     }
 }
 // подписаться на юзера
-export const addUserToFollowed = (userId) => {
-    return (dispatch) => {
-        dispatch(addButtonToDisabled(userId));
-        followAPI.followUser(userId).then(resultCode => {
-            if (resultCode === 0) {
-                dispatch(follow(userId))
-            }
-            dispatch(removeButtonFromDisabled(userId))
-        })
+export const addUserToFollowed = (userId) => async (dispatch) => {
+    dispatch(addButtonToDisabled(userId));
+    const resultCode = await followAPI.followUser(userId)
+    if (resultCode === 0) {
+        dispatch(follow(userId))
     }
+    dispatch(removeButtonFromDisabled(userId))
+
 }
 // отписаться на юзера
-export const addUserToUnfollowed = (userId) => {
-    return (dispatch) => {
-        dispatch(addButtonToDisabled(userId));
-        followAPI.unfollowUser(userId).then(resultCode => {
-            if (resultCode === 0) {
-                dispatch(unfollow(userId))
-            }
-            dispatch(removeButtonFromDisabled(userId))
-        })
+export const addUserToUnfollowed = (userId) => async (dispatch) => {
+    dispatch(addButtonToDisabled(userId));
+    const resultCode = await followAPI.unfollowUser(userId)
+    if (resultCode === 0) {
+        dispatch(unfollow(userId))
     }
+    dispatch(removeButtonFromDisabled(userId))
+
+
 }
 // загрузить юзеров на страницу с юзеров
-export const getUsers = (currentPage, pageSize) => {
-    return (dispatch) => {
-        dispatch(setIsFetching(true))
-        usersAPI.getUsersPage(currentPage, pageSize).then(data => {
-            dispatch(setUsers(data.items))
-            dispatch(setTotalUsers(data.totalCount))
-            dispatch(setCurrentPage(currentPage))
-            dispatch(setIsFetching(false))
-        })
+export const getUsers = (currentPage, pageSize) => async (dispatch) => {
+    dispatch(setIsFetching(true))
+    let data = {
+        "items": [
+        {
+            "name": "Shubert",
+            "id": 1,
+            "photos": {
+                "small": null,
+                "large": null
+            },
+            "status": null,
+            "followed": false
+        },
+        {
+            "name": "Hacker",
+            "id": 2,
+            "photos": {
+                "small": null,
+                "large": null
+            },
+            "status": null,
+            "followed": false
+        }
+    ],
+        "totalCount": 30,
+        "error": null
     }
+    data = await usersAPI.getUsersPage(currentPage, pageSize)
+    dispatch(setUsers(data.items))
+    dispatch(setTotalUsers(data.totalCount))
+    dispatch(setCurrentPage(currentPage))
+    dispatch(setIsFetching(false))
+
 }

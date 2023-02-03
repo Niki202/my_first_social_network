@@ -12,75 +12,74 @@ const instance = axios.create({
 // Объект с методами относящимися к эндпоинту "/users"
 export const usersAPI = {
     // Получить страницу с указанным номером из списка пользователей
-    getUsersPage: (currentPage, pageSize) => {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-            .then(response => response.data)
+    getUsersPage: async (currentPage, pageSize) => {
+        const response = await instance.get(`users?page=${currentPage}&count=${pageSize}`)
+        return response.data
     }
 }
 
 // Объект с методами относящимися к эндпоинту "/follow"
 export const followAPI = {
     // Подписаться на юзера
-    followUser: (userId) => {
-        return instance.post(`follow/${userId}`, {}).then(res => res.data.resultCode)
+    followUser: async (userId) => {
+        const response = await instance.post(`follow/${userId}`, {})
+        return response.data.resultCode
     },
     // Отписаться от юзера
-    unfollowUser: (userId) => {
-        return instance.delete(`follow/${userId}`).then(res => res.data.resultCode)
+    unfollowUser: async (userId) => {
+        const response = await instance.delete(`follow/${userId}`)
+        return response.data.resultCode
     }
 }
 
 // Объект с методами относящимися к эндпоинту "/auth"
 export const authAPI = {
     // Получить данные своего профиля
-    getAuthMe: () => {
-        return instance.get(`auth/me`).then(res => {
-            if (res.data.resultCode === 0) {
-                return res.data.data
-            }
-        })
+    getAuthMe: async () => {
+        const response = await instance.get(`auth/me`)
+        if (response.data.resultCode === 0) {
+            return response.data.data
+        }
+
     },
     // Завершить/удалить сессию
-    logOut: () => {
-        return instance.delete(`auth/login`).then(res => {
-            if (res.data.resultCode === 0) return 0
-        })
+    logOut: async () => {
+        const response = await instance.delete(`auth/login`)
+        if (response.data.resultCode === 0) return 0
     },
     // Начать сессию
-    logIn: (email, password, rememberMe, captcha) => {
-        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
-            .then(res => {
-                return res.data
-            })
+    logIn: async (email, password, rememberMe, captcha) => {
+        const response = await instance.post(`auth/login`, {email, password, rememberMe, captcha})
+        return response.data
+
     }
 }
 
 // Объект с методами относящимися к эндпоинту "/profile"
 export const profileAPI = {
     // Получить данные профиля
-    getUserProfile: (userId) => {
-        return instance.get(`profile/${userId}`).then(response => {
-            return response.data
-        })
+    getUserProfile: async (userId) => {
+        const response = await instance.get(`profile/${userId}`)
+        return response.data
     },
     // Получить статус
-    getStatus: (userId) => {
-        return instance.get(`profile/status/${userId}`).then(res => {
-            if (res.status === 200) {
-                return res.data
-            }
-        })
+    getStatus: async (userId) => {
+        const response = await instance.get(`profile/status/${userId}`)
+        if (response.status === 200) {
+            return response.data
+        }
     },
     // Обновить статус
-    updateStatus: (status) => {
-        return instance.put('profile/status', {status: status}).then(res => res.data.resultCode)
+    updateStatus: async (status) => {
+        const response = await instance.put('profile/status', {status: status})
+        return response.data.resultCode
     }
 }
 
 // Объект с методами относящимися к эндпоинту "/security"
 export const securityAPI = {
-    getCaptchaURL: instance.get('security/get-captcha-url').then(res => {
-        console.log(res.data.url)
-        return res.data.url
-    })
+    getCaptchaURL: async () => {
+        const response = await instance.get('security/get-captcha-url')
+        return response.data.url
+    }
 }
