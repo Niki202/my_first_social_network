@@ -1,0 +1,97 @@
+.paginationWrapper{
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  a{
+    margin: 0 5px;
+  }
+}
+.buttonWithText{
+  display: inline-block;
+  font-size: 14px;
+  height: 32px;
+  color: #747ba8;
+  padding: 8px 12px 7px;
+  border-radius: 3px;
+  background-color: #d9dcef;
+  &:hover{
+    background-color: #d4d6e7;
+  }
+}
+.button{
+  display: inline-block;
+  font-size: 14px;
+  height: 32px;
+  color: #747ba8;
+  padding: 8px 12px 7px;
+  border-radius: 8px;
+  &:hover{
+    background-color: #d9dae0;
+    &.threeDots{
+      background-color: transparent;
+      cursor: default;
+    }
+
+  }
+}
+.selected{
+  background-color: #8c95cb;
+  color: white;
+  &:hover{
+    background-color: #8c95cb;
+  }
+}
+.form{
+  display: flex;
+  align-items: center;
+  & *{
+    margin: 0 2px;
+  }
+  .goTo{
+    color: #001a34;
+  }
+  .input{
+    display: flex;
+    align-items: center;
+    tab-index: 0;
+    .inputWrapper{
+      border-radius: 8px;
+
+      .inputNumber{
+        tab-index: 1;
+        padding: 9px;
+        height: 32px;
+        width: 100px;
+        border-radius: 8px;
+        outline: 2px solid #d3d3d3;
+        &:focus{
+          outline: 2px solid #a2ace7;
+          outline-offset: -2px;
+        }
+        &:hover{
+          outline: 2px solid #a2ace7;
+          outline-offset: -2px;
+        }
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+      }
+
+    }
+    .submit{
+
+      background-color: #8c95cb;
+      border-radius: 8px;
+      height: 32px;
+      width: 100px;
+      color: white;
+      &.inActive{
+        background-color: #c0c0c0;
+        color: #8c8c8c;
+      }
+    }
+  }
+}

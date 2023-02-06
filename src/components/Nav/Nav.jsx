@@ -19,23 +19,23 @@ const Nav = (props) => {
                 {props.isAuth
                     ? <NavLink to={'/profile/' + props.userId}
                                className={activeClassName}
-                               onClick={() => props.getProfile(props.userId)}>My profile</NavLink>
-                    : <NavLink to='/login' className={activeClassName}>My profile</NavLink>}
+                               onClick={() => props.getProfile(props.userId)} tabIndex={-1}>My profile</NavLink>
+                    : <NavLink to='/login' className={activeClassName} tabIndex={-1}>My profile</NavLink>}
             </div>
             <div>
-                <NavLink to='/dialogs' className={activeClassName}>Message</NavLink>
+                <NavLink to='/dialogs' className={activeClassName} tabIndex={-1}>Message</NavLink>
             </div>
             <div>
-                <NavLink to='/news' className={activeClassName}>News</NavLink>
+                <NavLink to='/news' className={activeClassName} tabIndex={-1}>News</NavLink>
             </div>
             <div>
-                <NavLink to='/music' className={activeClassName}>Music</NavLink>
+                <NavLink to='/music' className={activeClassName} tabIndex={-1}>Music</NavLink>
             </div>
             <div>
-                <NavLink to='/users' className={activeClassName}>Users</NavLink>
+                <NavLink to='/users' className={activeClassName} tabIndex={-1}>Users</NavLink>
             </div>
             <div>
-                <NavLink to='/setting' className={activeClassName}>Setting</NavLink>
+                <NavLink to='/setting' className={activeClassName} tabIndex={-1}>Setting</NavLink>
             </div>
         </nav>
     )

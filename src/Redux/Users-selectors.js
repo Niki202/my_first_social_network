@@ -8,7 +8,6 @@ const getUsers = (state) => {
 // селектор запускается только когда меняются входные данные из getUsers
 // иначе он предоставляет сохраненный результат
 export const getUsersSel = createSelector(getUsers, (users) => {
-    console.log('calculate')
     // Код который перерабатывает данные из стейта но не срабатывает при каждой перерисовке
     return users.filter(u => true)
 })

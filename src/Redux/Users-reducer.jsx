@@ -21,7 +21,7 @@ export const removeButtonFromDisabled = (userId) => ({type: REMOVE_BUTTON_FROM_D
 
 const initialState = {
     users: [],
-    pageSize: 5,
+    pageSize: 14,
     totalUsers: 0,
     currentPage: 1,
     isFetching: true,

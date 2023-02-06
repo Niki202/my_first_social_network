@@ -7,16 +7,17 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Login from "./components/Login/Login"
 
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, BrowserRouter} from "react-router-dom";
 import ProfileContainer from "./components/Profile/Profile";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Dialogs from "./components/Dialogs/Dialogs";
 import UsersApiComponent from "./components/Users/UsersApiComponent";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {withRouter} from "./HOC/withRouter";
 import {initializeApp} from "./Redux/App-reducer";
 import {Preloader} from "./components/Common/Preloader/Preloader";
+import {store} from "./Redux/redux-store";
 
 
 class App extends React.Component {
@@ -30,7 +31,7 @@ class App extends React.Component {
             return <Preloader/>
         }
         return (
-            <div className="app-wrapper">
+            <div className="app-wrapper" role={'main'}>
                 <HeaderContainer/>
                 <NavContainer/>
                 <div className='app-wrapper-content'>
@@ -41,7 +42,8 @@ class App extends React.Component {
                         <Route path='/dialogs/*' element={<Dialogs/>}/>
                         <Route path='/news' element={<News/>}/>
                         <Route path='/music' element={<Music/>}/>
-                        <Route path='/users/*' element={<UsersApiComponent/>}/>
+                        <Route path='/users/:page' element={<UsersApiComponent/>}/>
+                        <Route path='/users' element={<UsersApiComponent/>}/>
                         <Route path='/setting' element={<Settings/>}/>
                         <Route path='/login' element={<Login/>}/>
                     </Routes>
@@ -55,4 +57,18 @@ const mapStateToProps = (state) => ({
     initialized: state.app.initialized
 })
 
-export default compose(connect(mapStateToProps, {initializeApp}), withRouter)(App);
+const AppWithCompose = compose(connect(mapStateToProps, {initializeApp}), withRouter)(App);
+
+const AppContainer = () => {
+    return(
+        <BrowserRouter>
+            <Provider store={store}>
+                {/*<React.StrictMode>*/}
+                <AppWithCompose store={store}/>
+                {/*</React.StrictMode>*/}
+            </Provider>
+        </BrowserRouter>
+    )
+}
+
+export default AppContainer

@@ -29,8 +29,6 @@
   width: 85%;
   border-radius: 50px 0 0 50px;
   padding: 3px 10px;
-  tab-index: 1;
-  z-index: 3;
 }
 .sendMessageWrapper .sendMessage .input_message.error {
   outline: 2px solid crimson;

@@ -2,7 +2,7 @@ import React from "react";
 import {Preloader} from "../Common/Preloader/Preloader"
 
 import {Users} from "./Users";
-import {addUserToFollowed, addUserToUnfollowed, getUsers} from "../../Redux/Users-reducer";
+import {addUserToFollowed, addUserToUnfollowed, getUsers, setCurrentPage} from "../../Redux/Users-reducer";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {
@@ -13,12 +13,19 @@ import {
     getTotalUsersSel,
     getUsersSel
 } from "../../Redux/Users-selectors";
+import {withRouter} from "../../HOC/withRouter";
 
 
 class UserApiComponent extends React.Component {
     // Этод метод срабатывает после отрисовки компоненты
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        if (this.props.router.params.page){
+            this.props.setCurrentPage(+this.props.router.params.page)
+            this.props.getUsers(+this.props.router.params.page, this.props.pageSize)
+        } else {
+            this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        }
+
     }
 
     // При нажатии на номер страницы (<NavLink>) в каруселе страниц срабатывает этот метод
@@ -28,7 +35,6 @@ class UserApiComponent extends React.Component {
 
     // Этот метод возвращает реакту jsx разметку
     render() {
-        console.log('render users')
         return (
             <>
                 {this.props.isFetching
@@ -42,7 +48,6 @@ class UserApiComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('map state to props users')
     return ({
         users: getUsersSel(state),
         pageSize: getPageSizeSel(state),
@@ -56,9 +61,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     addUserToFollowed,
     addUserToUnfollowed,
-    getUsers
+    getUsers,
+    setCurrentPage,
 }
 
 export default compose(
+    withRouter,
     connect(mapStateToProps, mapDispatchToProps)
 )(UserApiComponent)
