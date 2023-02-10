@@ -38,9 +38,7 @@ const ProfileInfo = (props) => {
             <div className={classes.info}>
                 <div className={classes.profile_descriptions}>
                     <div className={classes.avatar_wrapper}>
-                        <img src={props.profile.photos.large === null
-                            ? avaImage
-                            : props.profile.photos.large} alt="avatar"/>
+                        <img src={props.profile.photos.large || avaImage} alt="avatar"/>
                     </div>
                     <div className={classes.text}>
                         <div className={classes.name}>

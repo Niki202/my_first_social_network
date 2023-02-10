@@ -1,5 +1,4 @@
 import {authAPI, securityAPI} from "../api/api";
-import {getUserStatus} from "./Profile-reducer";
 
 const SET_USER_AUTH_DATA = 'AUTH/SET_USER_AUTH_DATA'
 const SET_INITIAL_STATE = 'AUTH/SET_INITIAL_STATE'
@@ -59,8 +58,7 @@ export const getAuthData = () => async (dispatch) => {
     const data = await authAPI.getAuthMe()
     if (data) {
         const {id, email, login} = data
-        dispatch(setUserAuthData(id, email, login))
-        return dispatch(getUserStatus(id))
+        return dispatch(setUserAuthData(id, email, login))
     } else {
         const url = await securityAPI.getCaptchaURL()
         return dispatch(setCaptchaURL(url))

@@ -12,14 +12,15 @@ const Header = (props) => {
                 {props.isAuth
                     ? <div>
                         <NavLink to={`/profile/${props.userId}`} tabIndex={-1}
-                                 onClick={() => props.getProfile(props.userId)}>{props.login}
+                                 // onClick={() => props.getProfile(props.userId)}
+                        >{props.login}
                         </NavLink>
                         <button onClick={props.logOut} tabIndex={-1}>Log out</button>
                     </div>
                     : <NavLink to={'/login'} tabIndex={-1}>
                         <button>Log in</button>
                     </NavLink>}
-                     {/*: <NavLink to={'/login'}>Login</NavLink>}*/}
+                {/*: <NavLink to={'/login'}>Login</NavLink>}*/}
             </div>
         </header>
     )

@@ -19,7 +19,8 @@ const Nav = (props) => {
                 {props.isAuth
                     ? <NavLink to={'/profile/' + props.userId}
                                className={activeClassName}
-                               onClick={() => props.getProfile(props.userId)} tabIndex={-1}>My profile</NavLink>
+                               // onClick={() => props.getProfile(props.userId)}
+                               tabIndex={-1}>My profile</NavLink>
                     : <NavLink to='/login' className={activeClassName} tabIndex={-1}>My profile</NavLink>}
             </div>
             <div>

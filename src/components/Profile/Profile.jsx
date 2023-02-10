@@ -1,7 +1,7 @@
 import classes from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {addPost, getProfile, getUserStatus, updateMyStatus} from "../../Redux/Profile-reducer";
+import {addPost, getProfile, updateMyStatus} from "../../Redux/Profile-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import {Preloader} from "../Common/Preloader/Preloader";
@@ -14,6 +14,12 @@ class Profile extends React.Component {
 
     componentDidMount() {
         this.props.getProfile(this.props.router.params.userId)
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (+this.props.router.params.userId !== this.props.profileInfo.userId && !this.props.isFetchingProfile) {
+            debugger
+            this.props.getProfile(this.props.router.params.userId)
+        }
     }
 
     onSubmitPost = (formData) => {
@@ -53,7 +59,7 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = {addPost, getProfile, getUserStatus, updateMyStatus}
+const mapDispatchToProps = {addPost, getProfile, updateMyStatus}
 
 
 export default compose(
