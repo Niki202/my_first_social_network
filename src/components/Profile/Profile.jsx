@@ -11,13 +11,11 @@ import {compose} from "redux";
 
 class Profile extends React.Component {
 
-
     componentDidMount() {
         this.props.getProfile(this.props.router.params.userId)
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (+this.props.router.params.userId !== this.props.profileInfo.userId && !this.props.isFetchingProfile) {
-            debugger
+        if (+this.props.router.params.userId !== prevProps.profileInfo.userId && !this.props.isFetchingProfile) {
             this.props.getProfile(this.props.router.params.userId)
         }
     }

@@ -2,7 +2,6 @@ import classes from './Message.module.css'
 import {Field, Form} from "react-final-form";
 import React from "react";
 import { maxLength2} from "../../../utilites/validators";
-import {FORM_ERROR} from "final-form";
 
 
 const Message = (props) => {
@@ -14,9 +13,9 @@ const Message = (props) => {
         )
     })
 
-    const onSubmit = async (formData) => {
+    const onSubmit = (formData) => {
         props.addMessage(props.userId, formData.newMessageText)
-        return {[FORM_ERROR]: 'Login Failed'}
+        // return {[FORM_ERROR]: 'Login Failed'}
     }
 
     const showError = (error) => {
@@ -60,6 +59,7 @@ const MessageForm = (props) => {
                                              className={`${classes.input_message} ${meta.error && meta.touched && classes.error}`}
                                              type='text'
                                              placeholder='Enter your message...'
+                                             autoComplete={'off'}
                                              // onError={form.reset()}
                                              // onSubmit={form.reset()}
                                       />

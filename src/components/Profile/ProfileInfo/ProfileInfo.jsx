@@ -89,6 +89,10 @@ const PostForm = (props) => {
                       <div>
                           <button className={classes.button}
                                   type='submit'
+                                  onClick={() => {
+                                      form.submit()
+                                      form.reset()
+                                  }}
                                   disabled={submitting || pristine}>Add post
                           </button>
                       </div>
