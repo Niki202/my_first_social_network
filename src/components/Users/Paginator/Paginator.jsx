@@ -29,12 +29,7 @@ export const Paginator = (props) => {
     if (currentPage >= 97) endPageInd = endPageInd - 2
     if (currentPage >= 997) endPageInd = endPageInd - 1
     pages = pages.slice(startPageInd, endPageInd)
-    // if (slicePages.indexOf(1) === -1) {
-    //     pages = [1,...pages]
-    // }
-    // if (slicePages.indexOf(pagesCount) === -1) {
-    //     pages = [...pages, pagesCount]
-    // }
+
     return (
         <div className={classes.paginationWrapper}>
             {/*Кнопка "в начало" и троеточие*/}
