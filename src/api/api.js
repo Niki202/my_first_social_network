@@ -73,6 +73,14 @@ export const profileAPI = {
     updateStatus: async (status) => {
         const response = await instance.put('profile/status', {status: status})
         return response.data.resultCode
+    },
+    // Загрузить фото
+    uploadPhoto: async (file) => {
+        return await instance.put('profile/photo', {image: file}, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            }
+        })
     }
 }
 

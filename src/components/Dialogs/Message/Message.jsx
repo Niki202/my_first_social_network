@@ -13,9 +13,9 @@ const Message = (props) => {
         )
     })
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData, form) => {
         props.addMessage(props.userId, formData.newMessageText)
-        // return {[FORM_ERROR]: 'Login Failed'}
+        form.reset()
     }
 
     const showError = (error) => {
@@ -45,14 +45,12 @@ const MessageForm = (props) => {
             //   validate={maxLength}
               render={({submitError, handleSubmit, form, submitting, pristine, values}) => (
                   <form
-                      // className={classes.sendMessageWrapper}
                       onSubmit={handleSubmit}>
                       <Field
-                          // className={classes.input_message}
                           validate={validate}
 
-                          name='newMessageText'>
-                          {({meta, input}) => (
+                          name='newMessageText'
+                          render={({meta, input}) => (
                               <div className={classes.sendMessageWrapper}>
                                   <div className={classes.sendMessage}>
                                       <input {...input}
@@ -60,22 +58,9 @@ const MessageForm = (props) => {
                                              type='text'
                                              placeholder='Enter your message...'
                                              autoComplete={'off'}
-                                             // onError={form.reset()}
-                                             // onSubmit={form.reset()}
                                       />
                                       <button className={classes.button}
-                                              type='submit'
-                                              // onSubmit={form.change('newMessageText', 'dfdfd')}
-                                          // onChange={form.reset}
-                                          onClick={() => {
-                                              form.submit()
-                                              if (!meta.error){
-                                                  form.reset()
-                                              }
-                                          }}
-
-
-                                              disabled={submitting || pristine}>Send
+                                              type='submit'disabled={submitting || pristine}>Send
                                       </button>
                                   </div>
                                   <div className={classes.errorWrapper}>
@@ -85,7 +70,7 @@ const MessageForm = (props) => {
                                   </div>
                               </div>
 
-                          )}
+                          )}>
                       </Field>
 
                   </form>

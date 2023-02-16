@@ -6,8 +6,10 @@ import {getAuthData, logIn} from "../../Redux/Auth-reducer";
 import {Navigate} from "react-router-dom";
 import {required} from "../../utilites/validators";
 import {FORM_ERROR} from "final-form";
+import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
 
 const LoginForm = (props) => {
+    console.log(props.captchaURL)
     return (
         <Form onSubmit={props.onSubmit}
               initialValues={{rememberMe: false}}
@@ -22,7 +24,7 @@ const LoginForm = (props) => {
                                   <div
                                       className={`${classes.inputWrapper}
                                        ${meta.error && meta.touched && classes.withError}
-                                       ${props.loginError.resultCode === 1 && classes.withError}`}>
+                                       ${submitError && classes.withError}`}>
                                       <label></label>
                                       <input
                                           {...input}
@@ -46,7 +48,7 @@ const LoginForm = (props) => {
                                   <div
                                       className={`${classes.inputWrapper} 
                                       ${meta.error && meta.touched && classes.withError}
-                                      ${props.loginError.resultCode === 1 && classes.withError}`}>
+                                      ${submitError && classes.withError}`}>
                                       <label></label>
                                       <input
                                           {...input}
@@ -61,10 +63,7 @@ const LoginForm = (props) => {
                                           <span>{meta.error}</span>
                                       </div>}
                                   {/*Сообщение об ошибке логинизации после отправки формы*/}
-                                  {props.loginError.message &&
-                                      <div className={classes.submitErrorMessage}>
-                                          <span>{props.loginError.message}</span>
-                                      </div>}
+                                  {submitError && <div className={classes.submitErrorMessage}><span>{submitError}</span></div>}
                               </div>
                           )}
                       </Field>
@@ -72,6 +71,7 @@ const LoginForm = (props) => {
                           <div className={classes.checkBoxWrapper}><label>RememberMe</label>
                               <Field name="rememberMe" component="input" type="checkbox"/></div>
                       </div>
+                      {/*Капча*/}
                       {props.captchaURL &&
                           <div>
                               <div className={classes.captchaWrapper}>
@@ -100,8 +100,9 @@ const LoginForm = (props) => {
                           </div>
                       }
                       <div className={classes.buttons}>
+                          {/*Кнопка отправить*/}
                           <button className={classes.submit} type="submit" disabled={submitting}>
-                              Login
+                              Login{submitting && <PreloaderButton/>}
                           </button>
                           <button
                               className={classes.reset}
@@ -119,11 +120,12 @@ const LoginForm = (props) => {
 }
 
 const Login = (props) => {
-    const onSubmit = (formData) => {
+    const onSubmit = async (formData) => {
         console.log(formData)
         const {email, password, rememberMe, captcha} = formData
-        props.logIn(email, password, rememberMe, captcha)
-        return {[FORM_ERROR]: 'Login Failed'}
+        const submitError = await props.logIn(email, password, rememberMe, captcha)
+        if (submitError) return {[FORM_ERROR]: submitError}
+
     }
     const validate = (formData) => {
         const errors = {}
@@ -141,7 +143,6 @@ const Login = (props) => {
             <h1 className={classes.head}>Sing in</h1>
             <LoginForm onSubmit={onSubmit}
                        validate={validate}
-                       loginError={props.loginError}
                        captchaURL={props.captchaURL}/>
         </div>
     )
@@ -150,7 +151,6 @@ const Login = (props) => {
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
     userId: state.auth.userId,
-    loginError: state.auth.loginError,
     captchaURL: state.auth.captchaURL,
 })
 

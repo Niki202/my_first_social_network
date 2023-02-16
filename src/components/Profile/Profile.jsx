@@ -8,20 +8,23 @@ import {Preloader} from "../Common/Preloader/Preloader";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {withRouter} from "../../HOC/withRouter";
 import {compose} from "redux";
+import {uploadPhoto} from "../../Redux/Profile-reducer";
 
 class Profile extends React.Component {
 
     componentDidMount() {
         this.props.getProfile(this.props.router.params.userId)
     }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (+this.props.router.params.userId !== prevProps.profileInfo.userId && !this.props.isFetchingProfile) {
             this.props.getProfile(this.props.router.params.userId)
         }
     }
 
-    onSubmitPost = (formData) => {
+    onSubmitPost = (formData, form) => {
         this.props.addPost(formData.newPostText)
+        form.reset()
     }
 
     render() {
@@ -35,7 +38,8 @@ class Profile extends React.Component {
                                      userId={this.props.router.params.userId}
                                      myId={this.props.myId}
                                      updateMyStatus={this.props.updateMyStatus}
-                                     onSubmitPost={this.onSubmitPost}/>
+                                     onSubmitPost={this.onSubmitPost}
+                                     uploadPhoto={this.props.uploadPhoto}/>
 
 
                         <MyPosts posts={this.props.posts}/>
@@ -57,7 +61,7 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = {addPost, getProfile, updateMyStatus}
+const mapDispatchToProps = {addPost, getProfile, updateMyStatus, uploadPhoto}
 
 
 export default compose(

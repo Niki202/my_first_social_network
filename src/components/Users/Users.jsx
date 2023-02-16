@@ -20,7 +20,7 @@ export const Users = (props) => {
                         <div className={classes.image}>
                             {/*Если ссылки на фото нет в объекте то вставляем универсальную картинку авы*/}
                             <NavLink to={`/profile/${u.id}`} tabIndex={-1}>
-                                <img src={u.photos.small != null ? u.photos.small : avaImage} alt="avatarImage"/>
+                                <img src={u.photos.small || avaImage} alt="avatarImage"/>
                             </NavLink>
                         </div>
                         <div className={classes.description}>

@@ -66,4 +66,13 @@
   color: white;
 }
 
+.inputFileLabel {
+  color: #ba12e7;
+}
+
+.inputFile {
+  display: none;
+  color: white;
+}
+
 /*# sourceMappingURL=ProfileInfo.module.css.map */

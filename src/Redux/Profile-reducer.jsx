@@ -103,3 +103,14 @@ export const updateMyStatus = (status) => async (dispatch, getState) => {
 
     }
 }
+
+export const uploadPhoto = (file) => async (dispatch, getState) => {
+
+    const response = await profileAPI.uploadPhoto(file)
+    if (response.data.resultCode === 0) {
+        const profileInfo = {...getState().myPostPage.profileInfo}
+        profileInfo.photos = response.data.data.photos
+        dispatch(setProfile(profileInfo))
+    }
+    console.log(response)
+}

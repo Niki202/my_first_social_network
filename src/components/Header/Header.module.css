@@ -18,5 +18,8 @@
   width: 100%;
   height: auto;
 }
+.header .preloaderButtonWrapper {
+  width: 0px;
+}
 
 /*# sourceMappingURL=Header.module.css.map */
