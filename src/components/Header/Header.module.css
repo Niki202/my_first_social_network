@@ -10,16 +10,16 @@
   width: 100px;
   height: 60px;
 }
-.header button {
-  padding: 4px;
-  margin: 5px;
-}
-.header img {
+.header .img {
   width: 100%;
   height: auto;
 }
+.header .profileName {
+  margin-right: 20px;
+}
 .header .preloaderButtonWrapper {
-  width: 0px;
+  width: 0;
+  display: none;
 }
 
 /*# sourceMappingURL=Header.module.css.map */

@@ -1,0 +1,34 @@
+.button{
+  transition: 100ms;
+  display: inline-block;
+  font-size: 14px;
+  height: 32px;
+  color: #747ba8;
+  background-color: #f1f1f1;
+  padding: 5px 8px 26px;
+  border-radius: 8px;
+  cursor: pointer;
+  &.success{
+    border: 1px solid #28A745;
+    color: #28A745;
+  }
+  &.danger{
+    border: 1px solid #DC3545;
+    color: #DC3545;
+  }
+
+  &:hover{
+    background-color: #d9dae0;
+    &.success{
+      background-color: #28A745;
+      color: white;
+    }
+    &.danger{
+      background-color: #DC3545;
+      color: white;
+    }
+  }
+  &:active{
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.44);
+  }
+}

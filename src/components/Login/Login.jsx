@@ -7,6 +7,7 @@ import {Navigate} from "react-router-dom";
 import {required} from "../../utilites/validators";
 import {FORM_ERROR} from "final-form";
 import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
+import {Btn} from "../Common/Buttons/Btn";
 
 const LoginForm = (props) => {
     console.log(props.captchaURL)
@@ -101,17 +102,22 @@ const LoginForm = (props) => {
                       }
                       <div className={classes.buttons}>
                           {/*Кнопка отправить*/}
-                          <button className={classes.submit} type="submit" disabled={submitting}>
+                          <Btn className={classes.button}
+                               btnType={'success'}
+                               type="submit"
+                               disabled={submitting}>
                               Login{submitting && <PreloaderButton/>}
-                          </button>
-                          <button
-                              className={classes.reset}
+                          </Btn>
+                          {/*Кнопка сбросить*/}
+                          <Btn
+                              className={classes.button}
+                              btnType={'danger'}
                               type="button"
                               onClick={form.reset}
                               disabled={submitting || pristine}
                           >
                               Reset
-                          </button>
+                          </Btn>
                       </div>
                   </form>
               )}
