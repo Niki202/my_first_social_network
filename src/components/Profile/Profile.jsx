@@ -1,7 +1,7 @@
 import classes from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {addPost, getProfile, updateMyStatus} from "../../Redux/Profile-reducer";
+import {addPost, getProfile, updateMyStatus, uploadProfile} from "../../Redux/Profile-reducer";
 import {connect} from "react-redux";
 import React from "react";
 import {Preloader} from "../Common/Preloader/Preloader";
@@ -39,7 +39,8 @@ class Profile extends React.Component {
                                      myId={this.props.myId}
                                      updateMyStatus={this.props.updateMyStatus}
                                      onSubmitPost={this.onSubmitPost}
-                                     uploadPhoto={this.props.uploadPhoto}/>
+                                     uploadPhoto={this.props.uploadPhoto}
+                                     uploadProfile={this.props.uploadProfile}/>
 
 
                         <MyPosts posts={this.props.posts}/>
@@ -61,7 +62,7 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = {addPost, getProfile, updateMyStatus, uploadPhoto}
+const mapDispatchToProps = {addPost, getProfile, updateMyStatus, uploadPhoto, uploadProfile}
 
 
 export default compose(

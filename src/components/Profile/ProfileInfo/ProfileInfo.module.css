@@ -4,40 +4,14 @@
 
 .profile_descriptions {
   display: flex;
+  justify-content: space-between;
 }
-.profile_descriptions .avatar_wrapper {
-  width: 200px;
-  height: 200px;
+.profile_descriptions .profile_descriptions_text {
+  display: flex;
 }
-.profile_descriptions .avatar_wrapper img {
-  width: 100%;
-  height: auto;
-}
-.profile_descriptions .text {
-  padding: 5px 15px;
-}
-.profile_descriptions .text .name {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.profile_descriptions .text .about {
-  font-style: italic;
-  margin-bottom: 10px;
-}
-.profile_descriptions .text .job .jobTrue {
-  color: #28A745;
-}
-.profile_descriptions .text .job .jobFalse {
-  color: brown;
-}
-
-.status {
-  padding: 20px;
-  font-size: 30px;
-}
-.status input {
-  font-size: 30px;
+.profile_descriptions .editProfileButton {
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .img {
@@ -52,27 +26,24 @@
   overflow: hidden;
 }
 
-.button {
-  transition: 0.2s;
-  background-color: #ffffff;
-  padding: 5px;
-  margin: 3px;
-  border: 1px solid #28A745;
-  border-radius: 5px;
-  color: #28A745;
-}
-.button:hover {
-  background-color: #28A745;
-  color: white;
-}
-
 .inputFileLabel {
   color: #ba12e7;
 }
 
-.inputFile {
+.button {
   display: none;
-  color: white;
+}
+
+.label {
+  display: block;
+}
+
+.contacts .contact {
+  margin-left: 15px;
+}
+.contacts .contact label {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 /*# sourceMappingURL=ProfileInfo.module.css.map */

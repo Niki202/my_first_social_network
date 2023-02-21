@@ -20,13 +20,13 @@ const initialState = {
     profileInfo: {
         "aboutMe": "",
         "contacts": {
-            "facebook": "",
+            "facebook": null,
             "website": null,
-            "vk": "",
-            "twitter": "",
-            "instagram": "",
+            "vk": null,
+            "twitter": null,
+            "instagram": null,
             "youtube": null,
-            "github": "",
+            "github": null,
             "mainLink": null
         },
         "lookingForAJob": null,
@@ -112,5 +112,12 @@ export const uploadPhoto = (file) => async (dispatch, getState) => {
         profileInfo.photos = response.data.data.photos
         dispatch(setProfile(profileInfo))
     }
-    console.log(response)
+}
+
+export const uploadProfile = (obj) => async (dispatch, getState) => {
+    const response = await profileAPI.uploadProfile(obj)
+    if (response.data.resultCode === 0){
+        dispatch(getProfile(obj.userId))
+    }
+    return response
 }

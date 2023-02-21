@@ -1,62 +1,53 @@
 import classes from './ProfileInfo.module.css'
-import avaImage from '../../../assets/images/Ava.webp'
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Form, Field} from "react-final-form";
+import {Btn} from "../../Common/Buttons/Btn";
+import {AvatarContainer} from "./AvatarContainer/AvatarContainer";
+import {ProfileDescriptions} from "./ProfileDescriptions/ProfileDescriptions";
+import {Status} from "./Status/Status";
+import {FORM_ERROR} from "final-form";
 
 const ProfileInfo = (props) => {
-    const [statusEditMode, toggleStatusEditMode] = useState(false)
-    const [status, setStatus] = useState(props.status)
+    const isOwner = props.myId === +props.userId
 
-    const [fileName, setFileName] = useState('Select file')
-    const [file, setFile] = useState(null)
 
-    const onDoubleClick = () => {
-        if (+props.userId === props.myId) {
-            toggleStatusEditMode(true)
+    const [profileEditMode, changeProfileEditMode] = useState(false)
+    const [avatarEditMode, toggleAvatarEditMode] = useState(props.status)
+
+    // const toggleProfileEditMode = () => {
+    //     if (profileEditMode) changeProfileEditMode(false)
+    //     else changeProfileEditMode(true)
+    // }
+
+
+    // const sendPhoto = (obj, form) => {
+    //     debugger
+    //     // props.uploadPhoto(obj.files[0])
+    //     form.reset()
+    //     // obj.target.value = ''
+    //     // form.restart()
+    // }
+
+
+    const uploadProfile = async (formData) => {
+        // delete formData.photos
+        console.log(formData)
+        const response = await props.uploadProfile(formData)
+        debugger
+        if (response.data.resultCode !== 0) {
+
+            return {[FORM_ERROR]: response.data.messages[0]}
+        } else {
+            changeProfileEditMode(false)
         }
+
     }
 
-    const sendPhoto = (obj, form) => {
-        debugger
-        // props.uploadPhoto(obj.files[0])
-        form.reset()
-        // obj.target.value = ''
-        // form.restart()
-    }
 
-    const savePhoto2 = (e) => {
-        const file = e.target.files[0]
-        setFile(file)
-        setFileName(file.name)
-
-        debugger
-    }
-    const sendPhoto2 = () => {
-        props.uploadPhoto(file)
-        const input = document.getElementById('fileInput')
-        input.value = ''
-        debugger
-    }
-
-    const updateStatus = () => {
-        props.updateMyStatus(status)
-        toggleStatusEditMode(false)
-    }
-    const onKeyDownEnter = (e) => {
-        if (e.key === 'Enter') {
-            updateStatus()
-        }
-    }
-
-    const onChangeStatus = (e) => {
-        setStatus(e.target.value)
-    }
     // UseEffect cрабатывает при каждой отрисовке компоненты или при изменении зависимостей
     // которые содержатся в массиве переданном вторым аргументом
     // в данном случае статус устанавливается в локальный useState при измененнии статуса в глобальном стейте
-    useEffect(() => {
-        setStatus(props.status)
-    }, [props.status])
+
     return (
         <>
             <div className={classes.pictWrapper}>
@@ -65,43 +56,33 @@ const ProfileInfo = (props) => {
             </div>
             <div className={classes.info}>
                 <div className={classes.profile_descriptions}>
-                    <div>
-                        <div className={classes.avatar_wrapper}>
-                            <img src={props.profile.photos.large || avaImage} alt="avatar"/>
-                        </div>
-                        <label htmlFor={'fileInput'}>{fileName}</label>
-                        <input className={classes.inputFile} id={'fileInput'} type={'file'} accept={'image/jpeg, image/png, image/gif'} onChange={(e) => savePhoto2(e)}/>
-                        <button disabled={!file} className={classes.button} onClick={sendPhoto2}>Upload</button>
-                        {/*<ChangeAvaForm onSubmit={sendPhoto} fileName={fileName} setfilename={setFileName}/>*/}
+                    <div className={classes.profile_descriptions_text}>
+                        <AvatarContainer photos={props.profile.photos}
+                                         isOwner={isOwner}
+                                         uploadPhoto={props.uploadPhoto}
+                                         profileEditMode={profileEditMode}/>
+                        {!profileEditMode && <ProfileDescriptions profile={props.profile}/>}
                     </div>
-                    <div className={classes.text}>
-                        <div className={classes.name}>
-                            {props.profile.fullName}
-                        </div>
-                        <div className={classes.about}>
-                            {props.profile.aboutMe}
-                        </div>
-                        <div className={classes.job}>
-                            <span className={props.profile.lookingForAJob ? classes.jobTrue : classes.jobFalse}>
-                                {props.profile.lookingForAJob
-                                    ? 'Ищу работу: ' + props.profile.lookingForAJobDescription
-                                    : 'Не ищу работу'}
-                            </span>
-                        </div>
-                    </div>
+                    {/*Кнопка редактировать профиль*/}
+                    {isOwner &&
+                        (profileEditMode
+                            ? <div>
+                                <div className={classes.editProfileButton}>
+                                    <Btn label={'SAVE'} btnType={'success'}
+                                         labelFor={'ProfileEditButton'}/>
+                                </div>
+                                <div className={classes.editProfileButton}>
+                                    <Btn label={'CANCEL'} btnType={'danger'} onClick={() => changeProfileEditMode(false)}/>
+                                </div>
+                            </div>
+                            : <div className={classes.editProfileButton}>
+                                <Btn label={'EDIT PROFILE'} onClick={() => changeProfileEditMode(true)}/>
+                            </div>)
+                    }
                 </div>
                 {/*статус*/}
-                <div className={classes.status}>
-                    {!statusEditMode
-                        ? <span onDoubleClick={onDoubleClick}>{props.status
-                            ? props.status
-                            : 'No status'}</span>
-                        : <input onBlur={updateStatus}
-                                 onKeyDown={onKeyDownEnter}
-                                 onChange={onChangeStatus}
-                                 defaultValue={status}
-                                 autoFocus={true}/>}
-                </div>
+                <Status isOwner={isOwner} status={props.status} updateMyStatus={props.updateMyStatus}/>
+                {profileEditMode && <ProfileEditForm onSubmit={uploadProfile} profileInfo={props.profile} contacts={props.profile.contacts}/>}
                 <div>My posts</div>
                 <PostForm onSubmit={props.onSubmitPost}/>
             </div>
@@ -130,6 +111,72 @@ const PostForm = (props) => {
               )}/>
     )
 }
+
+const ProfileEditForm = ({contacts, profileInfo, ...props}) => {
+    return (
+        <div>
+            <Form onSubmit={props.onSubmit}
+                  initialValues={profileInfo}
+                  render={({handleSubmit, submitError, form, submitting, pristine, values}) => (
+                      <form onSubmit={handleSubmit}>
+                          {submitError && <div>{submitError}</div>}
+                          <div>
+                              <label className={classes.label} htmlFor="fullName">full name:</label>
+                              <Field name='fullName'
+                                     id={'fullName'}
+                                     component='input'
+                                     type='text'/>
+                          </div>
+                          <div>
+                              <label className={classes.label} htmlFor="aboutMe">about Me:</label>
+                              <Field name='aboutMe'
+                                     id={'aboutMe'}
+                                     component='input'
+                                     type='text'/>
+                          </div>
+                          <div>
+                              <label className={classes.label} htmlFor="lookingForAJob">looking for a job: </label>
+                              <Field name='lookingForAJob'
+                                     id={'lookingForAJob'}
+                                     component='input'
+                                     type='checkbox'/>
+                          </div>
+                          <div>
+                              <label className={classes.label} htmlFor="lookingForAJobDescription">looking for a job
+                                  description:</label>
+                              <Field name='lookingForAJobDescription'
+                                     id={'lookingForAJobDescription'}
+                                     component='input'
+                                     type='text'/>
+                          </div>
+                          <div className={classes.button}>
+                              <Btn
+                                  id={'ProfileEditButton'}
+                                  btnType={'success'}
+                                  type='submit'
+                                  disabled={submitting || pristine}>Add post
+                              </Btn>
+                          </div>
+                          <div className={classes.contacts}>
+                              <div>
+                                  Contacts:
+                              </div>
+                              {Object.keys(contacts).map(contact => (
+                                  <div className={classes.contact} key={contact}>
+                                      <label className={classes.label} htmlFor={contact}>{contact}:</label>
+                                      <Field name={`contacts.${contact}`}
+                                             id={contact}
+                                             component='input'
+                                             type='text'/>
+                                  </div>
+                              ))}
+                          </div>
+                      </form>
+                  )}/>
+        </div>
+    )
+}
+
 
 const ChangeAvaForm = ({onSubmit, fileName, setFileName, ...props}) => {
     return (

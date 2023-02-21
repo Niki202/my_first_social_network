@@ -1,13 +1,19 @@
 .button{
+  white-space: nowrap;
   transition: 100ms;
   display: inline-block;
   font-size: 14px;
   height: 32px;
   color: #747ba8;
   background-color: #f1f1f1;
-  padding: 5px 8px 26px;
+  padding: 6px 8px 8px;
   border-radius: 8px;
   cursor: pointer;
+  &.label{
+    height: 32px;
+    padding-top: 8px;
+    transform: translate(0%, -2%);
+  }
   &.success{
     border: 1px solid #28A745;
     color: #28A745;

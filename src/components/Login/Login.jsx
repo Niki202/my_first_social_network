@@ -102,22 +102,25 @@ const LoginForm = (props) => {
                       }
                       <div className={classes.buttons}>
                           {/*Кнопка отправить*/}
-                          <Btn className={classes.button}
-                               btnType={'success'}
-                               type="submit"
-                               disabled={submitting}>
-                              Login{submitting && <PreloaderButton/>}
-                          </Btn>
+                          <div className={classes.buttonWrapper}>
+                              <Btn
+                                  btnType={'success'}
+                                  type="submit"
+                                  disabled={submitting}>
+                                  Login{submitting && <PreloaderButton/>}
+                              </Btn>
+                          </div>
                           {/*Кнопка сбросить*/}
-                          <Btn
-                              className={classes.button}
-                              btnType={'danger'}
-                              type="button"
-                              onClick={form.reset}
-                              disabled={submitting || pristine}
-                          >
-                              Reset
-                          </Btn>
+                          <div className={classes.buttonWrapper}>
+                              <Btn
+                                  btnType={'danger'}
+                                  type="button"
+                                  onClick={form.reset}
+                                  disabled={submitting || pristine}
+                              >
+                                  Reset
+                              </Btn>
+                          </div>
                       </div>
                   </form>
               )}

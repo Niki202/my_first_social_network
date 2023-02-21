@@ -63,8 +63,9 @@
   }
   .buttons{
     margin: 10px;
-    .button{
-      margin-right: 40px;
+    .buttonWrapper{
+      display: inline-block;
+      margin-right: 5px;
     }
   }
 }

@@ -4,6 +4,7 @@ import avaImage from "../../assets/images/Ava.webp";
 import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
 import React from "react";
 import {Paginator} from "./Paginator/Paginator";
+import {Btn} from "../Common/Buttons/Btn";
 
 export const Users = (props) => {
 
@@ -24,20 +25,18 @@ export const Users = (props) => {
                             </NavLink>
                         </div>
                         <div className={classes.description}>
-                            <div>{u.name}</div>
+                            <div className={classes.userName}>{u.name}</div>
                             {/*подставляем разные кнопки в зависимости от значения followed в объекте*/}
                             {u.followed
                                 ?
-                                <button disabled={disabledButton}
+                                <Btn disabled={disabledButton}
                                         onClick={() => props.addUserToUnfollowed(u.id)}
-                                        className={classes.button}
-                                        tabIndex={-1}>Unfollow{disabledButton &&
-                                    <PreloaderButton/>}</button>
-                                : <button disabled={disabledButton}
+                                        tabIndex={-1}>UNFOLLOW{disabledButton &&
+                                    <PreloaderButton/>}</Btn>
+                                : <Btn disabled={disabledButton}
                                           onClick={() => props.addUserToFollowed(u.id)}
-                                          className={classes.button}
-                                          tabIndex={-1}>Follow{disabledButton &&
-                                    <PreloaderButton/>}</button>}
+                                          tabIndex={-1}>FOLLOW{disabledButton &&
+                                    <PreloaderButton/>}</Btn>}
                         </div>
                     </div>)
                 })}

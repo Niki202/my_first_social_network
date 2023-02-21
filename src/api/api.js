@@ -81,6 +81,10 @@ export const profileAPI = {
                 "Content-Type": "multipart/form-data",
             }
         })
+    },
+    // Обновить профиль
+    uploadProfile: async (obj) => {
+        return await instance.put('profile', obj)
     }
 }
 

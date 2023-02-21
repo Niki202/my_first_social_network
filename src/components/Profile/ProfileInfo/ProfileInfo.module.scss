@@ -4,44 +4,17 @@
 
 .profile_descriptions{
   display: flex;
-  .avatar_wrapper{
-    width: 200px;
-    height: 200px;
-    img{
-      width: 100%;
-      height: auto;
-    }
-  }
-  .text{
-    padding: 5px 15px;
-    .name{
-      font-size: 30px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .about{
-      font-style: italic;
-      margin-bottom: 10px;
-    }
-    .job{
-      .jobTrue{
-        color: #28A745;
-      }
-      .jobFalse{
-        color: brown;
-      }
-    }
+  justify-content: space-between;
+  .profile_descriptions_text{
+    display: flex;
 
   }
-}
-.status{
-  padding: 20px;
-  font-size: 30px;
-  input{
-    font-size: 30px;
+
+  .editProfileButton{
+    display: inline-block;
+    margin-right: 10px;
   }
 }
-
 .img {
   width: 100%;
   position: absolute;
@@ -55,24 +28,24 @@
   overflow: hidden;
 
 }
-.button{
-  transition: 0.2s;
-  background-color: #ffffff;
-  padding: 5px;
-  margin: 3px;
-  border: 1px solid #28A745;
-  border-radius: 5px;
-  color: #28A745;
-  &:hover{
-    background-color: #28A745;
-    color: white;
-  }
-}
+
 .inputFileLabel{
   color: #ba12e7;
 }
-.inputFile{
+.button{
   display: none;
-  color: white;
 }
+.label{
+  display: block;
+}
+.contacts{
+  .contact{
+    margin-left: 15px;
+    label{
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+}
+
 
