@@ -6,6 +6,7 @@ import {AvatarContainer} from "./AvatarContainer/AvatarContainer";
 import {ProfileDescriptions} from "./ProfileDescriptions/ProfileDescriptions";
 import {Status} from "./Status/Status";
 import {FORM_ERROR} from "final-form";
+import {InputText} from "../../Common/Inputs/InputText";
 
 const ProfileInfo = (props) => {
     const isOwner = props.myId === +props.userId
@@ -30,13 +31,29 @@ const ProfileInfo = (props) => {
 
 
     const uploadProfile = async (formData) => {
+        const toLower = (str) => {
+            str = str.split('')
+            str[0] = str[0].toLowerCase()
+            return str.join('')
+        }
         // delete formData.photos
         console.log(formData)
         const response = await props.uploadProfile(formData)
-        debugger
-        if (response.data.resultCode !== 0) {
 
-            return {[FORM_ERROR]: response.data.messages[0]}
+        if (response.data.resultCode !== 0) {
+            const errors = {[FORM_ERROR]: response.data.messages[0]}
+            const fullErrorMessage = response.data.messages[0]
+            const errorField = fullErrorMessage.match(/(?<=\().*(?=\))/)[0]
+            const errorMessage = fullErrorMessage.match(/\b.*(?=\s\()/)[0]
+            if (/Contacts->/.test(errorField)){
+                debugger
+                const errorContactField = errorField.match(/(?<=Contacts->).+/)[0]
+                errors.contacts = {}
+                errors.contacts[toLower(errorContactField)] = errorMessage
+            } else {
+                errors[toLower(errorField)] = errorMessage
+            }
+            return errors
         } else {
             changeProfileEditMode(false)
         }
@@ -120,20 +137,9 @@ const ProfileEditForm = ({contacts, profileInfo, ...props}) => {
                   render={({handleSubmit, submitError, form, submitting, pristine, values}) => (
                       <form onSubmit={handleSubmit}>
                           {submitError && <div>{submitError}</div>}
-                          <div>
-                              <label className={classes.label} htmlFor="fullName">full name:</label>
-                              <Field name='fullName'
-                                     id={'fullName'}
-                                     component='input'
-                                     type='text'/>
-                          </div>
-                          <div>
-                              <label className={classes.label} htmlFor="aboutMe">about Me:</label>
-                              <Field name='aboutMe'
-                                     id={'aboutMe'}
-                                     component='input'
-                                     type='text'/>
-                          </div>
+
+                          <InputText name={"fullName"}>full name:</InputText>
+                          <InputText name={"aboutMe"}>about me:</InputText>
                           <div>
                               <label className={classes.label} htmlFor="lookingForAJob">looking for a job: </label>
                               <Field name='lookingForAJob'
@@ -141,14 +147,9 @@ const ProfileEditForm = ({contacts, profileInfo, ...props}) => {
                                      component='input'
                                      type='checkbox'/>
                           </div>
-                          <div>
-                              <label className={classes.label} htmlFor="lookingForAJobDescription">looking for a job
-                                  description:</label>
-                              <Field name='lookingForAJobDescription'
-                                     id={'lookingForAJobDescription'}
-                                     component='input'
-                                     type='text'/>
-                          </div>
+                          <InputText name={"lookingForAJobDescription"}>looking for a job
+                              description:</InputText>
+
                           <div className={classes.button}>
                               <Btn
                                   id={'ProfileEditButton'}
@@ -157,19 +158,15 @@ const ProfileEditForm = ({contacts, profileInfo, ...props}) => {
                                   disabled={submitting || pristine}>Add post
                               </Btn>
                           </div>
+                          <div>
+                              Contacts:
+                          </div>
                           <div className={classes.contacts}>
-                              <div>
-                                  Contacts:
-                              </div>
-                              {Object.keys(contacts).map(contact => (
-                                  <div className={classes.contact} key={contact}>
-                                      <label className={classes.label} htmlFor={contact}>{contact}:</label>
-                                      <Field name={`contacts.${contact}`}
-                                             id={contact}
-                                             component='input'
-                                             type='text'/>
-                                  </div>
-                              ))}
+
+                              <div >{Object.keys(contacts).map(contact => (
+                                  <InputText key={contact} name={`contacts.${contact}`}>{contact}</InputText>
+
+                              ))}</div>
                           </div>
                       </form>
                   )}/>

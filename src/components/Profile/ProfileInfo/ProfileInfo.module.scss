@@ -37,15 +37,22 @@
 }
 .label{
   display: block;
+  margin-bottom: 2px;
 }
 .contacts{
+  margin-left: 15px;
   .contact{
-    margin-left: 15px;
+
     label{
       margin-top: 5px;
       margin-bottom: 5px;
     }
   }
 }
+//.input{
+//  outline: 1px solid crimson;
+//  border-radius: 3px;
+//  padding: 3px;
+//}
 
 
