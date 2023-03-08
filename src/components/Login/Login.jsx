@@ -10,7 +10,6 @@ import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
 import {Btn} from "../Common/Buttons/Btn";
 
 const LoginForm = (props) => {
-    console.log(props.captchaURL)
     return (
         <Form onSubmit={props.onSubmit}
               initialValues={{rememberMe: false}}
@@ -130,7 +129,6 @@ const LoginForm = (props) => {
 
 const Login = (props) => {
     const onSubmit = async (formData) => {
-        console.log(formData)
         const {email, password, rememberMe, captcha} = formData
         const submitError = await props.logIn(email, password, rememberMe, captcha)
         if (submitError) return {[FORM_ERROR]: submitError}
