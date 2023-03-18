@@ -1,5 +1,4 @@
-import React from "react";
-import {authReducer, setCaptchaURL, setInitialState, setLoginError, setUserAuthData} from "./Auth-reducer";
+import {authReducer, setCaptchaURL, setInitialState, setUserAuthData} from "./Auth-reducer";
 
 const initialState = {
     userId: null,
@@ -33,14 +32,6 @@ it ('initial state shold be installed', () => {
     expect(newState.userId).toBe(null);
     expect(newState.email).toBe(null);
     expect(newState.login).toBe(null);
-});
-
-it ('login error should be added', () => {
-    const resultCode = 123
-    const errorMessage = 'errorMessageTest'
-    let newState = authReducer(initialState, setLoginError(resultCode, errorMessage))
-    expect(newState.loginError.resultCode).toBe(resultCode);
-    expect(newState.loginError.message).toBe(errorMessage);
 });
 
 it ('captcha url should be added', () => {

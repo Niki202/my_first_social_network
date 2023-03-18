@@ -1,7 +1,8 @@
 import classes from './Nav.module.css'
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import {getProfile} from "../../Redux/Profile-reducer";
+import {RootStateType} from "../../Redux/redux-store";
+import {FC} from "react";
 
 // const activeClassName = (navData) => {
 //     if (navData.isActive === true){
@@ -10,16 +11,22 @@ import {getProfile} from "../../Redux/Profile-reducer";
 //         return undefined
 //     }
 // }
-export const activeClassName = (element) => element.isActive ? classes.active : undefined
 
-const Nav = (props) => {
+type MapStatePropsType = {
+    isAuth: boolean,
+    userId: number | null,
+}
+
+
+
+const Nav: FC<MapStatePropsType> = (props) => {
+    const activeClassName = (navLink: { isActive: boolean }): string | undefined => navLink.isActive ? classes.active : undefined
     return (
         <nav className={classes.nav}>
             <div>
                 {props.isAuth
                     ? <NavLink to={'/profile/' + props.userId}
                                className={activeClassName}
-                               // onClick={() => props.getProfile(props.userId)}
                                tabIndex={-1}>My profile</NavLink>
                     : <NavLink to='/login' className={activeClassName} tabIndex={-1}>My profile</NavLink>}
             </div>
@@ -41,9 +48,9 @@ const Nav = (props) => {
         </nav>
     )
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootStateType): MapStatePropsType => ({
     isAuth: state.auth.isAuth,
     userId: state.auth.userId,
 })
 
-export const NavContainer = connect(mapStateToProps, {getProfile})(Nav)
+export const NavContainer = connect(mapStateToProps, {})(Nav)

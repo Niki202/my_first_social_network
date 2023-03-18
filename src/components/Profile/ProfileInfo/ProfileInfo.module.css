@@ -30,21 +30,4 @@
   color: #ba12e7;
 }
 
-.button {
-  display: none;
-}
-
-.label {
-  display: block;
-  margin-bottom: 2px;
-}
-
-.contacts {
-  margin-left: 15px;
-}
-.contacts .contact label {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
 /*# sourceMappingURL=ProfileInfo.module.css.map */

@@ -1,6 +1,8 @@
 // import classes from './Settings.module.css'
 
-const Music = () => {
+import {FC} from "react";
+
+const Music: FC = () => {
   return(
       <div>
           Music

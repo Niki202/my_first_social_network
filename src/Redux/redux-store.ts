@@ -1,12 +1,24 @@
-import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
-import {profileReducer} from "./Profile-reducer";
-import {dialogsReducer} from "./Dialogs-reducer";
-import {usersReducer} from "./Users-reducer";
-import {authReducer} from "./Auth-reducer";
-import thunk from "redux-thunk";
-import {appReducer} from "./App-reducer";
 
-const reducers = combineReducers({
+import {profileReducer, ProfileReducerActionTypes} from "./Profile-reducer";
+import {dialogsReducer, DialogsReducerActionTypes} from "./Dialogs-reducer";
+import {usersReducer, UsersReducerActionTypes} from "./Users-reducer";
+import {authReducer, AuthReducerActionTypes} from "./Auth-reducer";
+import {appReducer, appReducerActionTypes} from "./App-reducer";
+
+import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
+import thunk, {ThunkAction} from "redux-thunk";
+
+// types
+export type RootStateType = ReturnType<typeof store.getState>
+export type AppDispatchType = typeof store.dispatch
+export type GetStateType = () => RootStateType
+
+export type AllActionTypes = appReducerActionTypes | AuthReducerActionTypes | DialogsReducerActionTypes
+    | ProfileReducerActionTypes | UsersReducerActionTypes
+
+export type MyThunkType = ThunkAction<Promise<any>, RootStateType, unknown, AllActionTypes>
+
+const RootReducer = combineReducers({
     myPostPage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
@@ -14,8 +26,9 @@ const reducers = combineReducers({
     app: appReducer,
 })
 
-export const store = legacy_createStore(reducers, applyMiddleware(thunk))
-export type RootStateType = ReturnType<typeof store.getState>
-export type AppDispatchType = typeof store.dispatch
+export const store = legacy_createStore(RootReducer, applyMiddleware(thunk))
+
+
+
 
 

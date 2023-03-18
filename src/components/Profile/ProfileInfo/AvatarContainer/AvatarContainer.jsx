@@ -13,6 +13,7 @@ export const AvatarContainer = ({photos, isOwner, profileEditMode, ...props}) =>
         setFileName(file.name)
     }
     const sendPhoto = () => {
+        console.log(file)
         props.uploadPhoto(file)
         const input = document.getElementById('fileInput')
         input.value = ''

@@ -1,7 +1,8 @@
-import {authAPI, securityAPI} from "../api/api";
+import {authAPI, ResultCodesDefaultEnum, securityAPI} from "../api/api";
 
 // Types
-import {AppDispatchType} from "./redux-store";
+import {MyThunkType} from "./redux-store";
+import {Reducer} from "redux";
 
 // Action types
 type SetUserAuthDataActionType = {
@@ -12,22 +13,22 @@ type SetUserAuthDataActionType = {
 }
 type SetInitialStateActionType = {
     type: typeof SET_INITIAL_STATE,
-    initialState: InitialStateType
+    initialState: AuthReducerInitialStateType
 }
 type SetCaptchaUrlActionType = {
     type: typeof SET_CAPTCHA_URL,
     URL: string
 }
 
-type AuthReducerActionType = SetUserAuthDataActionType | SetInitialStateActionType | SetCaptchaUrlActionType
+export type AuthReducerActionTypes = SetUserAuthDataActionType | SetInitialStateActionType | SetCaptchaUrlActionType
 
 // Action creators types
 type SetUserAuthDataActionCreatorType = (userId: number, email: string, login: string) => SetUserAuthDataActionType
-type SetInitialStateActionCreatorType = (initialState: InitialStateType) => SetInitialStateActionType
+type SetInitialStateActionCreatorType = (initialState: AuthReducerInitialStateType) => SetInitialStateActionType
 type SetCaptchaUrlActionCreatorType = (URL: string) => SetCaptchaUrlActionType
 
 // Initial state types
-type InitialStateType = {
+type AuthReducerInitialStateType = {
     userId: number | null,
     email: string | null,
     login: string | null,
@@ -37,13 +38,7 @@ type InitialStateType = {
 }
 
 // Auth reducer type
-type AuthReducerType = (state: InitialStateType, action: AuthReducerActionType) => InitialStateType
-
-// Thunk creators types
-type GetAuthDataThunkCreatorType = () => (dispatch: AppDispatchType) => Promise<any>
-type LogOutThunkCreatorType = () => (dispatch: AppDispatchType) => void
-type LogInThunkCreatorType = (email: string, password: string, rememberMe: boolean, captcha: string) =>
-    (dispatch: AppDispatchType) => Promise<any>
+type AuthReducerType = Reducer<AuthReducerInitialStateType, AuthReducerActionTypes>
 
 // Constants
 const SET_USER_AUTH_DATA = 'AUTH/SET_USER_AUTH_DATA'
@@ -60,7 +55,7 @@ export const setInitialState: SetInitialStateActionCreatorType = (initialState) 
 export const setCaptchaURL: SetCaptchaUrlActionCreatorType = (URL) => ({type: SET_CAPTCHA_URL, URL})
 
 // Initial state
-const initialState: InitialStateType = {
+const initialState: AuthReducerInitialStateType = {
     userId: null,
     email: null,
     login: null,
@@ -95,22 +90,26 @@ export const authReducer: AuthReducerType = (state = initialState, action) => {
 }
 
 // Thunk creators
-export const getAuthData: GetAuthDataThunkCreatorType = () => async (dispatch) => {
+export const getAuthData = (): MyThunkType => async (dispatch) => {
     const data = await authAPI.getAuthMe()
-    if (data) {
-        const {id, email, login} = data
+    if (data.resultCode === ResultCodesDefaultEnum.Success) {
+        const {id, email, login} = data.data
         return dispatch(setUserAuthData(id, email, login))
     }
 
 }
 
-export const logOut: LogOutThunkCreatorType = () => (dispatch) => {
-    authAPI.logOut().then(res => {
-        if (res === 0) dispatch(setInitialState(initialState))
-    })
+export const logOut = (): MyThunkType => async (dispatch) => {
+    const responseData = await authAPI.logOut()
+    if (responseData.resultCode === ResultCodesDefaultEnum.Success){
+        dispatch(setInitialState(initialState))
+    }
 }
 
-export const logIn: LogInThunkCreatorType = (email,password, rememberMe, captcha) => async (dispatch) => {
+export const logIn = (email: string,
+                      password: string,
+                      rememberMe: boolean,
+                      captcha?: string): MyThunkType => async (dispatch) => {
     const data = await authAPI.logIn(email, password, rememberMe, captcha)
     if (data.resultCode === 0) {
         await dispatch(getAuthData())

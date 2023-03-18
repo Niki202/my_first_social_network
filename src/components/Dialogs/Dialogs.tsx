@@ -3,14 +3,24 @@ import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
 import {Route, Routes} from "react-router-dom";
 import {withAuthRedirect} from "../../HOC/withAuthRedirect";
-import {addMessage} from "../../Redux/Dialogs-reducer";
+import {addMessage, AddMessageActionCreatorType} from "../../Redux/Dialogs-reducer";
 import {connect} from "react-redux";
 import {compose} from "redux";
+import {FC} from "react";
+import {RootStateType} from "../../Redux/redux-store";
+import {DialogType, UserMessagesType} from "../../Types/Types";
+
+type MapStatePropsType = {
+    dialogs: Array<DialogType>,
+    messages: Array<UserMessagesType>
+}
+
+type MapDispatchPropsType = {
+    addMessage: AddMessageActionCreatorType
+}
 
 
-
-
-const Dialogs = (props) => {
+const Dialogs: FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
     const dialogs = props.dialogs.map(dialog =>
         <Dialog key={dialog.id} id={dialog.id} name={dialog.name}/>)
 
@@ -37,7 +47,7 @@ const Dialogs = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType):MapStatePropsType => {
     return({
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
@@ -46,8 +56,8 @@ const mapStateToProps = (state) => {
 
 // Compose компонует целевой компонент с разными хоками
 
-export default compose(
+export default compose<any>(
     // Функция connect возвращает hoc
-    connect(mapStateToProps, {addMessage}),
+    connect<MapStatePropsType, MapDispatchPropsType, unknown, RootStateType>(mapStateToProps, {addMessage}),
     withAuthRedirect
 )(Dialogs)

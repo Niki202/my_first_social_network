@@ -1,15 +1,17 @@
-import React from "react";
-import {Form, Field} from 'react-final-form'
-import classes from "./Login.module.css";
-import {connect} from "react-redux";
-import {getAuthData, logIn} from "../../Redux/Auth-reducer";
-import {Navigate} from "react-router-dom";
-import {required} from "../../utilites/validators";
-import {FORM_ERROR} from "final-form";
-import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
-import {Btn} from "../Common/Buttons/Btn";
+import {Field, Form} from "react-final-form";
+import classes from "../Login.module.css";
+import {Btn} from "../../Common/Buttons/Btn";
+import {PreloaderButton} from "../../Common/PreloaderButton/PreloaderButton";
+import React, {FC} from "react";
+import {ErrorsFormType, FormDataType} from "../Login";
 
-const LoginForm = (props) => {
+type OwnPropsType = {
+    onSubmit: (formData: any) =>  Promise<{ "FINAL_FORM/form-error": any; } | undefined>,
+    validate: (formData: FormDataType) => ErrorsFormType,
+    captchaURL: string | null
+}
+
+export const LoginForm: FC<OwnPropsType> = (props) => {
     return (
         <Form onSubmit={props.onSubmit}
               initialValues={{rememberMe: false}}
@@ -29,7 +31,7 @@ const LoginForm = (props) => {
                                       <input
                                           {...input}
                                           type="text"
-                                          size='50'
+                                          size={50}
                                           placeholder="Email"
                                       />
                                   </div>
@@ -53,7 +55,7 @@ const LoginForm = (props) => {
                                       <input
                                           {...input}
                                           type="password"
-                                          size='50'
+                                          size={50}
                                           placeholder="Password"
                                       />
                                   </div>
@@ -86,7 +88,7 @@ const LoginForm = (props) => {
                                               <input
                                                   {...input}
                                                   type="text"
-                                                  size='10'
+                                                  size={10}
                                                   placeholder="Enter captcha"
                                               />
                                           </div>
@@ -126,39 +128,3 @@ const LoginForm = (props) => {
         />
     )
 }
-
-const Login = (props) => {
-    const onSubmit = async (formData) => {
-        const {email, password, rememberMe, captcha} = formData
-        const submitError = await props.logIn(email, password, rememberMe, captcha)
-        if (submitError) return {[FORM_ERROR]: submitError}
-
-    }
-    const validate = (formData) => {
-        const errors = {}
-        errors.email = required(formData.email)
-        errors.password = required(formData.password)
-        // if (required(formData.email)) errors.email = required(formData.email)
-        // if (required(formData.password)) errors.password = required(formData.password)
-        return errors
-    }
-    if (props.isAuth) {
-        return <Navigate to={`/profile/${props.userId}`}/>
-    }
-    return (
-        <div>
-            <h1 className={classes.head}>Sing in</h1>
-            <LoginForm onSubmit={onSubmit}
-                       validate={validate}
-                       captchaURL={props.captchaURL}/>
-        </div>
-    )
-}
-
-const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuth,
-    userId: state.auth.userId,
-    captchaURL: state.auth.captchaURL,
-})
-
-export default connect(mapStateToProps, {logIn, getAuthData})(Login)

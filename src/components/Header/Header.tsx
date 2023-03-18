@@ -4,8 +4,11 @@ import {NavLink} from "react-router-dom";
 import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
 import {Preloader} from "../Common/Preloader/Preloader";
 import {Btn} from "../Common/Buttons/Btn";
+import {FC} from "react";
+import {MapDispatchPropsType, MapStatePropsType} from "./HeaderContainer";
 
-const Header = (props) => {
+type OwnPropsType = MapStatePropsType & MapDispatchPropsType
+const Header: FC<OwnPropsType> = (props) => {
     return (
         <header className={classes.header}>
             <div className={classes.img_wrapper}>

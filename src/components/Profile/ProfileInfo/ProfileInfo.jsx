@@ -1,33 +1,18 @@
 import classes from './ProfileInfo.module.css'
 import React, {useState} from "react";
-import {Form, Field} from "react-final-form";
 import {Btn} from "../../Common/Buttons/Btn";
 import {AvatarContainer} from "./AvatarContainer/AvatarContainer";
 import {ProfileDescriptions} from "./ProfileDescriptions/ProfileDescriptions";
 import {Status} from "./Status/Status";
 import {FORM_ERROR} from "final-form";
-import {InputText} from "../../Common/Inputs/InputText";
+import {PostForm} from "./PostForm/PostForm";
+import {ProfileEditForm} from "./ProfileEditForm/ProfileEditForm";
 
 const ProfileInfo = (props) => {
     const isOwner = props.myId === +props.userId
 
 
     const [profileEditMode, changeProfileEditMode] = useState(false)
-    const [avatarEditMode, toggleAvatarEditMode] = useState(props.status)
-
-    // const toggleProfileEditMode = () => {
-    //     if (profileEditMode) changeProfileEditMode(false)
-    //     else changeProfileEditMode(true)
-    // }
-
-
-    // const sendPhoto = (obj, form) => {
-    //     debugger
-    //     // props.uploadPhoto(obj.files[0])
-    //     form.reset()
-    //     // obj.target.value = ''
-    //     // form.restart()
-    // }
 
 
     const uploadProfile = async (formData) => {
@@ -36,7 +21,6 @@ const ProfileInfo = (props) => {
             str[0] = str[0].toLowerCase()
             return str.join('')
         }
-        // delete formData.photos
         console.log(formData)
         const response = await props.uploadProfile(formData)
 
@@ -46,7 +30,6 @@ const ProfileInfo = (props) => {
             const errorField = fullErrorMessage.match(/(?<=\().*(?=\))/)[0]
             const errorMessage = fullErrorMessage.match(/\b.*(?=\s\()/)[0]
             if (/Contacts->/.test(errorField)){
-                debugger
                 const errorContactField = errorField.match(/(?<=Contacts->).+/)[0]
                 errors.contacts = {}
                 errors.contacts[toLower(errorContactField)] = errorMessage
@@ -107,133 +90,6 @@ const ProfileInfo = (props) => {
     )
 }
 
-const PostForm = (props) => {
-    return (
-        <Form onSubmit={props.onSubmit}
-              initialValues={{}}
-              render={({handleSubmit, form, submitting, pristine, values}) => (
-                  <form onSubmit={handleSubmit}>
-                      <div>
-                          <Field name='newPostText'
-                                 component='textarea'
-                                 type='text'/>
-                      </div>
-                      <div>
-                          <button className={classes.button}
-                                  type='submit'
-                                  disabled={submitting || pristine}>Add post
-                          </button>
-                      </div>
-                  </form>
-              )}/>
-    )
-}
-
-const ProfileEditForm = ({contacts, profileInfo, ...props}) => {
-    return (
-        <div>
-            <Form onSubmit={props.onSubmit}
-                  initialValues={profileInfo}
-                  render={({handleSubmit, submitError, form, submitting, pristine, values}) => (
-                      <form onSubmit={handleSubmit}>
-                          {submitError && <div>{submitError}</div>}
-
-                          <InputText name={"fullName"}>full name:</InputText>
-                          <InputText name={"aboutMe"}>about me:</InputText>
-                          <div>
-                              <label className={classes.label} htmlFor="lookingForAJob">looking for a job: </label>
-                              <Field name='lookingForAJob'
-                                     id={'lookingForAJob'}
-                                     component='input'
-                                     type='checkbox'/>
-                          </div>
-                          <InputText name={"lookingForAJobDescription"}>looking for a job
-                              description:</InputText>
-
-                          <div className={classes.button}>
-                              <Btn
-                                  id={'ProfileEditButton'}
-                                  btnType={'success'}
-                                  type='submit'
-                                  disabled={submitting || pristine}>Add post
-                              </Btn>
-                          </div>
-                          <div>
-                              Contacts:
-                          </div>
-                          <div className={classes.contacts}>
-
-                              <div >{Object.keys(contacts).map(contact => (
-                                  <InputText key={contact} name={`contacts.${contact}`}>{contact}</InputText>
-
-                              ))}</div>
-                          </div>
-                      </form>
-                  )}/>
-        </div>
-    )
-}
-
-
-const ChangeAvaForm = ({onSubmit, fileName, setFileName, ...props}) => {
-    return (
-        <Form onSubmit={onSubmit}
-              initialValues={{}}
-              fileName={fileName}
-              setFileName={setFileName}
-              render={({handleSubmit, form, submitting, pristine, values}) => (
-                  <form onSubmit={handleSubmit}>
-                      <div>
-                          <FileField name="files"/>
-                          <Field name={'text'}
-                                 fileName={fileName}
-                                 setFileName={setFileName}
-                                 render={({meta, input}) => (
-                                     <input {...input} type={'text'}/>
-                                 )}/>
-                          <Field name={'test'} fileName={fileName} setFileName={setFileName}>
-                              {({input: {value, onChange, ...input}}) => (
-                                  <>
-                                      <label className={classes.inputFileLabel}
-                                             htmlFor={'inputFile'}>{fileName || 'Выберите файл'}</label>
-                                      <input
-                                          {...input}
-                                          className={classes.inputFile}
-                                          id={'inputFile'}
-                                          type="file"
-                                          onChange={({target}) => {
-                                              debugger
-                                              onChange(target.files)
-                                              // setFileName(target.files[0].name)
-                                          }} // instead of the default target.value
-                                      />
-                                  </>
-                              )}
-                          </Field>
-                      </div>
-                      <div>
-                          <button className={classes.button}
-                                  type='submit'
-                                  disabled={submitting}>Upload
-                          </button>
-                      </div>
-                  </form>
-              )}/>
-    )
-}
-
-const FileField = ({name, ...props}) => (
-    <Field name={name}>
-        {({input: {value, onChange, ...input}}) => (
-            <input
-                {...input}
-                type="file"
-                onChange={({target}) => onChange(target.files)} // instead of the default target.value
-                {...props}
-            />
-        )}
-    </Field>
-);
 
 
 export default ProfileInfo

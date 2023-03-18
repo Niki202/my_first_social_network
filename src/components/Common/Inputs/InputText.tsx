@@ -1,8 +1,13 @@
 import classes from "./InputText.module.css";
 import {Field} from "react-final-form";
-import React from "react";
+import React, {FC} from "react";
 
-export const InputText = ({name, children}) => {
+type PropsType = {
+    name: string
+    children?: string
+}
+
+export const InputText: FC<PropsType> = ({name, children}) => {
     return(
         <Field name={name}
                render={({input, meta}) => (

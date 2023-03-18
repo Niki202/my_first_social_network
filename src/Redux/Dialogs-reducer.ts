@@ -1,8 +1,39 @@
+
+//types
+
+import {Reducer} from "redux";
+import {DialogType, UserMessagesType} from "../Types/Types";
+
+
+// Action types
+type AddMessageActionType = {
+    type: typeof ADD_MESSAGE,
+    userId: number,
+    message: string,
+}
+
+export type DialogsReducerActionTypes = AddMessageActionType
+
+// Action creators types
+export type AddMessageActionCreatorType = (userId: number, message: string) => AddMessageActionType
+
+// Initial state type
+type DialogsReducerStateType = {
+    dialogs: Array<DialogType>,
+    messages: Array<UserMessagesType>
+}
+
+// Reducer type
+type DialogsReducerType = Reducer<DialogsReducerStateType, AddMessageActionType>
+
+// Constants
 export const ADD_MESSAGE = 'ADD_MESSAGE'
 
-export const addMessage = (userId, message) => ({type: ADD_MESSAGE, userId, message})
+// Action creators
+export const addMessage: AddMessageActionCreatorType = (userId, message) => ({type: ADD_MESSAGE, userId, message})
 
-const initialState = {
+// Initial state
+const initialState: DialogsReducerStateType = {
     "dialogs": [
         {"id": 1, "name": "Dimych"},
         {"id": 2, "name": "Andrew"},
@@ -28,7 +59,8 @@ const initialState = {
     ],
 }
 
-export const dialogsReducer = (state=initialState, action) => {
+// Reducer
+export const dialogsReducer: DialogsReducerType = (state=initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE:
             // Если сообщение не пустое

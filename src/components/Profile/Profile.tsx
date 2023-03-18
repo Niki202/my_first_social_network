@@ -9,20 +9,42 @@ import {withAuthRedirect} from "../../HOC/withAuthRedirect";
 import {withRouter} from "../../HOC/withRouter";
 import {compose} from "redux";
 import {uploadPhoto} from "../../Redux/Profile-reducer";
+import {RootStateType} from "../../Redux/redux-store";
+import {PostType, ProfileInfoType} from "../../Types/Types";
+import {FormApi} from "final-form";
 
-class Profile extends React.Component {
+type MapStatePropsType = {
+    posts: Array<PostType>,
+    profileInfo: ProfileInfoType,
+    isFetchingProfile: boolean,
+    status: string,
+    myId: number | null
+}
+type MapDispatchPropsType = {
+    addPost: (newPostText: string) => void,
+    getProfile: (userId: number) => void,
+    updateMyStatus: (status: string) => void,
+    uploadPhoto: (file: File) => void,
+    uploadProfile: (profile: ProfileInfoType) => void
+}
+
+type RouteComponentPropsType = {
+    router: {params: {userId: number}}
+}
+
+class Profile extends React.Component<MapStatePropsType & MapDispatchPropsType & RouteComponentPropsType> {
 
     componentDidMount() {
         this.props.getProfile(this.props.router.params.userId)
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps: MapStatePropsType & MapDispatchPropsType, prevState:RootStateType, snapshot: any) {
         if (+this.props.router.params.userId !== prevProps.profileInfo.userId && !this.props.isFetchingProfile) {
             this.props.getProfile(this.props.router.params.userId)
         }
     }
 
-    onSubmitPost = (formData, form) => {
+    onSubmitPost = (formData: {newPostText: string}, form: FormApi) => {
         this.props.addPost(formData.newPostText)
         form.reset()
     }
@@ -32,7 +54,7 @@ class Profile extends React.Component {
             <>
                 {this.props.isFetchingProfile
                     ? <Preloader/>
-                    : <div className={classes.content}>
+                    : <div>
                         <ProfileInfo profile={this.props.profileInfo}
                                      status={this.props.status}
                                      userId={this.props.router.params.userId}
@@ -52,7 +74,7 @@ class Profile extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType) => {
     return ({
         posts: state.myPostPage.posts,
         profileInfo: state.myPostPage.profileInfo,
@@ -65,8 +87,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {addPost, getProfile, updateMyStatus, uploadPhoto, uploadProfile}
 
 
-export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+export default compose<any>(
+    connect<MapStatePropsType, any, unknown, RootStateType>(mapStateToProps, mapDispatchToProps),
     withAuthRedirect,
     withRouter
 )(Profile)

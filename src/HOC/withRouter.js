@@ -1,7 +1,7 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import React from "react";
 
-export function withRouter(Component) {
+export function withRouter (Component) {
     return (props) => {
         let location = useLocation();
         let navigate = useNavigate();

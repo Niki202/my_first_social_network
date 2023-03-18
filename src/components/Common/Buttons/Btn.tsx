@@ -1,6 +1,15 @@
 import classes from "./Btn.module.css";
+import React, {FC} from "react";
 
-export const Btn = ({children, label, btnType, labelFor, ...props}) => {
+type OwnPropsType = {
+    children?: any,
+    label?: string,
+    btnType?: 'success' | 'danger'
+    labelFor?: string,
+    [otherProps: string]: any
+}
+
+export const Btn: FC<OwnPropsType> = ({children, label, btnType, labelFor, ...props}) => {
     if (labelFor){
         return(
             <label {...props}
