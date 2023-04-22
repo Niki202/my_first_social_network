@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 // import logo from './logo.svg';
 import './App.css';
 import {NavContainer} from "./components/Nav/Nav";
@@ -17,15 +17,24 @@ import {compose} from "redux";
 import {withRouter} from "./HOC/withRouter";
 import {initializeApp} from "./Redux/App-reducer";
 import {Preloader} from "./components/Common/Preloader/Preloader";
-import {store} from "./Redux/redux-store";
+import {RootStateType, store} from "./Redux/redux-store";
 
+type MapStatePropsType = {
+    initialized: boolean
+}
 
-class App extends React.Component {
+type MapDispatchPropsType = {
+    initializeApp: () => void
+}
+
+class App extends React.Component<MapStatePropsType & MapDispatchPropsType> {
     componentDidMount() {
         this.props.initializeApp()
     }
 
     render() {
+
+        // @ts-ignore
         window.state = this.props.store.getState()
         if (!this.props.initialized) {
             return <Preloader/>
@@ -53,13 +62,14 @@ class App extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootStateType) => ({
     initialized: state.app.initialized
 })
 
-const AppWithCompose = compose(connect(mapStateToProps, {initializeApp}), withRouter)(App);
+const AppWithCompose: FC<any> = compose<any>(connect<MapStatePropsType, any, unknown, RootStateType>(mapStateToProps, {initializeApp}), withRouter)(App);
 
 const AppContainer = () => {
+
     return(
         <BrowserRouter>
             <Provider store={store}>

@@ -108,7 +108,7 @@ export const removeButtonFromDisabled: RemoveButtonFromDisabledActionCreatorType
 // Initial state
 const initialState: InitialStateType = {
     users: [],
-    pageSize: 14,
+    pageSize: 13,
     totalUsers: 0,
     currentPage: 1,
     isFetching: true,

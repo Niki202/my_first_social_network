@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import AppContainer from "./App";
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(<AppContainer/>);
 
 

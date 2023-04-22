@@ -2,11 +2,24 @@ import classes from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 import avaImage from "../../assets/images/Ava.webp";
 import {PreloaderButton} from "../Common/PreloaderButton/PreloaderButton";
-import React from "react";
+import React, {FC} from "react";
 import {Paginator} from "./Paginator/Paginator";
 import {Btn} from "../Common/Buttons/Btn";
+import {UserType} from "../../Types/Types";
 
-export const Users = (props) => {
+//types
+type OwnPropsType = {
+    onPageClicked: (page: number) => void
+    pageSize: number
+    totalUsers: number
+    currentPage: number
+    users: Array<UserType>
+    buttonsIsDisabledArr: Array<number>
+    addUserToFollowed: (userId: number) => void
+    addUserToUnfollowed: (userId: number) => void
+}
+
+export const Users: FC<OwnPropsType> = (props) => {
 
     return (
         <>
@@ -30,12 +43,12 @@ export const Users = (props) => {
                             {u.followed
                                 ?
                                 <Btn disabled={disabledButton}
-                                        onClick={() => props.addUserToUnfollowed(u.id)}
-                                        tabIndex={-1}>UNFOLLOW{disabledButton &&
+                                     onClick={() => props.addUserToUnfollowed(u.id)}
+                                     tabIndex={-1}>UNFOLLOW{disabledButton &&
                                     <PreloaderButton/>}</Btn>
                                 : <Btn disabled={disabledButton}
-                                          onClick={() => props.addUserToFollowed(u.id)}
-                                          tabIndex={-1}>FOLLOW{disabledButton &&
+                                       onClick={() => props.addUserToFollowed(u.id)}
+                                       tabIndex={-1}>FOLLOW{disabledButton &&
                                     <PreloaderButton/>}</Btn>}
                         </div>
                     </div>)

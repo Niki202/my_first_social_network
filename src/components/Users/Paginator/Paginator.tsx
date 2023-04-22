@@ -1,19 +1,29 @@
 import classes from "./Paginator.module.css";
 import {NavLink} from "react-router-dom";
-import React from "react";
+import React, {FC} from "react";
 import {Form, Field} from "react-final-form";
 
+// Types
+type OwnPropsType = {
+    totalUsers: number
+    pageSize: number
+    currentPage: number
+    onPageClicked: (page: number) => void
+}
 
-export const Paginator = (props) => {
+type DataType = {
+    goTo: string
+}
+export const Paginator: FC<OwnPropsType> = (props) => {
     const {totalUsers, pageSize, currentPage, onPageClicked} = props
 
-    const onSubmitGoTo = (data) => {
+    const onSubmitGoTo = (data: DataType) => {
         window.history.pushState(null, '', '/users/' + data.goTo)
         onPageClicked(+data.goTo)
     }
 
-    const validator = (data) => {
-        const errors = {}
+    const validator = (data: DataType) => {
+        const errors: any = {}
         if (+data.goTo <= 0 || +data.goTo > pagesCount) errors.goTo = 'error'
         return errors
     }
@@ -82,8 +92,8 @@ export const Paginator = (props) => {
                                               {...input}
                                               className={classes.inputNumber}
                                               type="number"
-                                              size='5'
-                                              tabIndex='1'
+                                              size={5}
+                                              tabIndex={1}
                                               autoComplete={'off'}
                                               placeholder={`1-${pagesCount}`}
                                           />

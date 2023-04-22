@@ -1,8 +1,14 @@
 import classes from './ProfileDescriptions.module.css'
-import React from "react";
+import React, {FC} from "react";
+import {ContactsType, ProfileInfoType} from "../../../../Types/Types";
 
-export const ProfileDescriptions = ({profile, ...props}) => {
+type OwnPropsType = {
+    profile: ProfileInfoType
+}
+
+export const ProfileDescriptions: FC<OwnPropsType> = ({profile, ...props}) => {
     const contacts = profile.contacts
+    const contactsKeysArray = Object.keys(contacts)
     return (
         <div className={classes.text}>
             <div className={classes.name}>
@@ -21,10 +27,10 @@ export const ProfileDescriptions = ({profile, ...props}) => {
             </div>
             <div>
                 <div>Contacts:</div>
-                {Object.keys(contacts).map((key) => {
-                    if (contacts[key]) {
+                {contactsKeysArray.map((key: string) => {
+                    if (contacts[key as keyof ContactsType]) {
                         return (
-                            <div key={key}>{key}: {contacts[key]}</div>
+                            <div key={key}>{key}: {contacts[key as keyof ContactsType]}</div>
                         )
                     }
 

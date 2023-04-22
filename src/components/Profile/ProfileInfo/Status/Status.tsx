@@ -1,7 +1,13 @@
 import classes from './Status.module.css'
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 
-export const Status = ({isOwner, ...props}) => {
+type OwnPropsType = {
+    isOwner: boolean
+    updateMyStatus: (status: string) => void
+    status: string
+}
+
+export const Status: FC<OwnPropsType> = ({isOwner, ...props}) => {
     const [statusEditMode, toggleStatusEditMode] = useState(false)
     const [status, setStatus] = useState(props.status)
 
@@ -9,13 +15,13 @@ export const Status = ({isOwner, ...props}) => {
         props.updateMyStatus(status)
         toggleStatusEditMode(false)
     }
-    const onKeyDownEnter = (e) => {
+    const onKeyDownEnter = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
             updateStatus()
         }
     }
 
-    const onChangeStatus = (e) => {
+    const onChangeStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStatus(e.target.value)
     }
 

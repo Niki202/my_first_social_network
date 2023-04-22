@@ -2,9 +2,16 @@ import {Field, Form} from "react-final-form";
 import {InputText} from "../../../Common/Inputs/InputText";
 import classes from "./ProfileEditForm.module.css";
 import {Btn} from "../../../Common/Buttons/Btn";
-import React from "react";
+import React, {FC} from "react";
+import {ContactsType, ProfileInfoType, ProfileType} from "../../../../Types/Types";
 
-export const ProfileEditForm = ({contacts, profileInfo, ...props}) => {
+type OwnPropsType = {
+    contacts: ContactsType
+    profileInfo: ProfileInfoType
+    onSubmit: (profile: ProfileType) => Promise<any>
+}
+
+export const ProfileEditForm: FC<OwnPropsType> = ({contacts, profileInfo, ...props}) => {
     return (
         <div>
             <Form onSubmit={props.onSubmit}
@@ -30,7 +37,7 @@ export const ProfileEditForm = ({contacts, profileInfo, ...props}) => {
                                   id={'ProfileEditButton'}
                                   btnType={'success'}
                                   type='submit'
-                                  disabled={submitting || pristine}>Add post
+                                  disabled={submitting}>Save
                               </Btn>
                           </div>
                           <div>

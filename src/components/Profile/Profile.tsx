@@ -10,7 +10,7 @@ import {withRouter} from "../../HOC/withRouter";
 import {compose} from "redux";
 import {uploadPhoto} from "../../Redux/Profile-reducer";
 import {RootStateType} from "../../Redux/redux-store";
-import {PostType, ProfileInfoType} from "../../Types/Types";
+import {PostType, ProfileInfoType, ProfileType} from "../../Types/Types";
 import {FormApi} from "final-form";
 
 type MapStatePropsType = {
@@ -25,7 +25,7 @@ type MapDispatchPropsType = {
     getProfile: (userId: number) => void,
     updateMyStatus: (status: string) => void,
     uploadPhoto: (file: File) => void,
-    uploadProfile: (profile: ProfileInfoType) => void
+    uploadProfile: (profile: ProfileType) => Promise<any>
 }
 
 type RouteComponentPropsType = {
@@ -44,9 +44,9 @@ class Profile extends React.Component<MapStatePropsType & MapDispatchPropsType &
         }
     }
 
-    onSubmitPost = (formData: {newPostText: string}, form: FormApi) => {
+    onSubmitPost = (formData: {newPostText: string}, form?: FormApi) => {
         this.props.addPost(formData.newPostText)
-        form.reset()
+        if (form) form.reset()
     }
 
     render() {
@@ -87,7 +87,7 @@ const mapStateToProps = (state: RootStateType) => {
 const mapDispatchToProps = {addPost, getProfile, updateMyStatus, uploadPhoto, uploadProfile}
 
 
-export default compose<any>(
+export default compose<React.ComponentType>(
     connect<MapStatePropsType, any, unknown, RootStateType>(mapStateToProps, mapDispatchToProps),
     withAuthRedirect,
     withRouter

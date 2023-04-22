@@ -1,6 +1,8 @@
 // import classes from './Settings.module.css'
 
-const Settings = () => {
+import {FC} from "react";
+
+const Settings: FC = () => {
   return(
       <div>
           Settings

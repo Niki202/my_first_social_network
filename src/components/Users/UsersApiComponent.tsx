@@ -1,4 +1,4 @@
-import React from "react";
+ import React from "react";
 import {Preloader} from "../Common/Preloader/Preloader"
 
 import {Users} from "./Users";
@@ -14,9 +14,33 @@ import {
     getUsersSel
 } from "../../Redux/Users-selectors";
 import {withRouter} from "../../HOC/withRouter";
+ import {RootStateType} from "../../Redux/redux-store";
+ import {UserType} from "../../Types/Types";
 
+ // types
+ type MapStatePropsType = {
+     users: Array<UserType>
+     pageSize: number
+     totalUsers: number
+     currentPage: number
+     isFetching: boolean
+     buttonsIsDisabledArr: Array<number>
+ }
 
-class UserApiComponent extends React.Component {
+ type MapDispatchPropsType = {
+     addUserToFollowed: (userId: number) => void
+     addUserToUnfollowed: (userId: number) => void
+     getUsers: (currentPage: number, pageSize: number) => void
+     setCurrentPage: (page: number) => void
+
+ }
+
+ type RouteComponentPropsType = {
+     router: {params: {page: number}}
+ }
+
+// Component
+class UserApiComponent extends React.Component<MapStatePropsType & MapDispatchPropsType & RouteComponentPropsType> {
     // Этод метод срабатывает после отрисовки компоненты
     componentDidMount() {
         if (this.props.router.params.page){
@@ -29,7 +53,7 @@ class UserApiComponent extends React.Component {
     }
 
     // При нажатии на номер страницы (<NavLink>) в каруселе страниц срабатывает этот метод
-    onPageClicked = (page) => {
+    onPageClicked = (page: number) => {
         this.props.getUsers(page, this.props.pageSize)
     };
 
@@ -47,7 +71,7 @@ class UserApiComponent extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: RootStateType) => {
     return ({
         users: getUsersSel(state),
         pageSize: getPageSizeSel(state),
@@ -65,7 +89,7 @@ const mapDispatchToProps = {
     setCurrentPage,
 }
 
-export default compose(
+export default compose<any>(
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect<MapStatePropsType, any, unknown, RootStateType>(mapStateToProps, mapDispatchToProps)
 )(UserApiComponent)

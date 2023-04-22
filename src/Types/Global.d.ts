@@ -6,3 +6,8 @@ declare module "*.svg" {
     const content: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>>;
     export default content;
 }
+
+declare module "*.webp" {
+    const content: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>>;
+    export default content;
+}

@@ -1,8 +1,13 @@
 import {Field, Form} from "react-final-form";
 import {Btn} from "../../../Common/Buttons/Btn";
-import React from "react";
+import React, {FC} from "react";
+import {FormApi} from "final-form";
 
-export const PostForm = (props) => {
+type OwnPropsType = {
+    onSubmit: (formData: { newPostText: string}) => void
+}
+
+export const PostForm: FC<OwnPropsType> = (props) => {
     return (
         <Form onSubmit={props.onSubmit}
               initialValues={{}}

@@ -1,8 +1,9 @@
-import React from "react";
+import React, {ComponentType} from "react";
 import {connect} from "react-redux";
 import {Navigate} from "react-router-dom";
+import {RootStateType} from "../Redux/redux-store";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: RootStateType) => ({
     isAuth: state.auth.isAuth
 })
 
@@ -22,8 +23,8 @@ const mapStateToProps = (state) => ({
 
 // Функциональный HOC
 
-export const withAuthRedirect = (Component) => {
-    const withRedirect = (props) => {
+export const withAuthRedirect = (Component: ComponentType) => {
+    const withRedirect = (props: any) => {
         // debugger
         if (!props.isAuth) {
             return <Navigate to={'/login'}/>
