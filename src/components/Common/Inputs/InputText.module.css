@@ -1,0 +1,21 @@
+.label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input {
+  outline: 1px solid #cbcbcb;
+  border-radius: 3px;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+.input.withError {
+  outline: 1px solid crimson;
+  margin-right: 3px;
+}
+
+.errorMessage {
+  color: crimson;
+}
+
+/*# sourceMappingURL=InputText.module.css.map */

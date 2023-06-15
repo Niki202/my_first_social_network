@@ -1,0 +1,20 @@
+.text {
+  padding: 5px 15px;
+}
+.text .name {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.text .about {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.text .job .jobTrue {
+  color: #28A745;
+}
+.text .job .jobFalse {
+  color: brown;
+}
+
+/*# sourceMappingURL=ProfileDescriptions.module.css.map */

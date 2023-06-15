@@ -1,0 +1,29 @@
+.avatar_wrapper {
+  width: 200px;
+  height: 200px;
+}
+.avatar_wrapper img {
+  width: 100%;
+  height: auto;
+}
+
+.inputFile {
+  display: none;
+  color: white;
+}
+
+.button {
+  transition: 0.2s;
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 3px;
+  border: 1px solid #28A745;
+  border-radius: 5px;
+  color: #28A745;
+}
+.button:hover {
+  background-color: #28A745;
+  color: white;
+}
+
+/*# sourceMappingURL=AvatarContainer.module.css.map */

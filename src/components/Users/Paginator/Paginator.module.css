@@ -1,0 +1,99 @@
+.paginationWrapper {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+.paginationWrapper a {
+  margin: 0 5px;
+}
+
+.buttonWithText {
+  display: inline-block;
+  font-size: 14px;
+  height: 32px;
+  color: #747ba8;
+  padding: 8px 12px 7px;
+  border-radius: 8px;
+  background-color: #d9dcef;
+}
+.buttonWithText:hover {
+  background-color: #d4d6e7;
+}
+
+.button {
+  display: inline-block;
+  font-size: 14px;
+  height: 32px;
+  color: #747ba8;
+  padding: 8px 12px 7px;
+  border-radius: 8px;
+}
+.button:hover {
+  background-color: #d9dae0;
+}
+.button:hover.threeDots {
+  background-color: transparent;
+  cursor: default;
+}
+
+.selected {
+  background-color: #8c95cb;
+  color: white;
+}
+.selected:hover {
+  background-color: #8c95cb;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+}
+.form * {
+  margin: 0 2px;
+}
+.form .goTo {
+  color: #001a34;
+}
+.form .input {
+  display: flex;
+  align-items: center;
+  tab-index: 0;
+}
+.form .input .inputWrapper {
+  border-radius: 8px;
+}
+.form .input .inputWrapper .inputNumber {
+  tab-index: 1;
+  padding: 9px;
+  height: 32px;
+  width: 100px;
+  border-radius: 8px;
+  outline: 2px solid #d3d3d3;
+}
+.form .input .inputWrapper .inputNumber:focus {
+  outline: 2px solid #a2ace7;
+  outline-offset: -2px;
+}
+.form .input .inputWrapper .inputNumber:hover {
+  outline: 2px solid #a2ace7;
+  outline-offset: -2px;
+}
+.form .input .inputWrapper input::-webkit-outer-spin-button,
+.form .input .inputWrapper input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+.form .input .submit {
+  background-color: #8c95cb;
+  border-radius: 8px;
+  height: 32px;
+  width: 100px;
+  color: white;
+}
+.form .input .submit.inActive {
+  background-color: #c0c0c0;
+  color: #8c8c8c;
+}
+
+/*# sourceMappingURL=Paginator.module.css.map */

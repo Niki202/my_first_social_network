@@ -1,11 +1,11 @@
 
-export const maxLength2 = (number) => (formData) => {
+export const maxLength2 = (number: number) => (formData: string | undefined) => {
     if (formData && formData.length >= number) return `Max length is ${number} symbols`
     return undefined
 
 }
 
-export const required = (formData) => {
+export const required = (formData: string | undefined) => {
     if (!formData) return 'Field is required'
     return undefined
 }
